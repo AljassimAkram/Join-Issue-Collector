@@ -141,7 +141,7 @@ function setImageSources([urgentImgSrc, mediumImgSrc, lowImgSrc]) {
  * @param {Object} task - Updated task object.
  */
 function updateTaskInLocalStorage(task) {
-    const columns = ['todo', 'in-progress', 'await-feedback', 'done']; 
+    const columns = ['triage', 'todo', 'in-progress', 'await-feedback', 'done']; 
     for (const column of columns) {
         const tasks = JSON.parse(localStorage.getItem(column)) || [];
         const taskIndex = tasks.findIndex(t => t.id === task.id);

@@ -1,4 +1,5 @@
 const BASE_URL = "https://join-aj-default-rtdb.europe-west1.firebasedatabase.app/";
+const TASKS_PROJECT_ID = "-OHEHGcS4ouKKz4lJ0nr";
 let loadedContacts = [];
 let loadedTasks = [];
 let allTasks = {};
@@ -108,11 +109,72 @@ async function fetchAndStoreTasks() {
  * @param {Array} loadedTasks - Die geladenen Aufgaben.
  */
 function saveTasksInLocalStorage(loadedTasks) {
-  localStorage.setItem("await-feedback",JSON.stringify(loadedTasks[0]["-OHEHGcS4ouKKz4lJ0nr"].awaitFeedback));
-  localStorage.setItem("todo",JSON.stringify(loadedTasks[0]["-OHEHGcS4ouKKz4lJ0nr"].todo));
-  localStorage.setItem("in-progress",JSON.stringify(loadedTasks[0]["-OHEHGcS4ouKKz4lJ0nr"].inProgress));
-  localStorage.setItem("done",JSON.stringify(loadedTasks[0]["-OHEHGcS4ouKKz4lJ0nr"].done));
-  console.log(loadedTasks[0]["-OHEHGcS4ouKKz4lJ0nr"].awaitFeedback);
+  const projectTasks =
+    loadedTasks[0]["-OHEHGcS4ouKKz4lJ0nr"] || {};
+
+  localStorage.setItem(
+    "triage",
+    JSON.stringify(projectTasks.triage || [])
+  );
+
+  localStorage.setItem(
+    "todo",
+    JSON.stringify(projectTasks.todo || [])
+  );
+
+  localStorage.setItem(
+    "in-progress",
+    JSON.stringify(projectTasks.inProgress || [])
+  );
+
+  localStorage.setItem(
+    "await-feedback",
+    JSON.stringify(projectTasks.awaitFeedback || [])
+  );
+
+  localStorage.setItem(
+    "done",
+    JSON.stringify(projectTasks.done || [])
+  );
+}
+
+function getFirebaseColumnName(columnId) {
+  const columnNames = {
+    "triage": "triage",
+    "todo": "todo",
+    "in-progress": "inProgress",
+    "await-feedback": "awaitFeedback",
+    "done": "done"
+  };
+
+  return columnNames[columnId];
+}
+
+
+async function saveColumnToFirebase(columnId) {
+  const firebaseColumn = getFirebaseColumnName(columnId);
+  const tasks = JSON.parse(localStorage.getItem(columnId)) || [];
+
+  try {
+    const response = await fetch(
+      `${BASE_URL}tasks/${TASKS_PROJECT_ID}/${firebaseColumn}.json`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(tasks)
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Firebase speichern fehlgeschlagen");
+    }
+
+    console.log(`${columnId} wurde in Firebase gespeichert.`);
+  } catch (error) {
+    console.error("Firebase Fehler:", error);
+  }
 }
 
 /**

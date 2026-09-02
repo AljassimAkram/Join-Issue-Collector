@@ -13,7 +13,7 @@ function enableUserEdit() {
  * @returns {Object|null} - Task object or null.
  */
 function getCurrentTask() {
-    const columns = ['todo', 'in-progress', 'await-feedback', 'done'];
+    const columns = ['triage', 'todo', 'in-progress', 'await-feedback', 'done'];
     for (const column of columns) {
         const tasks = JSON.parse(localStorage.getItem(column)) || [];
         const task = tasks.find(task => task.id === currentTaskId);

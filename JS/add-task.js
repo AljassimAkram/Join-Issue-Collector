@@ -249,16 +249,30 @@ function clearDateError() {
 /**
  * Fügt eine neue Aufgabe hinzu und speichert sie.
  */
-function addTask() {
+async function addTask() {
   const title = getFormInputValue("title-input");
   const description = getFormInputValue("description");
   const dueDate = getFormInputValue("date-input");
   const priority = selectedPriority || "medium";
   const category = selectedCategory;
 
-  const newTask = createNewTask(title, description, dueDate, priority, category, subtaskList, selectedUsers);
-  const currentColumn = localStorage.getItem("currentColumn") || "todo";
+  const newTask = createNewTask(
+    title,
+    description,
+    dueDate,
+    priority,
+    category,
+    subtaskList,
+    selectedUsers
+  );
+
+  const currentColumn =
+    localStorage.getItem("currentColumn") || "triage";
+
   saveTaskToLocalStorage(currentColumn, newTask);
+
+  await saveColumnToFirebase(currentColumn);
+
   window.location.href = "board.html";
 }
 
@@ -286,10 +300,10 @@ function addTaskMsg() {
   let msgContainer = document.getElementById("add-task-msg");
 
   msgContainer.style.display = "flex";
+
   setTimeout(() => {
     msgContainer.style.display = "none";
     addTask();
-    window.location.href = "/HTML/board.html";
   }, 2000);
 }
 

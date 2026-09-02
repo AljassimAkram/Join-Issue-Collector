@@ -14,20 +14,19 @@ function openTaskDetails(taskId) {
   }
 }
 
-
 /**
  * Retrieves all tasks from local storage.
  * @returns {Array} - List of tasks.
  */
 function getAllTasks() {
   return [
+    ...JSON.parse(localStorage.getItem("triage") || "[]"),
     ...JSON.parse(localStorage.getItem("todo") || "[]"),
     ...JSON.parse(localStorage.getItem("in-progress") || "[]"),
     ...JSON.parse(localStorage.getItem("await-feedback") || "[]"),
     ...JSON.parse(localStorage.getItem("done") || "[]"),
   ];
 }
-
 
 /**
  * Finds a task by ID.
@@ -37,7 +36,6 @@ function getAllTasks() {
 function findTaskById(tasks, taskId) {
   return tasks.find((task) => task.id === taskId);
 }
-
 
 /**
  * Updates modal content with task details.
@@ -52,7 +50,6 @@ function updateModalContent(task) {
   updateModalSubtasks(task);
 }
 
-
 /**
  * Updates the category in the modal.
  * @param {Object} task - Task object.
@@ -64,7 +61,6 @@ function updateModalCategory(task) {
   setCategoryStyle("modalCategory", task.category);
 }
 
-
 /**
  * Updates title and description in the modal.
  * @param {Object} task - Task object.
@@ -73,7 +69,6 @@ function updateModalTitleAndDescription(task) {
   document.getElementById("modalTitle").innerText = task.title;
   document.getElementById("modalDescription").innerText = task.description;
 }
-
 
 /**
  * Updates the due date in the modal.
@@ -86,17 +81,15 @@ function updateModalDueDate(task) {
     : "Kein Fälligkeitsdatum";
 }
 
-
 /**
  * Updates priority in the modal.
  * @param {Object} task - Task object.
  */
 function updateModalPriority(task) {
   document.getElementById("modalPriority").innerHTML = formatPriority(
-    task.priority
+    task.priority,
   );
 }
-
 
 /**
  * Updates assigned users in the modal.
@@ -104,10 +97,9 @@ function updateModalPriority(task) {
  */
 function updateModalAssignedUsers(task) {
   document.getElementById("modalAssignedUsers").innerHTML = renderAssignedUsers(
-    task.assignedUsers
+    task.assignedUsers,
   );
 }
-
 
 /**
  * Closes the task modal.
@@ -116,12 +108,11 @@ function closeTaskModal() {
   document.getElementById("taskModal").style.display = "none";
 }
 
-
 /**
  * Deletes a task from local storage.
  */
 function deleteTask() {
-  const allColumns = ["todo", "in-progress", "await-feedback", "done"];
+  const allColumns = ["triage", "todo", "in-progress", "await-feedback", "done"];
   allColumns.forEach((column) => {
     let tasks = JSON.parse(localStorage.getItem(column)) || [];
     tasks = tasks.filter((task) => task.id !== currentTaskId);
@@ -131,11 +122,9 @@ function deleteTask() {
   closeTaskModal();
 }
 
-
 function closeTaskModal() {
   document.getElementById("taskModal").style.display = "none";
 }
-
 
 /**
  * Handles responsive button display.
@@ -152,10 +141,8 @@ function addButton() {
   }
 }
 
-
 window.addEventListener("resize", addButton);
 window.addEventListener("DOMContentLoaded", addButton);
-
 
 /**
  * Enables dragging for tasks.
@@ -165,7 +152,6 @@ function drag(event) {
   draggedTaskId = event.target.id;
   event.dataTransfer.effectAllowed = "move";
 }
-
 
 /**
  * Allows dropping tasks into columns.
@@ -184,7 +170,6 @@ function allowDrop(event) {
   }
 }
 
-
 /**
  * Removes highlight effect from drop areas.
  */
@@ -195,7 +180,6 @@ function removeHighlight() {
       container.classList.remove("highlight-drop");
     });
 }
-
 
 /**
  * Handles dropping a task into a new column.
@@ -214,7 +198,6 @@ function handleDrop(event) {
   }
 }
 
-
 /**
  * Processes the task drop action.
  * @param {HTMLElement} targetTaskContainer - Drop target.
@@ -224,15 +207,16 @@ function handleDrop(event) {
 function processDrop(
   targetTaskContainer,
   draggedTaskElement,
-  sourceTaskContainer) {
+  sourceTaskContainer,
+) {
   moveTaskInDOM(draggedTaskElement, targetTaskContainer);
   updateLocalStorage(
     sourceTaskContainer,
     targetTaskContainer,
-    draggedTaskElement.id);
+    draggedTaskElement.id,
+  );
   refreshUI(sourceTaskContainer, targetTaskContainer);
 }
-
 
 /**
  * Gets the closest task container element.
@@ -243,7 +227,6 @@ function getClosestTaskContainer(element) {
   return element.closest(".task-container");
 }
 
-
 /**
  * Finds the source task container for a dragged task.
  * @param {HTMLElement} draggedTaskElement - Dragged task.
@@ -253,7 +236,6 @@ function getSourceTaskContainer(draggedTaskElement) {
   return draggedTaskElement.closest(".task-container");
 }
 
-
 /**
  * Moves a task in the DOM.
  * @param {HTMLElement} draggedTaskElement - Dragged task.
@@ -262,7 +244,6 @@ function getSourceTaskContainer(draggedTaskElement) {
 function moveTaskInDOM(draggedTaskElement, targetTaskContainer) {
   targetTaskContainer.appendChild(draggedTaskElement);
 }
-
 
 /**
  * Updates local storage after task movement.
@@ -283,7 +264,6 @@ function updateLocalStorage(sourceTaskContainer, targetTaskContainer, taskId) {
   }
 }
 
-
 /**
  * Refreshes UI after task movement.
  * @param {HTMLElement} sourceTaskContainer - Original container.
@@ -296,12 +276,9 @@ function refreshUI(sourceTaskContainer, targetTaskContainer) {
   loadTasks(targetColumnId);
 }
 
-
 document.querySelectorAll(".task-container").forEach((taskContainer) => {
   taskContainer.addEventListener("dragleave", removeHighlight);
 });
-
-
 
 /**
  * Calculates target column index based on movement direction.
@@ -314,10 +291,9 @@ function calculateTargetColumnIndex(currentIndex, direction, columnCount) {
   return direction === "left" && currentIndex > 0
     ? currentIndex - 1
     : direction === "right" && currentIndex < columnCount - 1
-    ? currentIndex + 1
-    : null;
+      ? currentIndex + 1
+      : null;
 }
-
 
 /**
  * Processes task movement between columns.
@@ -326,18 +302,25 @@ function calculateTargetColumnIndex(currentIndex, direction, columnCount) {
  */
 function moveTask(taskId, direction, event) {
   if (event) event.stopPropagation();
-  const columns = ["todo", "in-progress", "await-feedback", "done"];
+  const columns = ["triage", "todo", "in-progress", "await-feedback", "done"];
   const tasks = getAllTasks();
   const task = findTaskById(tasks, taskId);
   if (!task) return;
   const currentColumnIndex = findCurrentColumnIndex(columns, taskId);
-  const targetColumnIndex = calculateTargetColumnIndex(currentColumnIndex, direction, columns.length);
+  const targetColumnIndex = calculateTargetColumnIndex(
+    currentColumnIndex,
+    direction,
+    columns.length,
+  );
   if (targetColumnIndex === null) return;
-  moveTaskBetweenColumns(taskId, task, columns[currentColumnIndex], columns[targetColumnIndex]);
+  moveTaskBetweenColumns(
+    taskId,
+    task,
+    columns[currentColumnIndex],
+    columns[targetColumnIndex],
+  );
   refreshUII(columns[currentColumnIndex], columns[targetColumnIndex]);
 }
-
-
 
 /**
  * Finds the current column index of a task.
@@ -352,13 +335,11 @@ function findCurrentColumnIndex(columns, taskId) {
   });
 }
 
-
 function calculateTargetColumnIndex(currentIndex, direction, totalColumns) {
   let targetIndex =
     direction === "previous" ? currentIndex - 1 : currentIndex + 1;
   return targetIndex < 0 || targetIndex >= totalColumns ? null : targetIndex;
 }
-
 
 /**
  * Moves a task between columns.

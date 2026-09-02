@@ -264,7 +264,7 @@ function addTask() {
     subtaskListOverlay,
     selectedUsersAddTask
   );
-  const currentColumn = localStorage.getItem("currentColumn") || "todo";
+  const currentColumn = localStorage.getItem("currentColumn") || "triage";
   saveTaskToLocalStorageOverlay(currentColumn, newTask);
   window.location.href = "board.html";
 }
