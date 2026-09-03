@@ -111,14 +111,39 @@ function closeTaskModal() {
 /**
  * Deletes a task from local storage.
  */
-function deleteTask() {
-  const allColumns = ["triage", "todo", "in-progress", "await-feedback", "done"];
-  allColumns.forEach((column) => {
+async function deleteTask() {
+  const allColumns = [
+    "triage",
+    "todo",
+    "in-progress",
+    "await-feedback",
+    "done"
+  ];
+
+  for (const column of allColumns) {
     let tasks = JSON.parse(localStorage.getItem(column)) || [];
-    tasks = tasks.filter((task) => task.id !== currentTaskId);
-    localStorage.setItem(column, JSON.stringify(tasks));
-    loadTasks(column);
-  });
+
+    const taskExists = tasks.some(
+      (task) => task.id === currentTaskId
+    );
+
+    if (taskExists) {
+      tasks = tasks.filter(
+        (task) => task.id !== currentTaskId
+      );
+
+      localStorage.setItem(
+        column,
+        JSON.stringify(tasks)
+      );
+
+      await saveColumnToFirebase(column);
+
+      loadTasks(column);
+      break;
+    }
+  }
+
   closeTaskModal();
 }
 
@@ -251,16 +276,39 @@ function moveTaskInDOM(draggedTaskElement, targetTaskContainer) {
  * @param {HTMLElement} targetTaskContainer - New container.
  * @param {string} taskId - Task ID.
  */
-function updateLocalStorage(sourceTaskContainer, targetTaskContainer, taskId) {
+async function updateLocalStorage(
+  sourceTaskContainer,
+  targetTaskContainer,
+  taskId
+) {
   const sourceColumnId = sourceTaskContainer.closest(".column").id;
   const targetColumnId = targetTaskContainer.closest(".column").id;
-  const sourceTasks = JSON.parse(localStorage.getItem(sourceColumnId)) || [];
-  const targetTasks = JSON.parse(localStorage.getItem(targetColumnId)) || [];
-  const taskIndex = sourceTasks.findIndex((task) => task.id === taskId);
+
+  const sourceTasks =
+    JSON.parse(localStorage.getItem(sourceColumnId)) || [];
+
+  const targetTasks =
+    JSON.parse(localStorage.getItem(targetColumnId)) || [];
+
+  const taskIndex = sourceTasks.findIndex(
+    (task) => task.id === taskId
+  );
+
   if (taskIndex > -1) {
     targetTasks.push(sourceTasks.splice(taskIndex, 1)[0]);
-    localStorage.setItem(sourceColumnId, JSON.stringify(sourceTasks));
-    localStorage.setItem(targetColumnId, JSON.stringify(targetTasks));
+
+    localStorage.setItem(
+      sourceColumnId,
+      JSON.stringify(sourceTasks)
+    );
+
+    localStorage.setItem(
+      targetColumnId,
+      JSON.stringify(targetTasks)
+    );
+
+    await saveColumnToFirebase(sourceColumnId);
+    await saveColumnToFirebase(targetColumnId);
   }
 }
 

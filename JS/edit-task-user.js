@@ -13,14 +13,23 @@ function enableUserEdit() {
  * @returns {Object|null} - Task object or null.
  */
 function getCurrentTask() {
-    const columns = ['triage', 'todo', 'in-progress', 'await-feedback', 'done'];
+    const columns = [
+        'triage',
+        'todo',
+        'in-progress',
+        'await-feedback',
+        'done'
+    ];
+
     for (const column of columns) {
         const tasks = JSON.parse(localStorage.getItem(column)) || [];
         const task = tasks.find(task => task.id === currentTaskId);
+
         if (task) {
             return task;
         }
     }
+
     return null;
 }
 
@@ -226,15 +235,30 @@ function gatherSelectedUsers() {
  * @returns {Object|null} - Task column info.
  */
 function getTaskColumnAndIndex(taskId) {
-    const columns = ['todo', 'in-progress', 'await-feedback', 'done'];
+    const columns = [
+        'triage',
+        'todo',
+        'in-progress',
+        'await-feedback',
+        'done'
+    ];
+
     for (const column of columns) {
-        let tasks = JSON.parse(localStorage.getItem(column)) || [];
-        const taskIndex = tasks.findIndex(task => task.id === taskId);
+        const tasks = JSON.parse(localStorage.getItem(column)) || [];
+
+        const taskIndex = tasks.findIndex(
+            task => task.id === taskId
+        );
 
         if (taskIndex !== -1) {
-            return { column, taskIndex, tasks };
+            return {
+                column,
+                taskIndex,
+                tasks
+            };
         }
     }
+
     return null;
 }
 
@@ -245,15 +269,25 @@ function getTaskColumnAndIndex(taskId) {
  */
 function updateTaskInLocalStorage(updatedTask) {
     const taskData = getTaskColumnAndIndex(updatedTask.id);
+
     if (taskData) {
         const { column, taskIndex, tasks } = taskData;
+
         tasks[taskIndex] = {
             ...tasks[taskIndex],
             ...updatedTask,
-            completedSubtasks: updatedTask.completedSubtasks 
+            completedSubtasks: updatedTask.completedSubtasks
         };
-        localStorage.setItem(column, JSON.stringify(tasks));
+
+        localStorage.setItem(
+            column,
+            JSON.stringify(tasks)
+        );
+
+        return column;
     }
+
+    return null;
 }
 
 

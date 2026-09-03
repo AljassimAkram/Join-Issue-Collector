@@ -174,8 +174,16 @@ function searchFromSearchInput() {
 /**
  * Loads tasks when the page loads.
  */
-window.addEventListener("load", function () {
-  ["triage", "todo", "in-progress", "await-feedback", "done"].forEach(loadTasks);
+window.addEventListener("load", async function () {
+  await fetchAndStoreTasks();
+
+  [
+    "triage",
+    "todo",
+    "in-progress",
+    "await-feedback",
+    "done"
+  ].forEach(loadTasks);
 });
 
 

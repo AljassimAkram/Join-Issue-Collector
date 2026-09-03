@@ -248,7 +248,7 @@ function clearDateError() {
 /**
  * Fügt eine neue Aufgabe hinzu, nachdem die Validierung erfolgt ist.
  */
-function addTask() {
+async function addTask() {
   const title = getFormInputValue("title-input");
   const description = getFormInputValue("description");
   const dueDate = getFormInputValue("date-input");
@@ -264,23 +264,28 @@ function addTask() {
     subtaskListOverlay,
     selectedUsersAddTask
   );
-  const currentColumn = localStorage.getItem("currentColumn") || "triage";
+
+  const currentColumn =
+    localStorage.getItem("currentColumn") || "triage";
+
   saveTaskToLocalStorageOverlay(currentColumn, newTask);
+
+  await saveColumnToFirebase(currentColumn);
+
   window.location.href = "board.html";
 }
-
 /**
  * Zeigt eine Bestätigungsmeldung an, dass die Aufgabe hinzugefügt wurde.
  */
 function addTaskMsg() {
   let msgContainer = document.getElementById("add-task-msg");
 
-    msgContainer.style.display = "flex";
-    setTimeout(() => {
-      msgContainer.style.display = "none";
-      addTask();
-      closeOverlay();
-    }, 2000); 
+  msgContainer.style.display = "flex";
+
+  setTimeout(async () => {
+    msgContainer.style.display = "none";
+    await addTask();
+  }, 2000);
 }
 
 document.getElementById('add-task-mobile').addEventListener('click', () => {

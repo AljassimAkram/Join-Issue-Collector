@@ -94,13 +94,19 @@ function formatContact(x) {
  */
 async function fetchAndStoreTasks() {
   try {
-    let response = await fetch(`${BASE_URL}/tasks.json`);
-    let tasksData = await response.json();
+    const response = await fetch(
+      `${BASE_URL}tasks/${TASKS_PROJECT_ID}.json`
+    );
 
-    loadedTasks.push(tasksData);
-    saveTasksInLocalStorage(loadedTasks);
+    if (!response.ok) {
+      throw new Error("Tasks konnten nicht geladen werden");
+    }
+
+    const projectTasks = await response.json() || {};
+
+    saveTasksInLocalStorage(projectTasks);
   } catch (error) {
-    console.error("Fehler:", error.message);
+    console.error("Fehler beim Laden der Tasks:", error);
   }
 }
 
@@ -108,10 +114,7 @@ async function fetchAndStoreTasks() {
  * Speichert Aufgaben im lokalen Speicher.
  * @param {Array} loadedTasks - Die geladenen Aufgaben.
  */
-function saveTasksInLocalStorage(loadedTasks) {
-  const projectTasks =
-    loadedTasks[0]["-OHEHGcS4ouKKz4lJ0nr"] || {};
-
+function saveTasksInLocalStorage(projectTasks) {
   localStorage.setItem(
     "triage",
     JSON.stringify(projectTasks.triage || [])
