@@ -1,0 +1,424 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+
+  background: #dddddd;
+
+  color: #2a3647;
+
+  padding: 28px 10px;
+}
+
+
+/* =========================
+   PAGE
+========================= */
+
+.stakeholder-page {
+  position: relative;
+
+  width: 100%;
+  max-width: 900px;
+
+  min-height: 640px;
+
+  margin: 0 auto;
+
+  background: #f8f9fa;
+}
+
+
+/* =========================
+   LOGO
+========================= */
+
+.logo-link {
+  position: absolute;
+
+  top: 18px;
+  left: 28px;
+
+  display: block;
+}
+
+.join-logo {
+  width: 38px;
+  height: auto;
+}
+
+
+/* =========================
+   BACK ARROW
+========================= */
+
+.back-button {
+  position: absolute;
+
+  top: 52px;
+  left: 102px;
+
+  color: #2a3647;
+
+  font-size: 26px;
+  line-height: 1;
+
+  text-decoration: none;
+
+  font-weight: 400;
+
+  transition: color 0.15s ease;
+}
+
+.back-button:hover {
+  color: #29abe2;
+}
+
+
+/* =========================
+   REQUEST COUNTER
+========================= */
+
+.request-counter {
+  position: absolute;
+
+  top: 57px;
+  right: 100px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  font-size: 12px;
+
+  color: #168fc4;
+}
+
+.request-counter strong {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.request-counter span {
+  font-weight: 400;
+}
+
+
+/* =========================
+   MAIN TITLE
+========================= */
+
+.stakeholder-page > h1 {
+  margin: 0;
+
+  padding-top: 112px;
+
+  text-align: center;
+
+  font-size: 42px;
+  line-height: 1;
+
+  font-weight: 700;
+
+  color: #2a3647;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.stakeholder-content {
+  width: 605px;
+
+  margin: 36px auto 0;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: space-between;
+
+  gap: 55px;
+}
+
+
+/* =========================
+   LEFT TEXT
+========================= */
+
+.stakeholder-text {
+  width: 310px;
+  flex-shrink: 0;
+}
+
+
+.stakeholder-text h2 {
+  margin: 0 0 26px;
+
+  font-size: 18px;
+  line-height: 1.25;
+
+  font-weight: 400;
+
+  color: #3f5575;
+}
+
+
+.stakeholder-text p {
+  margin: 0 0 10px;
+
+  font-size: 12px;
+  line-height: 1.25;
+
+  font-weight: 400;
+
+  color: #53627a;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.create-request-button {
+  margin-top: 33px;
+
+  min-height: 38px;
+
+  padding: 0 13px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 4px;
+
+  border-radius: 5px;
+
+  background: #168fc4;
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  font-weight: 400;
+
+  transition:
+    background-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+
+.create-request-button:hover {
+  background: #29abe2;
+
+  box-shadow:
+    0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+.create-request-button span {
+  font-size: 13px;
+}
+
+
+/* =========================
+   ILLUSTRATION
+========================= */
+
+.stakeholder-image {
+  width: 235px;
+
+  margin-top: -3px;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+}
+
+
+.stakeholder-image img {
+  width: 235px;
+  height: auto;
+
+  display: block;
+
+  object-fit: contain;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+  position: absolute;
+
+  bottom: 29px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  display: flex;
+
+  gap: 22px;
+}
+
+
+footer a {
+  color: #777777;
+
+  font-size: 10px;
+
+  text-decoration: none;
+}
+
+
+footer a:hover {
+  color: #29abe2;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 760px) {
+
+  body {
+    padding: 0;
+    background: #f8f9fa;
+  }
+
+  .stakeholder-page {
+    min-height: 100vh;
+  }
+
+  .request-counter {
+    right: 30px;
+  }
+
+  .stakeholder-content {
+    width: calc(100% - 60px);
+
+    gap: 30px;
+  }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+  .logo-link {
+    top: 20px;
+    left: 20px;
+  }
+
+  .join-logo {
+    width: 34px;
+  }
+
+
+  .back-button {
+    top: 73px;
+    left: 25px;
+  }
+
+
+  .request-counter {
+    top: 31px;
+    right: 20px;
+
+    font-size: 11px;
+  }
+
+
+  .stakeholder-page > h1 {
+    padding-top: 110px;
+
+    font-size: 36px;
+  }
+
+
+  .stakeholder-content {
+    width: 100%;
+
+    margin-top: 30px;
+
+    padding: 0 28px;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 25px;
+  }
+
+
+  .stakeholder-text {
+    width: 100%;
+  }
+
+
+  .stakeholder-text h2 {
+    font-size: 18px;
+  }
+
+
+  .stakeholder-text p {
+    font-size: 13px;
+  }
+
+
+  .stakeholder-image {
+    width: 220px;
+
+    order: -1;
+  }
+
+
+  .stakeholder-image img {
+    width: 220px;
+  }
+
+
+  .create-request-button {
+    width: 100%;
+  }
+
+
+  footer {
+    position: relative;
+
+    bottom: auto;
+    left: auto;
+
+    transform: none;
+
+    justify-content: center;
+
+    margin-top: 60px;
+    padding-bottom: 25px;
+  }
+
+}

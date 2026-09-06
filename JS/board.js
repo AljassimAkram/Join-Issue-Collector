@@ -242,15 +242,36 @@ function formatPriority(priorityText) {
  * @returns {string} - HTML string.
  */
 function renderAssignedUsers(users) {
+  if (!Array.isArray(users) || users.length === 0) {
+    return "<p>Keine Benutzer zugewiesen</p>";
+  }
+
   return users
     .map(
       (user) => `
         <div class="user-item">
-            <div class="user-avatar" style="background-color: ${user.color};">${
-        user.name[0]
-      }${user.name.split(" ")[1] ? user.name.split(" ")[1][0] : ""}</div>
-            <span class="user-name">${user.name}</span>
-        </div>`).join("");
+          <div
+            class="user-avatar"
+            style="background-color: ${user.color || "#ccc"};"
+          >
+            ${
+              user.name
+                ? user.name
+                    .split(" ")
+                    .map(name => name[0])
+                    .join("")
+                    .toUpperCase()
+                : "?"
+            }
+          </div>
+
+          <span class="user-name">
+            ${user.name || "Unbekannt"}
+          </span>
+        </div>
+      `
+    )
+    .join("");
 }
 
 
