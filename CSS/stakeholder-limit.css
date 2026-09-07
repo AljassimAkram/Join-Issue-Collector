@@ -83,13 +83,13 @@ body {
 
   gap: 5px;
 
-  font-size: 12px;
+  font-size: 14px;
 
   color: #ff4d2f;
 }
 
 .request-counter strong {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -155,7 +155,7 @@ body {
 
   text-align: center;
 
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
 
   margin-bottom: 16px;
@@ -167,7 +167,7 @@ body {
 .limit-text p {
   margin: 0;
 
-  font-size: 12px;
+  font-size: 16px;
   line-height: 1.25;
 
   color: #53627a;
@@ -198,7 +198,7 @@ body {
 
   text-decoration: none;
 
-  font-size: 14px;
+  font-size: 16px;
 
   transition:
     background-color 0.15s ease,
@@ -213,7 +213,7 @@ body {
 }
 
 .send-email-button span {
-  font-size: 13px;
+  font-size: 14px;
 }
 
 
@@ -255,7 +255,7 @@ footer {
 footer a {
   color: #777777;
 
-  font-size: 10px;
+  font-size: 14px;
 
   text-decoration: none;
 }
@@ -297,7 +297,7 @@ footer a:hover {
     top: 31px;
     right: 20px;
 
-    font-size: 11px;
+    font-size: 14px;
   }
 
   .limit-page > h1 {

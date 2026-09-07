@@ -28,7 +28,7 @@
   
   @media (min-width: 1355px) {
     h2 {
-      font-size: 12px;
+      font-size: 14px;
     }
   
     .board {
@@ -201,11 +201,11 @@
       gap: 3px;
     }
     .subtask-text{
-      font-size: 12px;
+      font-size: 14px;
     }
     .subtask-edit-input{
       width: 70%;
-      font-size: 12px;
+      font-size: 14px;
     }
   
   }
@@ -305,7 +305,7 @@
         margin-top: 10px;
     }
     .move-btn {
-        font-size: 12px;
+        font-size: 14px;
         border: none;
         border-radius: 4px;
         background-color: #ffffff;

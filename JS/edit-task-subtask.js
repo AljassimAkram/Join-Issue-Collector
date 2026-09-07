@@ -286,7 +286,7 @@ function showErrorMessage(container, message) {
     const errorElement = document.createElement('span');
     errorElement.className = 'error-message';
     errorElement.style.color = 'red';
-    errorElement.style.fontSize = '12px';
+    errorElement.style.fontSize = '14px';
     errorElement.textContent = message;
     container.appendChild(errorElement);
 }
