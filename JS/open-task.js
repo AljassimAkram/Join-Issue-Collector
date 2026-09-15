@@ -46,8 +46,21 @@ function updateModalContent(task) {
   updateModalTitleAndDescription(task);
   updateModalDueDate(task);
   updateModalPriority(task);
+  updateModalCreator(task);
   updateModalAssignedUsers(task);
   updateModalSubtasks(task);
+}
+
+/**
+ * Displays the task creator and creator type.
+ * @param {Object} task - Task object.
+ */
+function updateModalCreator(task) {
+  const creator = task.creator || "Unknown";
+  const type =
+    task.creatorType === "external" ? "External Stakeholder" : "Internal";
+
+  document.getElementById("modalCreator").innerText = `${creator} (${type})`;
 }
 
 /**
@@ -117,25 +130,18 @@ async function deleteTask() {
     "todo",
     "in-progress",
     "await-feedback",
-    "done"
+    "done",
   ];
 
   for (const column of allColumns) {
     let tasks = JSON.parse(localStorage.getItem(column)) || [];
 
-    const taskExists = tasks.some(
-      (task) => task.id === currentTaskId
-    );
+    const taskExists = tasks.some((task) => task.id === currentTaskId);
 
     if (taskExists) {
-      tasks = tasks.filter(
-        (task) => task.id !== currentTaskId
-      );
+      tasks = tasks.filter((task) => task.id !== currentTaskId);
 
-      localStorage.setItem(
-        column,
-        JSON.stringify(tasks)
-      );
+      localStorage.setItem(column, JSON.stringify(tasks));
 
       await saveColumnToFirebase(column);
 
@@ -279,36 +285,31 @@ function moveTaskInDOM(draggedTaskElement, targetTaskContainer) {
 async function updateLocalStorage(
   sourceTaskContainer,
   targetTaskContainer,
-  taskId
+  taskId,
 ) {
   const sourceColumnId = sourceTaskContainer.closest(".column").id;
   const targetColumnId = targetTaskContainer.closest(".column").id;
 
-  const sourceTasks =
-    JSON.parse(localStorage.getItem(sourceColumnId)) || [];
+  const sourceTasks = JSON.parse(localStorage.getItem(sourceColumnId)) || [];
 
-  const targetTasks =
-    JSON.parse(localStorage.getItem(targetColumnId)) || [];
+  const targetTasks = JSON.parse(localStorage.getItem(targetColumnId)) || [];
 
-  const taskIndex = sourceTasks.findIndex(
-    (task) => task.id === taskId
-  );
+  const taskIndex = sourceTasks.findIndex((task) => task.id === taskId);
 
   if (taskIndex > -1) {
-    targetTasks.push(sourceTasks.splice(taskIndex, 1)[0]);
+    const movedTask = sourceTasks.splice(taskIndex, 1)[0];
 
-    localStorage.setItem(
-      sourceColumnId,
-      JSON.stringify(sourceTasks)
-    );
+    movedTask.status = targetColumnId;
+    targetTasks.push(movedTask);
 
-    localStorage.setItem(
-      targetColumnId,
-      JSON.stringify(targetTasks)
-    );
+    localStorage.setItem(sourceColumnId, JSON.stringify(sourceTasks));
+
+    localStorage.setItem(targetColumnId, JSON.stringify(targetTasks));
 
     await saveColumnToFirebase(sourceColumnId);
     await saveColumnToFirebase(targetColumnId);
+
+    notifyCreatorStatusChange(movedTask, targetColumnId);
   }
 }
 
@@ -408,4 +409,25 @@ function moveTaskBetweenColumns(taskId, task, currentColumn, targetColumn) {
 function refreshUII(currentColumn, targetColumn) {
   loadTasks(currentColumn);
   loadTasks(targetColumn);
+}
+
+/**
+ * Notifies the ticket creator about a status change via n8n.
+ * @param {Object} task - Moved task.
+ * @param {string} status - New column/status.
+ */
+function notifyCreatorStatusChange(task, status) {
+  if (!task || !task.creator) return;
+
+  const data = new URLSearchParams({
+    creator: task.creator,
+    title: task.title || "Ticket",
+    status: status,
+  });
+
+  fetch("http://localhost:5678/webhook/join-status-change", {
+    method: "POST",
+    mode: "no-cors",
+    body: data,
+  });
 }

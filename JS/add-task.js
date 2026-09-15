@@ -169,9 +169,34 @@ function selectCategory(category) {
  * 
  * @returns {Object} Die erstellte Aufgabe.
  */
-function createNewTask(title, description, dueDate, priority, category, subtaskList, selectedUsers) {
+function createNewTask(
+  title,
+  description,
+  dueDate,
+  priority,
+  category,
+  subtaskList,
+  selectedUsers
+) {
   const { completedSubtasks, totalSubtasks } = countSubtasks(subtaskList);
-  return { id: `task-${Date.now()}`, title, description, dueDate, priority, category, subtasks: subtaskList, completedSubtasks, totalSubtasks, assignedUsers: selectedUsers, };
+
+  const loggedInUser =
+    JSON.parse(localStorage.getItem("loggedInUser")) || {};
+
+  return {
+    id: `task-${Date.now()}`,
+    title,
+    description,
+    dueDate,
+    priority,
+    category,
+    subtasks: subtaskList,
+    completedSubtasks,
+    totalSubtasks,
+    assignedUsers: selectedUsers,
+    creator: loggedInUser.email || loggedInUser.name || "Guest",
+    creatorType: "internal",
+  };
 }
 
 /**

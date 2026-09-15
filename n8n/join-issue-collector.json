@@ -1,0 +1,639 @@
+{
+  "name": "Join - Issue Collector",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -224,
+        0
+      ],
+      "id": "0a615f71-f820-480d-8a30-a4c211fee81f",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "P5wbmK6weyOvguSp",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        560,
+        240
+      ],
+      "id": "55729964-c749-4394-9ef3-04e0cf71ebf2",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "6uIOUS0yg1zKM4RE",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const ai = $json.output || $json;\nconst email = $('Extract Email Data').first().json;\n\nreturn [{\n  json: {\n    id: `task-${Date.now()}`,\n    title: ai.title || email.subject || \"New Issue\",\n    description:\n      `${email.body}\\n\\nDieses Ticket wurde KI-generiert.`,\n    dueDate: ai.deadline || \"\",\n    priority: ai.priority || \"medium\",\n    category: ai.category || \"technical task\",\n    issueType: ai.category || \"technical task\",\n    subtasks: [],\n    completedSubtasks: 0,\n    totalSubtasks: 0,\n    assignedUsers: [],\n    creator: email.sender,\n    creatorType: \"external\",\n    aiGenerated: true,\n    status: \"triage\"\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        912,
+        0
+      ],
+      "id": "a2f14c46-d4f6-44af-b1a6-8f61bb818123",
+      "name": "Create Join Task"
+    },
+    {
+      "parameters": {
+        "url": "https://join-aj-default-rtdb.europe-west1.firebasedatabase.app/tasks/-OHEHGcS4ouKKz4lJ0nr/triage.json",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        1056,
+        0
+      ],
+      "id": "89dd4f42-cffe-4e1b-b895-52b741097596",
+      "name": "Get Triage Tasks"
+    },
+    {
+      "parameters": {
+        "jsCode": "const existingTasks = $input.all()\n  .map(item => item.json)\n  .filter(task => task && Object.keys(task).length > 0);\n\nconst newTask = $('Create Join Task').first().json;\n\nreturn [{\n  json: {\n    tasks: [...existingTasks, newTask]\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1248,
+        0
+      ],
+      "id": "dc14786c-7e91-4b1d-b5d5-0f1bd0dcdc11",
+      "name": "Append New Task"
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "https://join-aj-default-rtdb.europe-west1.firebasedatabase.app/tasks/-OHEHGcS4ouKKz4lJ0nr/triage.json",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.tasks }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        1424,
+        0
+      ],
+      "id": "9ef7e327-dd5b-482b-9d71-b81f80c93119",
+      "name": "Save Triage Tasks"
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Extract Email Data').first().json.messageId }}",
+        "labelIds": [
+          "Label_2901071397397103598"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1072,
+        192
+      ],
+      "id": "9a2fca74-6918-4b8b-ab41-d5d20e8ed504",
+      "name": "Mark Email as zu bearbeiten",
+      "webhookId": "870b6a6f-c23e-4472-8784-461120378fe3",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "P5wbmK6weyOvguSp",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Extract Email Data').first().json.sender.match(/<([^>]+)>/)?.[1] || $('Extract Email Data').first().json.sender }}",
+        "subject": "Join Issue Collector – Request received",
+        "emailType": "text",
+        "message": "Hello,  thank you for your request.  Unfortunately, an error occurred while automatically processing your email.  We have received your request and our team will review it manually and get back to you as soon as possible.  Best regards Join Team",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        912,
+        192
+      ],
+      "id": "cf75ec32-61d0-447c-a934-f3f9381fcf44",
+      "name": "Send Error Email",
+      "webhookId": "8743d61f-cdaf-44fe-b4f1-838d04002823",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "P5wbmK6weyOvguSp",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\n * Extracts the relevant email data for the Issue Collector.\n * @returns {Array} Normalized email data.\n */\nreturn $input.all().map((item) => {\n  const email = item.json;\n\n  return {\n    json: {\n      messageId: email.id || \"\",\n      threadId: email.threadId || \"\",\n      sender: email.From || email.from || \"\",\n      subject: email.Subject || email.subject || \"\",\n      body: email.body || email.text || email.snippet || \"\"\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -48,
+        0
+      ],
+      "id": "8c853702-61fa-41e8-9971-eef1a32e9ca2",
+      "name": "Extract Email Data"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $getWorkflowStaticData('global');\n\nconst today = $now\n  .setZone('Europe/Berlin')\n  .toFormat('yyyy-MM-dd');\n\nif (data.date !== today) {\n  data.date = today;\n  data.count = 0;\n}\n\nconst count = Number(data.count || 0);\n\nreturn $input.all().map((item) => ({\n  json: {\n    ...item.json,\n    dailyCount: count,\n    limitReached: count >= 10\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        128,
+        0
+      ],
+      "id": "36ac7a7e-b689-49c9-a0c9-02fc1e789802",
+      "name": "Check Daily Limit1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "a5616074-ce97-44f6-98db-e7682254df9d",
+              "leftValue": "={{ $json.limitReached }}",
+              "rightValue": 10,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        320,
+        0
+      ],
+      "id": "c01fc852-e2b5-4fa9-a8c9-b377136261b8",
+      "name": "Daily Limit Reached?"
+    },
+    {
+      "parameters": {
+        "text": "=Sender: {{$json.sender}}\nSubject: {{$json.subject}}\nBody: {{$json.body}}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "title",
+              "description": "Kurzer und prägnanter Titel für das Join-Ticket.",
+              "required": true
+            },
+            {
+              "name": "category",
+              "description": "Klassifiziere die E-Mail genau als einen dieser Werte: technical task, user story, feature, bug request.",
+              "required": true
+            },
+            {
+              "name": "priority",
+              "description": "Bestimme die Priorität genau als: urgent, medium oder low.",
+              "required": true
+            },
+            {
+              "name": "deadline",
+              "description": "Extrahiere eine Deadline aus der E-Mail. Format: YYYY-MM-DD. Falls keine Deadline genannt wird, leer lassen."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1.2,
+      "position": [
+        560,
+        16
+      ],
+      "id": "1b340892-cc2a-471e-bfed-15366b54247d",
+      "name": "Analyze Email",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $getWorkflowStaticData('global');\n\nconst today = $now\n  .setZone('Europe/Berlin')\n  .toFormat('yyyy-MM-dd');\n\nif (data.date !== today) {\n  data.date = today;\n  data.count = 0;\n}\n\ndata.count = Number(data.count || 0) + 1;\n\nreturn [{\n  json: {\n    dailyCount: data.count\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1600,
+        0
+      ],
+      "id": "4adc086f-7f55-453f-b15f-5cd4ed9138a8",
+      "name": "Increase Daily Count"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Extract Email Data').first().json.sender.match(/<([^>]+)>/)?.[1] || $('Extract Email Data').first().json.sender }}",
+        "subject": "Join Issue Collector – Ticket created",
+        "emailType": "text",
+        "message": "=Hello,  thank you for your request.  Your ticket was successfully created and added to the Triage column.  Title: {{ $('Create Join Task').first().json.title }} Priority: {{ $('Create Join Task').first().json.priority }} Category: {{ $('Create Join Task').first().json.category }}  Best regards Join Team",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1824,
+        0
+      ],
+      "id": "93a1715d-90ca-4f19-aa97-4b37c407cb6b",
+      "name": "Send Confirmation Email",
+      "webhookId": "434aae2d-82c3-4429-a56e-7b91f4992b1b",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "P5wbmK6weyOvguSp",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.sender.match(/<([^>]+)>/)?.[1] || $json.sender }}",
+        "subject": "Join Issue Collector – Daily limit reached",
+        "emailType": "text",
+        "message": "Hello,  thank you for your request.  The daily limit of 10 requests has already been reached. No automatic ticket was created.  Please try again tomorrow.  Best regards Join Team",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        592,
+        -192
+      ],
+      "id": "a7cfe8ff-60a6-4fc9-893a-cab0b52af13c",
+      "name": "Send Limit Email",
+      "webhookId": "91d9e67e-cbcf-4595-9596-0e62dfc5d4b2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "P5wbmK6weyOvguSp",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Extract Email Data').first().json.messageId }}",
+        "labelIds": [
+          "Label_4320786503185410430"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2048,
+        0
+      ],
+      "id": "466f0e0f-1a96-4226-b33e-193bef66c799",
+      "name": "Mark Email as erledigt",
+      "webhookId": "0d9d6f10-2568-49f2-ae6f-8bcff9354663",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "P5wbmK6weyOvguSp",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "removeLabels",
+        "messageId": "={{ $('Extract Email Data').first().json.messageId }}",
+        "labelIds": [
+          "INBOX"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2272,
+        0
+      ],
+      "id": "6ef277a2-7f94-448d-b460-421dc268589e",
+      "name": "Remove from Inbox",
+      "webhookId": "17913493-0041-4dcb-8b9b-82362649d888",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "P5wbmK6weyOvguSp",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "removeLabels",
+        "messageId": "={{ $('Extract Email Data').first().json.messageId }}",
+        "labelIds": [
+          "INBOX"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1280,
+        192
+      ],
+      "id": "84a778d9-b061-4011-b1a5-78e692a1527a",
+      "name": "Remove Error Mail from Inbox",
+      "webhookId": "efab976a-2db4-49f3-b93f-341581bad082",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "P5wbmK6weyOvguSp",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "join-status-change",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        912,
+        -416
+      ],
+      "id": "3d825207-1b67-48b2-b3ed-1a42a0609f85",
+      "name": "Status Change Webhook",
+      "webhookId": "85581364-fc3e-4e44-ad1b-a0e012f9b068"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.body.creator.match(/<([^>]+)>/)?.[1] || $json.body.creator }}",
+        "subject": "Join – Ticket status changed",
+        "emailType": "text",
+        "message": "=Hello,  the status of your ticket has changed.  Ticket: {{ $json.body.title }} New status: {{ $json.body.status }}  Best regards Join Team",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1136,
+        -416
+      ],
+      "id": "6602f9ec-9ef7-487a-8539-1092f25d4138",
+      "name": "Send Status Change Email",
+      "webhookId": "c15c88c2-73df-42d3-8407-38dba2c9995b",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "P5wbmK6weyOvguSp",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Extract Email Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Analyze Email",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Join Task": {
+      "main": [
+        [
+          {
+            "node": "Get Triage Tasks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Triage Tasks": {
+      "main": [
+        [
+          {
+            "node": "Append New Task",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append New Task": {
+      "main": [
+        [
+          {
+            "node": "Save Triage Tasks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Triage Tasks": {
+      "main": [
+        [
+          {
+            "node": "Increase Daily Count",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark Email as zu bearbeiten": {
+      "main": [
+        [
+          {
+            "node": "Remove Error Mail from Inbox",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Error Email": {
+      "main": [
+        [
+          {
+            "node": "Mark Email as zu bearbeiten",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Email Data": {
+      "main": [
+        [
+          {
+            "node": "Check Daily Limit1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Daily Limit1": {
+      "main": [
+        [
+          {
+            "node": "Daily Limit Reached?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Daily Limit Reached?": {
+      "main": [
+        [
+          {
+            "node": "Send Limit Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Analyze Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze Email": {
+      "main": [
+        [
+          {
+            "node": "Create Join Task",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Error Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Increase Daily Count": {
+      "main": [
+        [
+          {
+            "node": "Send Confirmation Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Limit Email": {
+      "main": [
+        []
+      ]
+    },
+    "Send Confirmation Email": {
+      "main": [
+        [
+          {
+            "node": "Mark Email as erledigt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark Email as erledigt": {
+      "main": [
+        [
+          {
+            "node": "Remove from Inbox",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Status Change Webhook": {
+      "main": [
+        [
+          {
+            "node": "Send Status Change Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "dcefff79-22ce-4ade-88d3-b6222acdb00d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "59da82d2b0941e715b77408769fe3a4a57a0c6cbb4d6ee210d7f4c19ef2e33f8"
+  },
+  "nodeGroups": [],
+  "id": "ugPfTvSanOHbUxpB",
+  "tags": []
+}
