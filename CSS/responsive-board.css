@@ -41,14 +41,11 @@
       flex-direction: column;
     }
   
-    .user-story-card {
-      width: 230px;
-    }
-  
     .header-board {
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
+      padding-left: 40px;
     }
     .column-header{
       justify-content: space-around;
@@ -230,9 +227,6 @@
   }
   
   @media (max-width: 385px) {
-    .user-story-card {
-      width: 230px;
-    }
   
     .board-container {
       margin-top: 80px;

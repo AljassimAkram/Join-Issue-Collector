@@ -95,7 +95,7 @@ button {
 .hero {
   padding-left: 16px;
   padding-right: 16px;
-  padding-top: 110px;
+  padding-top: 90px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -351,7 +351,7 @@ input:focus {
   }
 
   .hero {
-    padding-left: 96px;
-    padding-top: 110px;
+    padding-left: 95px;
+    padding-top: 90px;
   }
 }

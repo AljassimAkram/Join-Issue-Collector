@@ -47,26 +47,41 @@ function userCheck() {
  * @async
  * @param {string} [path=""] - Der Pfad zu den Kontakten in der Datenbank.
  */
-async function loadAllContacts(path = "") {
-  let savedContacts = localStorage.getItem('contacts');
+async function loadAllContacts() {
+  let savedContacts = localStorage.getItem("contacts");
   loadedContacts = savedContacts ? JSON.parse(savedContacts) : [];
-  
-  if (typeof renderContacts === "function") renderContacts();
 
-  if (!savedContacts) { 
-      try {
-          let response = await fetch(BASE_URL + path + ".json");
-          let usersArray = Object.values((await response.json()).users);
-          loadedContacts = usersArray.map(formatContact);
-          
-          if (typeof saveContactsToLocalStorage === "function") {
-              saveContactsToLocalStorage();
-          }
+  if (typeof renderContacts === "function") {
+    renderContacts();
+  }
 
-          if (typeof renderContacts === "function") renderContacts();
-      } catch (error) {
-          console.error("Fehler beim Laden der Kontakte aus der Datenbank:", error);
+  if (!savedContacts) {
+    try {
+      const response = await fetch(`${BASE_URL}users.json`);
+
+      if (!response.ok) {
+        throw new Error(`Users konnten nicht geladen werden: ${response.status}`);
       }
+
+      const users = await response.json();
+
+      loadedContacts = users
+        ? Object.values(users).map(formatContact)
+        : [];
+
+      if (typeof saveContactsToLocalStorage === "function") {
+        saveContactsToLocalStorage();
+      }
+
+      if (typeof renderContacts === "function") {
+        renderContacts();
+      }
+    } catch (error) {
+      console.error(
+        "Fehler beim Laden der Kontakte aus der Datenbank:",
+        error
+      );
+    }
   }
 }
 

@@ -21,16 +21,17 @@ body {
 }
 
 .board-container {
-  margin-top: 110px;
-  margin-left: 91px;
-  margin-right: 110px;
-  max-width:1200px
+  margin-top: 90px;
+  max-width:1208px;
+  padding-left:20px;
 }
 
 .header-board {
   display: flex;
   padding-bottom: 16px;
   flex-direction: column;
+  padding-left: 40px;
+  padding-right: 80px;
 }
 
 .section {
@@ -119,7 +120,7 @@ body {
   padding: 10px;
   box-sizing: border-box;
   overflow: hidden;
-  height: 100%;
+  height: auto;
 }
 
 .hidden {
@@ -165,9 +166,9 @@ body {
 }
 
 .task-container {
+  flex: 1;
   min-height: 550px;
   border: 2px dashed #00000000;
-  overflow-y: auto;
 }
 
 .column h2 {
@@ -206,7 +207,7 @@ body {
   border-radius: 12px;
   padding: 16px;
   margin: 16px 0;
-  width: 280px;
+  width: 220px;
 }
 
 .user-story-card h4 {
@@ -422,6 +423,7 @@ body {
 .section-board {
   display: flex;
   gap: 30px;
+  align-items: stretch;
 }
 
 .add-task-board-plus {
