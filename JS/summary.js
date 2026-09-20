@@ -11,11 +11,14 @@ const priorityIcons = {
 /**
  * Initialisiert das Dashboard und lädt alle notwendigen Daten.
  */
-function initSummary() {
+async function initSummary() {
+  await fetchAndStoreTasks();
+
   loadTasksFromLocalStorage();
   displayTaskCounts();
   displayTotalTaskCount();
   displayNextDueTask();
+  displayEmailRequestCount();
   time();
 }
 
@@ -224,4 +227,38 @@ function displayNextDueTask() {
   } else if (nextDueElement) {
     nextDueElement.innerHTML = "<p>Keine anstehenden Aufgaben gefunden.</p>";
   }
+}
+
+/**
+ * Counts all tickets that were created automatically by email.
+ * @returns {number} Number of email-generated tickets.
+ */
+function getEmailRequestCount() {
+  const columns = [
+    "triage",
+    "todo",
+    "in-progress",
+    "await-feedback",
+    "done",
+  ];
+
+  return columns.reduce((count, column) => {
+    const tasks = JSON.parse(localStorage.getItem(column)) || [];
+
+    return count + tasks.filter(
+      (task) => task.aiGenerated === true
+    ).length;
+  }, 0);
+}
+
+
+/**
+ * Displays the number of email-generated tickets.
+ */
+function displayEmailRequestCount() {
+  const element = document.getElementById("emailRequestCount");
+
+  if (!element) return;
+
+  element.textContent = getEmailRequestCount();
 }

@@ -11,6 +11,7 @@
   font-size: 27px;
   font-family: Inter;
   font-weight: 400;
+  white-space: nowrap;
 }
 
 hr {
@@ -29,6 +30,14 @@ hr {
   display: flex;
   align-items: center;
   gap: 30px;
+}
+
+.title-summary h1 {
+  white-space: nowrap;
+}
+.regards h1,
+.regards h2 {
+  white-space: nowrap;
 }
 
 .info {
@@ -70,6 +79,66 @@ span {
   text-align: center;
 }
 
+/* =========================
+   DEADLINE + EMAIL REQUESTS
+========================= */
+
+.middle-info-row {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  width: 560px;
+}
+
+.middle-info-row .task-date-info {
+  width: 364px;
+}
+
+.email-request-card {
+  width: 168px;
+  height: 168px;
+  flex-shrink: 0;
+
+  background-color: #ffffff;
+  border-radius: 30px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+
+  transition: all 100ms ease;
+}
+
+.email-request-card h4 {
+  margin: 0;
+  font-size: 47px;
+  font-weight: 700;
+  color: #625bf6;
+}
+
+.email-request-card h3 {
+  margin: 4px 0 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.email-request-card:hover {
+  background-color: #2a3647;
+  color: white;
+  transform: scale(1.05);
+  transform-origin: right;
+}
+
+.email-request-card:hover h4 {
+  color: #ffffff;
+}
+
+/* ========================= */
+
 .task-date-info {
   height: 168px;
   width: 560px;
@@ -92,7 +161,7 @@ span {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 61px;
+  gap: 12px;
 }
 
 .date {
@@ -181,11 +250,6 @@ span {
   transform-origin: left top;
 }
 
-/* .task-status:hover {
-  background-color: #2a3647;
-  color: white;
-} */
-
 #task-status-left:hover {
   background-color: #2a3647;
   color: white;
@@ -197,7 +261,6 @@ span {
   background-color: #2a3647;
   color: white;
   transform: scale(1.05, 1.05);
-  transform-origin: all;
 }
 
 #task-status-right:hover {
@@ -241,6 +304,7 @@ span {
 
 a {
   color: black;
+  text-decoration: none;
 }
 
 .prio-urgent {
@@ -273,12 +337,13 @@ a {
   justify-content: center;
 }
 
-.regards-mobile{
+.regards-mobile {
   display: none;
   flex-direction: column;
   gap: 10px;
   text-align: center;
 }
+
 @media (max-width: 1430px) {
   h1 {
     font-size: 47px;
@@ -307,7 +372,7 @@ a {
     background-color: #f6f7f8;
   }
 
-  50%{
+  50% {
     background-color: #f6f7f8;
   }
 
@@ -342,6 +407,29 @@ a {
   .info-container {
     width: 186px;
     height: 110px;
+  }
+
+  .middle-info-row {
+    width: 396px;
+    gap: 14px;
+  }
+
+  .middle-info-row .task-date-info {
+    width: 268px;
+  }
+
+  .email-request-card {
+    width: 114px;
+    height: 110px;
+    border-radius: 20px;
+  }
+
+  .email-request-card h4 {
+    font-size: 38px;
+  }
+
+  .email-request-card h3 {
+    font-size: 14px;
   }
 
   .task-date-info {
@@ -383,17 +471,24 @@ a {
     width: 90px;
     border: 2px solid #29abe2;
   }
-  .prio-urgent{
+
+  .prio-urgent {
     height: 40px;
     width: 40px;
   }
-  .prio-medium{
+
+  .prio-medium {
     height: 30px;
     width: 30px;
   }
-  .prio-low{
+
+  .prio-low {
     height: 30px;
     width: 30px;
+  }
+
+  .task-info {
+    gap: 25px;
   }
 }
 
@@ -407,12 +502,28 @@ a {
     gap: 14px;
   }
 
+  .middle-info-row {
+    width: 100%;
+    gap: 14px;
+  }
+
+  .middle-info-row .task-date-info {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+  }
+
+  .email-request-card {
+    width: 96px;
+    flex-shrink: 0;
+  }
+
   .task-date-info {
     width: 100%;
   }
 
   .task-info {
-    gap: 30px;
+    gap: 20px;
   }
 
   .tasks-status-container {
@@ -425,44 +536,71 @@ a {
 }
 
 @media (max-width: 400px) {
-  .info{
+  .info {
     width: 100%;
   }
-  .info-todo{
+
+  .info-todo {
     width: 100%;
     justify-content: center;
   }
-  .info-container{
+
+  .info-container {
     width: 140px;
     height: 100px;
   }
-  .pen-img{
+
+  .pen-img {
     width: 50px;
     height: 50px;
   }
-  .hover-pen-img{
+
+  .hover-pen-img {
     width: 50px;
     height: 50px;
   }
-  .done-img{
+
+  .done-img {
     width: 50px;
     height: 50px;
   }
-  .done-img-hover{
+
+  .done-img-hover {
     width: 50px;
     height: 50px;
   }
-  .task-status{
+
+  .middle-info-row {
+    gap: 10px;
+  }
+
+  .email-request-card {
+    width: 90px;
+    height: 100px;
+  }
+
+  .email-request-card h4 {
+    font-size: 34px;
+  }
+
+  .email-request-card h3 {
+    font-size: 13px;
+  }
+
+  .task-status {
     width: 96px;
     height: 96px;
   }
-  h4{
+
+  h4 {
     font-size: 38px;
   }
-  h3{
+
+  h3 {
     font-size: 14px;
   }
-  .prio{
+
+  .prio {
     gap: 10px;
     padding-left: 10px;
   }
