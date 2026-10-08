@@ -8,27 +8,22 @@ body {
   width: 100%;
   min-height: 100%;
 }
-
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background: #dddddd;
+  background: #f8f9fa;
   color: #2a3647;
-  padding: 28px 10px;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
 }
-
-
-/* =========================
-   PAGE
-========================= */
-
 .stakeholder-page {
   position: relative;
   width: 100%;
-  max-width: 900px;
-  min-height: 640px;
-  margin: 0 auto;
+  min-height: 100vh;
+  margin: 0;
   background: #f8f9fa;
 }
+
 
 
 /* =========================
@@ -55,7 +50,7 @@ body {
 .back-button {
   position: absolute;
   top: 52px;
-  left: 102px;
+  left: 125px;
   color: #2a3647;
   font-size: 26px;
   line-height: 1;
@@ -76,7 +71,7 @@ body {
 .request-counter {
   position: absolute;
   top: 57px;
-  right: 100px;
+  right: 125px;
   display: flex;
   align-items: center;
   gap: 5px;
@@ -102,7 +97,7 @@ body {
   margin: 0;
   padding-top: 112px;
   text-align: center;
-  font-size: 42px;
+  font-size: 45px;
   line-height: 1;
   font-weight: 700;
   color: #2a3647;
@@ -114,8 +109,8 @@ body {
 ========================= */
 
 .stakeholder-content {
-  width: 605px;
-  margin: 36px auto 0;
+  max-width: 800px;
+  margin:50px auto ;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -128,13 +123,13 @@ body {
 ========================= */
 
 .stakeholder-text {
-  width: 310px;
+  width: 55%;
   flex-shrink: 0;
 }
 
 .stakeholder-text h2 {
   margin: 0 0 26px;
-  font-size: 18px;
+  font-size: 24px;
   line-height: 1.25;
   font-weight: 400;
   color: #3f5575;
@@ -142,7 +137,7 @@ body {
 
 .stakeholder-text p {
   margin: 0 0 10px;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.25;
   font-weight: 400;
   color: #53627a;
@@ -165,7 +160,7 @@ body {
   background: #168fc4;
   color: #ffffff;
   text-decoration: none;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 400;
   transition:
     background-color 0.15s ease,
@@ -179,7 +174,7 @@ body {
 }
 
 .create-request-button span {
-  font-size: 16px;
+  font-size: 18px;
 }
 
 
@@ -196,7 +191,6 @@ body {
 }
 
 .stakeholder-image img {
-  width: 235px;
   height: auto;
   display: block;
   object-fit: contain;
@@ -211,12 +205,12 @@ body {
 }
 
 .issue-email-box span {
-  font-size: 14px;
+  font-size: 18px;
   color: #68707a;
 }
 
 .issue-email-box strong {
-  font-size: 16px;
+  font-size: 18px;
   color: #2a3647;
 }
 

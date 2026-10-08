@@ -37,7 +37,7 @@ body {
 /* CARD */
 
 .welcome-card {
-  width: 494px;
+  width: 557px;
   min-height: 252px;
 
   background: #ffffff;
@@ -61,7 +61,7 @@ body {
 
   text-align: center;
 
-  font-size: 24px;
+  font-size: 30px;
   font-weight: 700;
 
   color: #2a3647;
@@ -74,7 +74,7 @@ body {
   width: 76px;
   height: 2px;
 
-  margin: 8px auto 15px;
+  margin: -15px auto 20px;
 
   background: #29abe2;
 }
@@ -84,10 +84,7 @@ body {
 
 .welcome-description {
   margin: 0 0 33px;
-
-  max-width: 385px;
-
-  font-size: 15px;
+  font-size: 18px;
   line-height: 1.25;
 
   color: #2a3647;
@@ -126,7 +123,7 @@ body {
 
   gap: 6px;
 
-  font-size: 14px;
+  font-size: 18px;
   white-space: nowrap;
 
   color: #2a3647;
@@ -160,7 +157,7 @@ body {
 
   text-decoration: none;
 
-  font-size: 14px;
+  font-size: 18px;
 
   display: inline-flex;
   justify-content: center;
