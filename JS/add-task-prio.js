@@ -23,11 +23,16 @@ let imgSources = {
 };
 
 /**
- * Ändert die Farbe und die Bildquelle der Prioritäts-Schaltflächen basierend auf der ausgewählten Priorität.
- * @param {string} priority Die ausgewählte Priorität, die entweder "urgent", "medium" oder "low" sein kann.
+ * Ändert die Farbe und die Bildquelle der Prioritäts-Schaltflächen
+ * basierend auf der ausgewählten Priorität.
+ * @param {string} priority Die ausgewählte Priorität.
  */
 function changeColorPrioBtn(priority) {
-    let bgColors = { urgent: "#FF3B30", medium: "#FFA800", low: "#4CD964" };
+    let bgColors = {
+        urgent: "#FF3B30",
+        medium: "#FFA800",
+        low: "#4CD964"
+    };
 
     resetButtonStyles();
     selectedPriority = priority;
@@ -36,29 +41,39 @@ function changeColorPrioBtn(priority) {
 }
 
 /**
- * Setzt die Hintergrundfarben der Prioritäts-Schaltflächen auf den Standardwert zurück.
+ * Setzt Hintergrund- und Textfarben der Prioritäts-Schaltflächen zurück.
  */
 function resetButtonStyles() {
-    btnUrgent.style.backgroundColor =
-        btnMedium.style.backgroundColor =
-        btnLow.style.backgroundColor =
-        "#ffffff";
+    btnUrgent.style.backgroundColor = "#ffffff";
+    btnMedium.style.backgroundColor = "#ffffff";
+    btnLow.style.backgroundColor = "#ffffff";
+
+    btnUrgent.style.color = "#000000";
+    btnMedium.style.color = "#000000";
+    btnLow.style.color = "#000000";
 }
 
 /**
- * Setzt die Hintergrundfarbe der ausgewählten Prioritäts-Schaltfläche.
- * @param {string} priority Die Priorität, die geändert werden soll ("urgent", "medium", oder "low").
- * @param {string} bgColor Die Hintergrundfarbe, die gesetzt werden soll.
+ * Setzt Hintergrundfarbe und weiße Schrift der ausgewählten Priorität.
+ * @param {string} priority Die ausgewählte Priorität.
+ * @param {string} bgColor Die gewünschte Hintergrundfarbe.
  */
 function setButtonStyles(priority, bgColor) {
-    if (priority === "urgent") btnUrgent.style.backgroundColor = bgColor;
-    else if (priority === "medium") btnMedium.style.backgroundColor = bgColor;
-    else if (priority === "low") btnLow.style.backgroundColor = bgColor;
+    if (priority === "urgent") {
+        btnUrgent.style.backgroundColor = bgColor;
+        btnUrgent.style.color = "#ffffff";
+    } else if (priority === "medium") {
+        btnMedium.style.backgroundColor = bgColor;
+        btnMedium.style.color = "#ffffff";
+    } else if (priority === "low") {
+        btnLow.style.backgroundColor = bgColor;
+        btnLow.style.color = "#ffffff";
+    }
 }
 
 /**
- * Setzt die Bildquellen der Prioritätsbilder für alle drei Prioritätsstufen.
- * @param {Array<string>} [urgentImgSrc, mediumImgSrc, lowImgSrc] Ein Array mit den Bildquellen für jede Prioritätsstufe.
+ * Setzt die Bildquellen der Prioritätsbilder.
+ * @param {Array<string>} imageSources Bildquellen für die Prioritäten.
  */
 function setImageSources([urgentImgSrc, mediumImgSrc, lowImgSrc]) {
     imgUrgent.src = urgentImgSrc;

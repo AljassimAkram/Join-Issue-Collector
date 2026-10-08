@@ -47,9 +47,6 @@
       align-items: center;
       padding-left: 40px;
     }
-    .column-header{
-      justify-content: space-around;
-    }
     .task-list{
       width: 85%;
       margin-left: 12px;

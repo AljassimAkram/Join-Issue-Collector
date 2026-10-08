@@ -44,6 +44,23 @@
                   <textarea class="description-input" placeholder="Enter a Description" id="description" onchange="clearDescriptionError()"></textarea>
                   <div class="erorr-msg description-error" id="description-error"></div>
                 </div>
+                <div class="input-containers">
+                  <p>Due date<span>*</span></p>
+                  <input class="date-input" type="date" id="date-input" onchange="clearDateError()"/>
+                  <div class="erorr-msg" id="date-error"></div>
+                </div>
+                
+              </div>
+              <hr />
+              <div class="form-right">
+                <div class="prio-container">
+                  <p>Prio</p>
+                  <div class="prio-btn-container" id="prio-container">
+                    <button onclick="changeColorPrioBtn('urgent')" id="btn-urgent" class="btn-prio-urgent">Urgent<img id="urgent-img" src="../Assets/prio_urgent.png" alt="Urgent"/></button>
+                    <button onclick="changeColorPrioBtn('medium')" id="btn-medium" class="btn-prio-medium">Medium<img id="medium-img" src="../Assets/prio_medium.png" alt="Medium"/></button>
+                    <button onclick="changeColorPrioBtn('low')" id="btn-low" class="btn-prio-low">Low<img id="low-img" src="../Assets/prio_low.png" alt="Low"/></button>
+                  </div>
+                </div>
                 <div class="input-containers" id="input-contacts">
                   <p>Assigned to</p>
                   <div onclick="openDropDownMenuUser(), addUserToTask()" class="drop-down">
@@ -54,22 +71,6 @@
                   </div>
                   <div class="contact-list-container" id="contact-list"></div>
                   <div id="addedUers"></div>
-                </div>
-              </div>
-              <hr />
-              <div class="form-right">
-                <div class="input-containers">
-                  <p>Due date<span>*</span></p>
-                  <input class="date-input" type="date" id="date-input" onchange="clearDateError()"/>
-                  <div class="erorr-msg" id="date-error"></div>
-                </div>
-                <div class="prio-container">
-                  <p>Prio</p>
-                  <div class="prio-btn-container" id="prio-container">
-                    <button onclick="changeColorPrioBtn('urgent')" id="btn-urgent" class="btn-prio-urgent">Urgent<img id="urgent-img" src="../Assets/prio_urgent.png" alt="Urgent"/></button>
-                    <button onclick="changeColorPrioBtn('medium')" id="btn-medium" class="btn-prio-medium">Medium<img id="medium-img" src="../Assets/prio_medium.png" alt="Medium"/></button>
-                    <button onclick="changeColorPrioBtn('low')" id="btn-low" class="btn-prio-low">Low<img id="low-img" src="../Assets/prio_low.png" alt="Low"/></button>
-                  </div>
                 </div>
                 <div class="input-containers" id="input-category">
                   <p>Category<span>*</span></p>

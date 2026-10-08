@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: space-around;
     justify-content: center;
-    gap: 12px;
+    gap: 40px;
   }
   .error-message {
     color: red;

@@ -84,7 +84,8 @@
                 onclick="openInputPage('triage')"
                 class="add-task-board-plus"
               >
-                + Add Task
+                <span>Add Task</span>
+                <span class="plus-icon">+</span>
               </div>
             </div>
           </div>
@@ -98,10 +99,6 @@
             >
               <div class="column-header">
                 <h2>Triage</h2>
-
-                <button onclick="openInputPage('triage')" class="add-task">
-                  +
-                </button>
               </div>
 
               <div class="task-list">
@@ -118,9 +115,6 @@
             >
               <div class="column-header">
                 <h2>To Do</h2>
-                <button onclick="openInputPage('todo')" class="add-task">
-                  +
-                </button>
               </div>
               <div class="task-list" id="taskList">
                 <div class="no-tasks">No tasks To do</div>
@@ -135,9 +129,6 @@
             >
               <div class="column-header">
                 <h2>In Progress</h2>
-                <button onclick="openInputPage('in-progress')" class="add-task">
-                  +
-                </button>
               </div>
               <div class="task-list">
                 <div class="no-tasks">No tasks In progress</div>
@@ -155,12 +146,6 @@
             >
               <div class="column-header">
                 <h2>Await Feedback</h2>
-                <button
-                  onclick="openInputPage('await-feedback')"
-                  class="add-task"
-                >
-                  +
-                </button>
               </div>
               <div class="task-list">
                 <div class="no-tasks">No tasks Await feedback</div>
@@ -251,33 +236,6 @@
                 ></div>
               </div>
               <div class="input-containers">
-                <p>Assigned to</p>
-                <div
-                  onclick="
-                    (openDropDownMenuUserOverlay(), addUserToTaskOverlay())
-                  "
-                  class="drop-down"
-                >
-                  <div>Select contacts to assign</div>
-                  <div>
-                    <img
-                      class="drop-down-arrow"
-                      id="drop-down-arrow-contacts-overlay"
-                      src="../Assets/arrow_drop_downaa (1).png"
-                      alt="Arrow down"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="contact-list-container-overlay"
-                  id="contact-listOverlay"
-                ></div>
-                <div id="addedUersOverlay"></div>
-              </div>
-            </div>
-            <hr />
-            <div class="form-right">
-              <div class="input-containers">
                 <p>Due date<span class="span">*</span></p>
                 <input
                   class="date-input"
@@ -287,6 +245,9 @@
                 />
                 <div class="erorr-msg" id="date-error"></div>
               </div>
+            </div>
+            <hr />
+            <div class="form-right">
               <div class="prio-container">
                 <p>Prio</p>
                 <div class="prio-btn-container">
@@ -324,6 +285,30 @@
                     />
                   </button>
                 </div>
+              </div>
+              <div class="input-containers">
+                <p>Assigned to</p>
+                <div
+                  onclick="
+                    (openDropDownMenuUserOverlay(), addUserToTaskOverlay())
+                  "
+                  class="drop-down"
+                >
+                  <div>Select contacts to assign</div>
+                  <div>
+                    <img
+                      class="drop-down-arrow"
+                      id="drop-down-arrow-contacts-overlay"
+                      src="../Assets/arrow_drop_downaa (1).png"
+                      alt="Arrow down"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="contact-list-container-overlay"
+                  id="contact-listOverlay"
+                ></div>
+                <div id="addedUersOverlay"></div>
               </div>
               <div class="input-containers" id="input-category">
                 <p>Category<span>*</span></p>
