@@ -39,10 +39,13 @@ function changeColorPrioBtnOverlay(priority) {
  * Setzt die Hintergrundfarben aller Prioritäts-Schaltflächen auf die Standardfarbe zurück.
  */
   function resetButtonStylesOverlay() {
-    btnUrgent.style.backgroundColor =
-      btnMedium.style.backgroundColor =
-      btnLow.style.backgroundColor =
-        "#ffffff";
+     btnUrgent.style.backgroundColor = "#ffffff";
+    btnMedium.style.backgroundColor = "#ffffff";
+    btnLow.style.backgroundColor = "#ffffff";
+
+    btnUrgent.style.color = "#000000";
+    btnMedium.style.color = "#000000";
+    btnLow.style.color = "#000000";
   }
   
   /**
@@ -51,9 +54,18 @@ function changeColorPrioBtnOverlay(priority) {
  * @param {string} bgColorOverlay - Die Hintergrundfarbe, die der Schaltfläche zugewiesen wird.
  */
   function setButtonStylesOverlay(priority, bgColorOverlay) {
-    if (priority === "urgent") btnUrgent.style.backgroundColor = bgColorOverlay;
-    else if (priority === "medium") btnMedium.style.backgroundColor = bgColorOverlay;
-    else if (priority === "low") btnLow.style.backgroundColor = bgColorOverlay;
+    if (priority === "urgent") {
+      btnUrgent.style.backgroundColor = bgColorOverlay;
+      btnUrgent.style.color = "#ffffff";
+    }
+    else if (priority === "medium") {
+      btnMedium.style.backgroundColor = bgColorOverlay;
+      btnMedium.style.color = "#ffffff";
+    }
+    else if (priority === "low") {
+      btnLow.style.backgroundColor = bgColorOverlay;
+      btnLow.style.color = "#ffffff";
+    }
   }
   
   /**

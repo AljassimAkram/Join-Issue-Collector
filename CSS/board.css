@@ -606,6 +606,14 @@ body {
   justify-content: flex-end;
 }
 
+.add-task-close {
+  border-radius: 50%;
+  cursor: pointer;
+}
+.add-task-close:hover {
+  background-color: #eeeeee;
+}
+
 #modalSubtasks {
   display: flex;
   flex-direction: column;

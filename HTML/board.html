@@ -205,7 +205,7 @@
         <div class="addtask-overlay">
           <div class="title-arrow">
             <h1>Add Task</h1>
-            <button id="close-overlay" onclick="closeOverlay()">
+            <button class="add-task-close" id="close-overlay" onclick="closeOverlay()">
               <img src="../Assets/Close.png" alt="" />
             </button>
           </div>
@@ -311,7 +311,7 @@
                 <div id="addedUersOverlay"></div>
               </div>
               <div class="input-containers" id="input-category">
-                <p>Category<span>*</span></p>
+                <p>Category<span class="span">*</span></p>
                 <div class="drop-down" onclick="openDropDownMenuCategory()">
                   <div id="selected-category">Select task category</div>
                   <img
@@ -374,13 +374,13 @@
                   id="subtaskLabels"
                   class="subtask-label-container-overlay"
                 ></div>
-                <p class="required">This field is required<span>*</span></p>
+                <p class="required">This field is required<span class="span">*</span></p>
               </div>
             </div>
           </div>
           <div class="add-clear-task">
             <div>
-              <p>This field is required<span>*</span></p>
+              <p>This field is required<span class="span">*</span></p>
             </div>
             <div class="clear-addTask-container">
               <button onclick="clearTask()" class="clear-btn">

@@ -195,6 +195,7 @@
   background-color: #29abe2;
   width: 90px;
   display: flex;
+  margin-top: 12px;
 }
 
 .blue-line-desktop {
@@ -202,6 +203,7 @@
   background-color: #29abe2;
   width: 3px;
   display: flex;
+  margin-top: 12px;
 }
 
 .edit-delete-button-div-desktop {
@@ -371,7 +373,7 @@
   right: -100%;
   width: 100%;
   height: 100%;
-  background: rgba(175, 175, 175, 0.6);
+  background-color: #2d3e502a;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -385,7 +387,7 @@
   right: -100%;
   width: 100%;
   height: 100%;
-  background: rgba(175, 175, 175, 0.6);
+  background-color: #2d3e502a;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -720,18 +722,24 @@
 
 }
 
+.edit-contact-title-desktop h2 {
+  font-size: 24px;
+  font-weight: 400;
+}
 .close-cross-desktop {
   width: 25px;
   height: 25px;
   position: absolute;
   top: 25px;
   right: 25px;
+  border: none;
+  border-radius: 60%;
+  cursor: pointer;
+  padding: 5px;
 }
 
 .close-cross-desktop:hover {
-  transform: translateY(-5px) scale(1.05);
-  border-radius: 15px;
-  cursor: pointer;
+  background-color: #eeeeee;
 }
 
 .overlay-delete-button-desktop {
@@ -773,6 +781,11 @@
   font-weight: 400;
   background-color: white;
 }
+.overlay-cancel-button-desktop:hover {
+  color: #177DA8;
+  border: 1px solid #177DA8;
+  cursor: pointer;
+}
 
 .overlay-create-button-desktop {
   width: 214px;
@@ -787,6 +800,10 @@
   background-color: #2A3647;
   color: white;
 
+}
+.overlay-create-button-desktop:hover {
+  background-color: #177DA8;
+  cursor: pointer;
 }
 
 .gray-bg {
