@@ -385,3 +385,13 @@ function checkIfLoggedIn() {
     window.location.href = '/index.html';
   }
 }
+
+function startWelcomeAnimation() {
+  const animation = document.getElementById("animation");
+
+  if (!animation) return;
+
+  animation.style.display = "flex";
+}
+
+window.addEventListener("load", startWelcomeAnimation);

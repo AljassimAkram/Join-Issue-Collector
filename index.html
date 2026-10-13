@@ -15,22 +15,35 @@
     <link rel="stylesheet" href="./style.css" />
     <link rel="stylesheet" href="./CSS/login.css" />
 
-    <link rel="stylesheet" href="../CSS/welcome.css" />
+    <link rel="stylesheet" href="./CSS/welcome.css" />
   </head>
 
-  <body
-    id="body"
-    onload="
-      logOut();
-      init();
-    "
-  >
+  <body id="body">
+    <!-- Splash / Logo Animation -->
     <div class="animation" id="animation">
-      <img class="welcome-img" src="./Assets/Join_logo_big.png" alt="" />
-      <img class="welcome-img-mobile" src="./Assets/Join_logo.png" alt="" />
+      <img
+        class="welcome-img"
+        src="./Assets/Join_logo_big.png"
+        alt="Join Logo"
+      />
+
+      <img
+        class="welcome-img-mobile"
+        src="./Assets/Join_logo.png"
+        alt="Join Logo"
+      />
     </div>
 
     <main class="welcome-page">
+      <!-- Sign up -->
+      <div class="welcome-top">
+        <div class="welcome-signup">
+          <span>Not a Join user?</span>
+          <a href="./HTML/signup.html" class="signup-btn">Sign up</a>
+        </div>
+      </div>
+
+      <!-- Welcome Card -->
       <section class="welcome-card">
         <h1>Welcome</h1>
 
@@ -42,16 +55,14 @@
         </p>
 
         <div class="role-container">
-          <!-- STAKEHOLDER -->
           <div class="role-box">
             <div class="role-title">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M8 7V5.5C8 4.7 8.7 4 9.5 4h5c.8 0 1.5.7 1.5 1.5V7" />
-
                 <rect x="4" y="7" width="16" height="12" rx="1" />
               </svg>
 
-              <span> Are you a stakeholder? </span>
+              <span>Are you a stakeholder?</span>
             </div>
 
             <a href="./HTML/stakeholder.html" class="request-button">
@@ -59,20 +70,16 @@
             </a>
           </div>
 
-          <!-- TEAM MEMBER -->
           <div class="role-box">
             <div class="role-title">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <circle cx="9" cy="8" r="3" />
-
                 <path d="M3.5 18c.4-3.3 2.4-5 5.5-5s5.1 1.7 5.5 5" />
-
                 <circle cx="17" cy="9" r="2.2" />
-
                 <path d="M15.5 13.5c2.9-.3 4.7 1.2 5 4" />
               </svg>
 
-              <span> Are you a team member? </span>
+              <span>Are you a team member?</span>
             </div>
 
             <a href="./HTML/welcome.html" class="login-button">
@@ -82,12 +89,13 @@
         </div>
       </section>
 
+      <!-- Footer -->
       <footer class="welcome-footer">
-        <a href="./privacy-policy.html"> Privacy Policy </a>
-
-        <a href="./legal-notice.html"> Legal notice </a>
+        <a href="./privacy-policy.html">Privacy Policy</a>
+        <a href="./legal-notice.html">Legal Notice</a>
       </footer>
     </main>
+
     <script src="./script.js"></script>
     <script src="./JS/login.js"></script>
     <script src="./JS/template.js"></script>

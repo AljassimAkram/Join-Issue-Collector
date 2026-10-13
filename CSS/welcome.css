@@ -10,13 +10,57 @@ body {
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  background: #2a3647;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  background-color: #2a3647;
   color: #2a3647;
 }
 
 
-/* PAGE */
+/* ==================================================
+   SPLASH
+================================================== */
+
+.animation {
+  position: fixed;
+  inset: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #ffffff;
+
+  z-index: 9999;
+
+  pointer-events: none;
+
+  animation: desktopSplashFade 1.5s ease forwards;
+}
+
+
+/* DESKTOP SPLASH LOGO */
+
+.welcome-img {
+  width: 100px;
+  height: 122px;
+
+  object-fit: contain;
+}
+
+
+/* MOBILE SPLASH LOGO */
+
+.welcome-img-mobile {
+  display: none;
+}
+
+
+/* ==================================================
+   PAGE
+================================================== */
 
 .welcome-page {
   position: relative;
@@ -28,33 +72,45 @@ body {
   justify-content: center;
   align-items: center;
 
-  background: #2a3647;
-
   padding: 40px 24px 90px;
+
+  background-color: #2a3647;
 }
 
 
-/* CARD */
+/* ==================================================
+   TOP
+================================================== */
+
+.welcome-top {
+  display: none;
+}
+
+
+/* ==================================================
+   CARD
+================================================== */
 
 .welcome-card {
   width: 557px;
   min-height: 252px;
 
-  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+
+  padding: 34px 44px;
+
+  background-color: #ffffff;
 
   border-radius: 18px;
 
-  padding: 34px 44px 34px;
-
-  box-shadow:
-    0 2px 5px rgba(0, 0, 0, 0.08);
-
-  display: flex;
-  flex-direction: column;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
 }
 
 
-/* TITLE */
+/* ==================================================
+   TITLE
+================================================== */
 
 .welcome-card h1 {
   margin: 0;
@@ -68,22 +124,27 @@ body {
 }
 
 
-/* BLUE LINE */
+/* ==================================================
+   BLUE LINE
+================================================== */
 
 .headline-line {
   width: 76px;
   height: 2px;
 
-  margin: -15px auto 20px;
+  margin: 12px auto 20px;
 
-  background: #29abe2;
+  background-color: #29abe2;
 }
 
 
-/* DESCRIPTION */
+/* ==================================================
+   DESCRIPTION
+================================================== */
 
 .welcome-description {
   margin: 0 0 33px;
+
   font-size: 18px;
   line-height: 1.25;
 
@@ -91,11 +152,12 @@ body {
 }
 
 
-/* TWO OPTIONS */
+/* ==================================================
+   ROLES
+================================================== */
 
 .role-container {
   display: flex;
-
   justify-content: space-between;
   align-items: flex-start;
 
@@ -108,14 +170,11 @@ body {
 
   display: flex;
   flex-direction: column;
-
   align-items: flex-start;
 
   gap: 15px;
 }
 
-
-/* ICON + TEXT */
 
 .role-title {
   display: flex;
@@ -124,6 +183,7 @@ body {
   gap: 6px;
 
   font-size: 18px;
+
   white-space: nowrap;
 
   color: #2a3647;
@@ -145,11 +205,17 @@ body {
 }
 
 
-/* BUTTONS */
+/* ==================================================
+   BUTTONS
+================================================== */
 
 .request-button,
 .login-button {
   min-height: 31px;
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 
   padding: 6px 12px;
 
@@ -159,22 +225,17 @@ body {
 
   font-size: 18px;
 
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-
   transition:
     background-color 0.15s ease,
     color 0.15s ease,
-    border-color 0.15s ease,
-    box-shadow 0.15s ease;
+    border-color 0.15s ease;
 }
 
 
 /* CREATE REQUEST */
 
 .request-button {
-  background: #168fc4;
+  background-color: #168fc4;
 
   border: 1px solid #168fc4;
 
@@ -183,18 +244,16 @@ body {
 
 
 .request-button:hover {
-  background: #29abe2;
-  border-color: #29abe2;
+  background-color: #29abe2;
 
-  box-shadow:
-    0 2px 5px rgba(0, 0, 0, 0.18);
+  border-color: #29abe2;
 }
 
 
 /* MEMBER LOGIN */
 
 .login-button {
-  background: #ffffff;
+  background-color: #ffffff;
 
   border: 1px solid #2a3647;
 
@@ -209,7 +268,9 @@ body {
 }
 
 
-/* FOOTER */
+/* ==================================================
+   FOOTER
+================================================== */
 
 .welcome-footer {
   position: absolute;
@@ -239,69 +300,357 @@ body {
 }
 
 
-/* MOBILE */
+/* ==================================================
+   DESKTOP SPLASH ANIMATION
+================================================== */
+
+@keyframes desktopSplashFade {
+  0%,
+  40% {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+
+/* ==================================================
+   MOBILE
+================================================== */
 
 @media (max-width: 600px) {
 
-  .welcome-page {
-    padding:
-      24px
-      18px
-      100px;
+  html,
+  body {
+    width: 100%;
+    min-height: 100%;
+
+    margin: 0;
+
+    overflow-x: hidden;
+
+    background-color: #2a3647;
   }
 
 
-  .welcome-card {
+  /* ===============================================
+     MOBILE SPLASH
+  =============================================== */
+
+  .animation {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #2a3647;
+
+    opacity: 1;
+    visibility: visible;
+
+    z-index: 9999;
+
+    pointer-events: none;
+
+    animation: mobileBackgroundFade 4s ease forwards;
+  }
+
+
+  .welcome-img {
+    display: none;
+  }
+
+
+  .welcome-img-mobile {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 64px;
+    height: 78px;
+
+    display: block;
+
+    object-fit: contain;
+
+    transform: translate(-50%, -50%);
+
+    animation: mobileLogoMove 4s ease forwards;
+  }
+
+
+  /* ===============================================
+     MOBILE PAGE
+  =============================================== */
+
+  .welcome-page {
+    position: relative;
+
+    width: 100%;
+    min-height: 100dvh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    padding: 145px 7px 17px;
+
+    background-color: #2a3647;
+  }
+
+
+  /* ===============================================
+     SIGN UP OBEN
+  =============================================== */
+
+  .welcome-top {
+    position: static;
+
     width: 100%;
 
-    max-width: 420px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    padding:
-      32px
-      24px;
+    margin-bottom: 16px;
   }
 
 
-  .welcome-description {
+  .welcome-signup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 14px;
+
+    color: #ffffff;
+
+    font-size: 14px;
+  }
+
+
+  .welcome-signup .signup-btn {
+    width: auto;
+    height: auto;
+
+    display: inline-flex;
+
+    padding: 0;
+
+    color: #ffffff;
+
+    background-color: transparent;
+
+    border: none;
+
+    font-size: 16px;
+
+    text-decoration: none;
+  }
+
+
+  /* ===============================================
+     MOBILE CARD
+  =============================================== */
+
+  .welcome-card {
+    width: 95%;
+    min-height: 476px;
+
+    flex-shrink: 0;
+
+    margin: 0 auto;
+
+
+    background-color: #ffffff;
+
+    border-radius: 25px;
+
+    box-shadow: none;
+  }
+
+
+  .welcome-card h1 {
+    margin: 0;
+
     text-align: center;
 
-    margin-bottom: 30px;
+    font-size: 34px;
+    font-weight: 700;
+
+    color: #2a3647;
   }
 
 
-  .role-container {
-    flex-direction: column;
+  /* BLUE LINE */
 
-    gap: 27px;
+  .headline-line {
+    width: 85px;
+    height: 2px;
+
+    margin: 12px auto 20px;
+
+    background-color: #29abe2;
+  }
+
+
+  /* DESCRIPTION */
+
+  .welcome-description {
+    margin: 0 0 44px;
+
+    text-align: center;
+
+    font-size: 14px;
+    line-height: 1.2;
+
+    color: #2a3647;
+  }
+
+
+  /* ===============================================
+     MOBILE ROLES
+  =============================================== */
+
+  .role-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 57px;
   }
 
 
   .role-box {
     width: 100%;
+    min-width: 0;
 
+    display: flex;
+    flex-direction: column;
     align-items: center;
+
+    gap: 14px;
   }
 
 
   .role-title {
-    white-space: normal;
-
     justify-content: center;
+
+    font-size: 16px;
+
+    white-space: normal;
   }
 
+
+  /* ===============================================
+     MOBILE BUTTONS
+  =============================================== */
 
   .request-button,
   .login-button {
-    min-width: 135px;
+    min-width: 132px;
+    min-height: 41px;
+
+    padding: 8px 14px;
+
+    font-size: 14px;
+
+    border-radius: 7px;
   }
 
 
+  .request-button {
+    background-color: #2a3647 !important;
+
+    border-color: #2a3647 !important;
+
+    color: #ffffff !important;
+  }
+
+
+  /* ===============================================
+     MOBILE FOOTER
+  =============================================== */
+
   .welcome-footer {
-    bottom: 32px;
+    position: static;
 
     width: 100%;
 
+    display: flex;
     justify-content: center;
+    align-items: center;
+
+    gap: 27px;
+
+    margin-top: auto;
+
+    padding-top: 20px;
+
+    transform: none;
   }
 
+
+  .welcome-footer a {
+    color: #ffffff;
+
+    font-size: 14px;
+
+    text-decoration: none;
+  }
+}
+
+
+/* ==================================================
+   MOBILE BACKGROUND ANIMATION
+
+   Hintergrund bleibt zuerst dunkel
+   und wird danach langsam transparent.
+================================================== */
+
+@keyframes mobileBackgroundFade {
+  0%,
+  45% {
+    background-color: #2a3647;
+  }
+
+  100% {
+    background-color: transparent;
+  }
+}
+
+
+/* ==================================================
+   MOBILE LOGO ANIMATION
+
+   Logo:
+   Mitte -> oben links -> bleibt dort.
+================================================== */
+
+@keyframes mobileLogoMove {
+  0%,
+  45% {
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+  }
+
+  100% {
+    top: 38px;
+    left: 37px;
+
+    transform: translate(0, 0);
+  }
 }

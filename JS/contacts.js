@@ -24,6 +24,7 @@ function renderContacts() {
     }
     addBackgrounds();
     renderContactDetailPage();
+    openContactFromUrl();
 }
 
 /**
@@ -358,4 +359,30 @@ function showEditDeleteDiv(){
 function hideEditDeleteDiv(){
     const contentRef = document.getElementById('edit-delete-div-id');
     contentRef.classList.add('d-none');
+}
+
+function openContactFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const contactValue = params.get("contact");
+
+  if (!contactValue) return;
+
+  const value = contactValue.toLowerCase();
+
+  const contactIndex = loadedContacts.findIndex((contact) => {
+    return (
+      contact.email?.toLowerCase() === value ||
+      contact.name?.toLowerCase() === value
+    );
+  });
+
+  if (contactIndex === -1) return;
+
+  openContactDetailsOverlay(contactIndex);
+
+  window.history.replaceState(
+    {},
+    "",
+    window.location.pathname
+  );
 }

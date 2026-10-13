@@ -7,6 +7,7 @@
 body {
   display: flex;
   flex-direction: column;
+  background-color: #f6f7f8;
 }
 
 a {
@@ -31,16 +32,14 @@ a {
   display: flex;
   flex-direction: column;
 }
-
 #frame {
-  display: unset;
-  background-color: #f6f7f8;
   width: 100%;
-  justify-content: space-between;
-  overflow-y: hidden;
-  height: 100vh;
-
+  max-width: 1440px;
+  margin: 0 auto;
+  
 }
+
+
 
 h1 {
   font-family: Inter;
@@ -283,6 +282,7 @@ input:focus {
     transform: translate(-50%, -50%);
   }
 }
+
 
 @media (max-width: 830px) {
   #main-content {

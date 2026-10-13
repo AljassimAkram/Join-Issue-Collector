@@ -53,7 +53,11 @@
 }
 
 .content-wrapper::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(90deg, #858585, #898989); /* Farbverlauf beim Hover */
+  background: linear-gradient(
+    90deg,
+    #858585,
+    #898989
+  ); /* Farbverlauf beim Hover */
 }
 
 .contacts-section-header {
@@ -218,13 +222,12 @@
 }
 
 .edit-button-desktop:hover {
-  color: #29ABE2;
+  color: #29abe2;
   cursor: pointer;
 
   .edit-img-blue {
-    content: url('../Assets/edit_blue.svg');
+    content: url("../Assets/edit_blue.svg");
   }
-
 }
 
 .delete-button-desktop {
@@ -237,13 +240,12 @@
 }
 
 .delete-button-desktop:hover {
-  color: #29ABE2;
+  color: #29abe2;
   cursor: pointer;
 
   .delete-img-blue {
-    content: url('../Assets/delete_blue.svg');
+    content: url("../Assets/delete_blue.svg");
   }
-
 }
 
 .detail-name-div {
@@ -316,7 +318,7 @@
   display: block;
 }
 
-.three-points-menu:hover{
+.three-points-menu:hover {
   transform: translateY(-5px) scale(1.05);
   border-radius: 15px;
   cursor: pointer;
@@ -348,7 +350,7 @@
   width: 100%;
 }
 
-.edit-delete-flex-div:hover{
+.edit-delete-flex-div:hover {
   transform: translateY(-2px);
   cursor: pointer;
 }
@@ -368,31 +370,22 @@
 }
 
 .add-contact-div-overlay {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 100%;
-  height: 100%;
-  background-color: #2d3e502a;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  animation: slideIn 0.5s ease-out forwards
-}
+  position: fixed;
+  inset: 0;
 
-.edit-contact-details-overlay {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 100%;
-  height: 100%;
-  background-color: #2d3e502a;
-  display: flex;
+  width: 100vw;
+  height: 100vh;
+
+  background-color: rgba(0, 0, 0, 0.5);
+
   justify-content: center;
   align-items: center;
-  z-index: 1000;
-  animation: slideIn 0.5s ease-out forwards;
+
+  padding: 20px;
+  box-sizing: border-box;
+
+  z-index: 9999;
 }
 
 .overlay-edit-contact {
@@ -570,7 +563,6 @@
   height: 30px;
   border-radius: 15px;
   border: 1px solid lightgray;
-
 }
 
 .create-button {
@@ -633,17 +625,30 @@
   transform: translateY(-5px) scale(1.05);
   border-radius: 15px;
   cursor: pointer;
-  background-color: #29ABE2;
+  background-color: #29abe2;
 }
 
 /* NewAdditions */
 
 .overlay-edit-contact-desktop {
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  position: relative;
+  width: 100%;
+  max-width: 1040px;
+
+  background-color: white;
+  border-radius: 30px;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+
+  box-sizing: border-box;
+
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: addContactSlideIn 0.6s ease-out;
 }
 
 .left-part {
@@ -711,7 +716,7 @@
 
 .edit-contact-title-desktop img {
   width: 53px;
-  height: 66px
+  height: 66px;
 }
 
 .delete-save-buttons-desktop {
@@ -719,7 +724,6 @@
   display: flex;
   flex-direction: row;
   gap: 25px;
-
 }
 
 .edit-contact-title-desktop h2 {
@@ -746,7 +750,7 @@
   width: 113px;
   height: 55px;
   border-radius: 8px;
-  border: 1px solid #2A3647;
+  border: 1px solid #2a3647;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -759,13 +763,13 @@
   width: 113px;
   height: 55px;
   border-radius: 8px;
-  border: 1px solid #2A3647;
+  border: 1px solid #2a3647;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 21px;
   font-weight: 400;
-  background-color: #2A3647;
+  background-color: #2a3647;
   color: white;
 }
 
@@ -773,7 +777,7 @@
   width: 113px;
   height: 55px;
   border-radius: 8px;
-  border: 1px solid #2A3647;
+  border: 1px solid #2a3647;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -782,8 +786,8 @@
   background-color: white;
 }
 .overlay-cancel-button-desktop:hover {
-  color: #177DA8;
-  border: 1px solid #177DA8;
+  color: #177da8;
+  border: 1px solid #177da8;
   cursor: pointer;
 }
 
@@ -791,18 +795,17 @@
   width: 214px;
   height: 57px;
   border-radius: 8px;
-  border: 1px solid #2A3647;
+  border: 1px solid #2a3647;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 21px;
   font-weight: 400;
-  background-color: #2A3647;
+  background-color: #2a3647;
   color: white;
-
 }
 .overlay-create-button-desktop:hover {
-  background-color: #177DA8;
+  background-color: #177da8;
   cursor: pointer;
 }
 
@@ -811,13 +814,13 @@
 }
 
 .darkgray-bg {
-  background-color: #2A3647;
+  background-color: #2a3647;
   border-radius: 10px;
   color: white;
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
-.flying-div{
+.flying-div {
   position: absolute;
   bottom: -100px;
   right: 5%;
@@ -825,12 +828,14 @@
   color: white;
   text-align: center;
   border-radius: 10px;
-  transition: bottom 1s ease-in-out, 0.5s ease-in-out;
+  transition:
+    bottom 1s ease-in-out,
+    0.5s ease-in-out;
   z-index: 900;
 }
 
 #flyingDiv.hidden {
-  display: none; 
+  display: none;
 }
 
 #flying-div-id.visible {
@@ -872,48 +877,48 @@
     color: white;
     text-align: center;
     border-radius: 10px;
-    transition: right 0.5s ease-in-out; 
+    transition: right 0.5s ease-in-out;
   }
 
   #flying-div-id.hidden {
-    display: none; 
+    display: none;
   }
 
   #flying-div-id.visible {
-    display: block; 
+    display: block;
     bottom: 50%;
-    right: 200px; 
+    right: 200px;
   }
 
   #flying-div-id.disappear {
-    right: -300px; 
+    right: -300px;
     bottom: 50%;
   }
 
-  .contacts-list{
+  .contacts-list {
     overflow-y: auto;
     overflow-x: hidden;
   }
 
-  .content-wrapper{
-    overflow-y: hidden
+  .content-wrapper {
+    overflow-y: hidden;
   }
   .contacts-list::-webkit-scrollbar {
     width: 12px;
   }
-  
+
   .contacts-list::-webkit-scrollbar-track {
     background: #f0f0f0;
     border-radius: 10px;
   }
-  
+
   .contacts-list::-webkit-scrollbar-thumb {
     background: linear-gradient(90deg, #898989, #afafaf);
     border-radius: 10px;
   }
-  
+
   .contacts-list::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(90deg, #858585, #898989); 
+    background: linear-gradient(90deg, #858585, #898989);
   }
 }
 
@@ -941,20 +946,19 @@
 }
 
 @media screen and (max-width: 1250px) {
-  .right-part{
+  .right-part {
     width: 700px;
   }
 }
 
-
 /* Animationen */
 
-@keyframes slideIn {
+@keyframes addContactSlideIn {
   from {
-    right: -100%;
+    transform: translateX(+100vw);
   }
 
   to {
-    right: 0;
+    transform: translateX(0);
   }
 }

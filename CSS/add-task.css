@@ -157,7 +157,6 @@ input::placeholder {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  width: 396px;
   padding-bottom: 16px;
   position: relative;
   width: 100%;
@@ -196,7 +195,6 @@ input::placeholder {
   padding-right: 16px;
 }
 
-/* Dropdown-Inhalt */
 .category-options {
   width: 100%;
   border-radius: 8px;
@@ -205,7 +203,6 @@ input::placeholder {
   z-index: 10;
   padding: 5px 0;
   border: none;
-  /* Entfernt den Rahmen */
   position: absolute;
   top: 80px;
 }
@@ -214,7 +211,6 @@ input::placeholder {
   padding: 10px;
   cursor: pointer;
   border: none;
-  /* Kein Rahmen um die Optionen */
   border-radius: 0;
 }
 
@@ -222,7 +218,6 @@ input::placeholder {
   background-color: #f0f0f0;
 }
 
-/* Versteckt */
 .hidden {
   display: none;
 }
@@ -260,7 +255,7 @@ input::placeholder {
 .images-container {
   display: none;
   justify-content: space-between;
-  width: 60px
+  width: 60px;
 }
 
 .subtask-label:hover .images-container {
@@ -304,7 +299,7 @@ input::placeholder {
   z-index: 5;
 }
 
-.contact:hover{
+.contact:hover {
   cursor: pointer;
 }
 
@@ -340,7 +335,7 @@ input::placeholder {
   border: none;
 }
 
-hr{
+hr {
   height: 340px;
 }
 
@@ -355,12 +350,10 @@ hr{
   width: 10px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   border-radius: 10px;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #a8a8a8;
   border-radius: 10px;
@@ -398,23 +391,29 @@ hr{
   display: none;
 }
 
-.erorr-msg{
+.erorr-msg {
   top: 70px;
 }
-.description-error{
+
+.description-error {
   top: 120px;
 }
 
-.category-error{
+.category-error {
   top: 80px;
   padding-left: 0;
 }
 
-.selected-user{
+.selected-user {
   background-color: #2a3647;
   border-radius: 10px;
   color: white;
 }
+
+
+/* =========================
+   RESPONSIVE
+========================= */
 
 @media (max-width: 1290px) {
   .form-container {
@@ -423,30 +422,21 @@ hr{
 }
 
 @media (max-width: 1040px) {
-  .btn-prio-urgent {
-    width: 90px;
-  }
-
-  .btn-prio-medium {
-    width: 90px;
-  }
-
+  .btn-prio-urgent,
+  .btn-prio-medium,
   .btn-prio-low {
     width: 90px;
   }
 
-  .subtask {
-    width: 100%;
-  }
-
+  .subtask,
   .subtask input {
     width: 100%;
   }
+
   .hero {
     padding-top: 48px;
     padding-left: 10px !important;
     padding-right: 10px !important;
-    /* width: 100% */
   }
 }
 
@@ -463,14 +453,8 @@ hr{
     display: none;
   }
 
-  .btn-prio-urgent {
-    width: 121px;
-  }
-
-  .btn-prio-medium {
-    width: 121px;
-  }
-
+  .btn-prio-urgent,
+  .btn-prio-medium,
   .btn-prio-low {
     width: 121px;
   }
@@ -480,10 +464,9 @@ hr{
   }
 
   .add-clear-task {
-    /*  display: none; */
     position: sticky;
     background-color: #f6f7f8;
-    bottom: 0px;
+    bottom: 0;
     padding: 10px;
   }
 
@@ -507,64 +490,37 @@ hr{
   }
 }
 
-@media screen and (min-width: 830px) {
-  #add-task-button {
-    border-radius: 0;
-  }
-}
-
-@media(max-width: 520px){
-  .hero{
+@media (max-width: 520px) {
+  .hero {
     width: 100%;
   }
 }
 
 @media (max-width: 490px) {
-  .form-left {
-    width: 100%;
-  }
-
+  .form-left,
   .form-right {
     width: 100%;
   }
 
-  .subtask {
-    width: 100%;
-  }
-
-  .subtask input {
-    width: 100%;
-  }
-  .prio-btn-container{
+  .prio-btn-container {
     gap: 5px;
   }
 }
-.form-container{
-  padding-left: 30px;
-  padding-right: 30px;
-}
-
 
 @media (max-width: 370px) {
-  .btn-prio-urgent {
-    width: 80px;
-    gap: 5px;
-  }
-
-  .btn-prio-medium {
-    width: 80px;
-    gap: 5px;
-  }
-
+  .btn-prio-urgent,
+  .btn-prio-medium,
   .btn-prio-low {
     width: 80px;
     gap: 5px;
   }
-  .clear-btn{
+
+  .clear-btn {
     height: 46px;
     width: 90px;
   }
-  .creatTask-btn{
+
+  .creatTask-btn {
     height: 46px;
     width: 140px;
   }
@@ -573,5 +529,11 @@ hr{
 @media (max-width: 1220px) {
   #main-content {
     width: auto;
+  }
+}
+
+@media screen and (min-width: 830px) {
+  #add-task-button {
+    border-radius: 0;
   }
 }

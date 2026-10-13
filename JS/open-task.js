@@ -43,6 +43,7 @@ function findTaskById(tasks, taskId) {
  */
 function updateModalContent(task) {
   updateModalCategory(task);
+  updateModalAiGenerated(task);
   updateModalTitleAndDescription(task);
   updateModalDueDate(task);
   updateModalPriority(task);
@@ -56,11 +57,65 @@ function updateModalContent(task) {
  * @param {Object} task - Task object.
  */
 function updateModalCreator(task) {
+  const creatorElement = document.getElementById("modalCreator");
   const creator = task.creator || "Unknown";
-  const type =
-    task.creatorType === "external" ? "External Stakeholder" : "Internal";
 
-  document.getElementById("modalCreator").innerText = `${creator} (${type})`;
+  if (task.creatorType === "external") {
+    const emailMatch = creator.match(/<([^>]+)>/);
+
+    const email = emailMatch ? emailMatch[1] : creator;
+
+    const displayName = emailMatch
+      ? creator.replace(/<[^>]+>/, "").trim()
+      : creator;
+
+    creatorElement.innerHTML = `
+      <span class="creator-badge external">
+        <img src="../Assets/extern.png" alt="External">
+        Extern
+      </span>
+
+      <span class="creator-name">
+        ${displayName}
+      </span>
+
+      <a class="creator-action" href="mailto:${email}">
+        <img src="../Assets/extern-mail.png" alt="E-mail">
+        E-mail
+      </a>
+    `;
+
+    return;
+  }
+
+  const contact = loadedContacts.find((item) => {
+    return (
+      item.email?.toLowerCase() === creator.toLowerCase() ||
+      item.name?.toLowerCase() === creator.toLowerCase()
+    );
+  });
+
+  const displayName = contact ? contact.name : creator;
+  const contactValue = contact ? contact.email : creator;
+
+  creatorElement.innerHTML = `
+    <span class="creator-badge member">
+      <img src="../Assets/member.png" alt="Member">
+      Member
+    </span>
+
+    <span class="creator-name">
+      ${displayName}
+    </span>
+
+    <a
+      class="creator-action"
+      href="contacts.html?contact=${encodeURIComponent(contactValue)}"
+    >
+      <img src="../Assets/person-member.png" alt="Profil">
+      Profil 
+    </a>
+  `;
 }
 
 /**
@@ -72,6 +127,22 @@ function updateModalCategory(task) {
   modalCategory.innerText = task.category || "No Category";
   modalCategory.className = `category-label ${task.categoryClass || ""}`;
   setCategoryStyle("modalCategory", task.category);
+}
+
+function updateModalAiGenerated(task) {
+  const aiElement = document.getElementById("modalAiGenerated");
+
+  if (task.aiGenerated === true) {
+    aiElement.innerHTML = `
+      <img src="../Assets/ai.png" alt="AI">
+      <span>AI-generated ticket</span>
+    `;
+
+    aiElement.style.display = "inline-flex";
+  } else {
+    aiElement.innerHTML = "";
+    aiElement.style.display = "none";
+  }
 }
 
 /**

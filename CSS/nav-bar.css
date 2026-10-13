@@ -10,7 +10,7 @@
 }
 
 #nav-bar {
-  position: sticky;
+  position: relative;
   bottom: 0;
   background: #2a3647;
   color: #cdcdcd;
@@ -135,6 +135,18 @@
 
   .frame-nav-bar-logged-out {
     padding: 0 16px;
+  }
+}
+
+@media screen and (min-width: 1441px) {
+  #nav-bar::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 100%;
+    width: calc((100vw - 1440px) / 2);
+    background-color: #2a3647;
   }
 }
 

@@ -10,6 +10,7 @@
   background-color: white;
   z-index: 1000;
   display: flex;
+  box-sizing: border-box;
 }
 
 .header-logo {
@@ -97,6 +98,30 @@
   display: unset;
 }
 
+@media screen and (min-width: 1441px) {
+  body::after {
+    content: "";
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 96px;
+    background-color: white;
+
+    box-shadow: 0px 4px 4px 0px #0000001a;
+
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  #frame {
+    position: relative;
+    z-index: 1;
+  }
+}
+
 @media screen and (min-width: 830px) {
   #usr-menu-help-button {
     display: none;
@@ -119,9 +144,7 @@
   #header {
     position: sticky;
     height: 96px;
-    box-shadow: none;
     padding: 20px 40px 20px 116px;
-    box-shadow: 0px 4px 4px 0px #0000001a;
     justify-content: flex-end;
   }
 

@@ -8,54 +8,77 @@ body {
   width: 100%;
   min-height: 100%;
 }
+
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  background: #f8f9fa;
-  color: #2a3647;
   margin: 0;
   padding: 0;
+
   min-height: 100vh;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  background-color: #f8f9fa;
+  color: #2a3647;
 }
+
+
+/* ==================================================
+   PAGE
+================================================== */
+
 .stakeholder-page {
   position: relative;
+
   width: 100%;
   min-height: 100vh;
+
   margin: 0;
-  background: #f8f9fa;
+
+  background-color: #f8f9fa;
 }
 
 
-
-/* =========================
+/* ==================================================
    LOGO
-========================= */
+================================================== */
 
 .logo-link {
   position: absolute;
+
   top: 18px;
   left: 28px;
+
   display: block;
+
+  z-index: 5;
 }
 
 .join-logo {
   width: 38px;
   height: auto;
+
+  display: block;
 }
 
 
-/* =========================
+/* ==================================================
    BACK ARROW
-========================= */
+================================================== */
 
 .back-button {
   position: absolute;
+
   top: 52px;
   left: 125px;
+
   color: #2a3647;
+
   font-size: 26px;
-  line-height: 1;
-  text-decoration: none;
   font-weight: 400;
+  line-height: 1;
+
+  text-decoration: none;
+
   transition: color 0.15s ease;
 }
 
@@ -64,19 +87,24 @@ body {
 }
 
 
-/* =========================
+/* ==================================================
    REQUEST COUNTER
-========================= */
+================================================== */
 
 .request-counter {
   position: absolute;
+
   top: 57px;
   right: 125px;
+
   display: flex;
   align-items: center;
+
   gap: 5px;
-  font-size: 16px;
+
   color: #168fc4;
+
+  font-size: 16px;
 }
 
 .request-counter strong {
@@ -89,88 +117,138 @@ body {
 }
 
 
-/* =========================
-   MAIN TITLE
-========================= */
+/* ==================================================
+   TITLE
+================================================== */
 
 .stakeholder-page > h1 {
   margin: 0;
+
   padding-top: 112px;
+
   text-align: center;
-  font-size: 45px;
-  line-height: 1;
-  font-weight: 700;
+
   color: #2a3647;
+
+  font-size: 45px;
+  font-weight: 700;
+  line-height: 1;
 }
 
 
-/* =========================
+/* ==================================================
    CONTENT
-========================= */
+================================================== */
 
 .stakeholder-content {
+  width: 100%;
   max-width: 800px;
-  margin:50px auto ;
+
+  margin: 50px auto;
+
   display: flex;
-  align-items: flex-start;
   justify-content: space-between;
+  align-items: flex-start;
+
   gap: 55px;
 }
 
 
-/* =========================
-   LEFT TEXT
-========================= */
+/* ==================================================
+   TEXT
+================================================== */
 
 .stakeholder-text {
   width: 55%;
+
   flex-shrink: 0;
 }
 
 .stakeholder-text h2 {
   margin: 0 0 26px;
-  font-size: 24px;
-  line-height: 1.25;
-  font-weight: 400;
+
   color: #3f5575;
+
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.25;
 }
 
 .stakeholder-text p {
   margin: 0 0 10px;
-  font-size: 18px;
-  line-height: 1.25;
-  font-weight: 400;
+
   color: #53627a;
+
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.25;
 }
 
 
-/* =========================
-   BUTTON
-========================= */
+/* ==================================================
+   ISSUE EMAIL
+================================================== */
+
+.issue-email-box {
+  margin-top: 22px;
+  margin-bottom: 18px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.issue-email-box span {
+  color: #68707a;
+
+  font-size: 18px;
+}
+
+.issue-email-box strong {
+  color: #2a3647;
+
+  font-size: 18px;
+}
+
+
+/* ==================================================
+   CREATE REQUEST BUTTON
+================================================== */
 
 .create-request-button {
-  margin-top: 33px;
   min-height: 38px;
+
+  margin-top: 33px;
+
   padding: 0 13px;
+
   display: inline-flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+
   gap: 4px;
-  border-radius: 5px;
-  background: #168fc4;
+
   color: #ffffff;
-  text-decoration: none;
+
+  background-color: #168fc4;
+
+  border-radius: 5px;
+
   font-size: 18px;
   font-weight: 400;
+
+  text-decoration: none;
+
   transition:
     background-color 0.15s ease,
     box-shadow 0.15s ease;
 }
 
 .create-request-button:hover {
-  background: #29abe2;
-  box-shadow:
-    0 2px 5px rgba(0, 0, 0, 0.2);
+  background-color: #29abe2;
+
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .create-request-button span {
@@ -178,59 +256,54 @@ body {
 }
 
 
-/* =========================
+/* ==================================================
    ILLUSTRATION
-========================= */
+================================================== */
 
 .stakeholder-image {
   width: 235px;
+
   margin-top: -3px;
+
   display: flex;
   justify-content: center;
   align-items: center;
+
+  flex-shrink: 0;
 }
 
 .stakeholder-image img {
+  width: 100%;
   height: auto;
+
   display: block;
+
   object-fit: contain;
 }
 
-.issue-email-box {
-  margin-top: 22px;
-  margin-bottom: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
 
-.issue-email-box span {
-  font-size: 18px;
-  color: #68707a;
-}
-
-.issue-email-box strong {
-  font-size: 18px;
-  color: #2a3647;
-}
-
-
-/* =========================
+/* ==================================================
    FOOTER
-========================= */
+================================================== */
 
 footer {
   position: absolute;
+
   bottom: 29px;
   left: 50%;
+
   transform: translateX(-50%);
+
   display: flex;
+
   gap: 22px;
 }
 
 footer a {
   color: #777777;
+
   font-size: 14px;
+
   text-decoration: none;
 }
 
@@ -239,20 +312,11 @@ footer a:hover {
 }
 
 
-/* =========================
+/* ==================================================
    TABLET
-========================= */
+================================================== */
 
 @media (max-width: 760px) {
-
-  body {
-    padding: 0;
-    background: #f8f9fa;
-  }
-
-  .stakeholder-page {
-    min-height: 100vh;
-  }
 
   .request-counter {
     right: 30px;
@@ -260,85 +324,299 @@ footer a:hover {
 
   .stakeholder-content {
     width: calc(100% - 60px);
+
     gap: 30px;
   }
-
 }
 
 
-/* =========================
+/* ==================================================
    MOBILE
-========================= */
+================================================== */
 
 @media (max-width: 600px) {
 
+  body {
+    background-color: #f8f9fa;
+  }
+
+
+  /* =========================
+     PAGE
+  ========================= */
+
+  .stakeholder-page {
+    width: 100%;
+    min-height: 100dvh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    padding:
+      145px
+      15px
+      18px;
+
+    background-color: #f8f9fa;
+  }
+
+
+  /* =========================
+     LOGO
+  ========================= */
+
   .logo-link {
-    top: 20px;
-    left: 20px;
+    top: 25px;
+    left: 15px;
   }
 
   .join-logo {
-    width: 34px;
+    width: 55px;
+    height: auto;
   }
 
-  .back-button {
-    top: 73px;
-    left: 25px;
-  }
 
-  .request-counter {
-    top: 31px;
-    right: 20px;
-    font-size: 16px;
-  }
+  /* =========================
+     TITLE
+  ========================= */
 
   .stakeholder-page > h1 {
-    padding-top: 110px;
+    order: 1;
+
+    margin: 0;
+    padding: 0;
+
+    text-align: left;
+
+    color: #2a3647;
+
     font-size: 36px;
+    font-weight: 700;
+    line-height: 1;
   }
 
-  .stakeholder-content {
+
+  /* =========================
+     BACK ARROW
+  ========================= */
+
+  .back-button {
+    top: 150px;
+    right: 18px;
+    left: auto;
+
+    color: #168fc4;
+
+    font-size: 29px;
+
+    z-index: 4;
+  }
+
+
+  /* =========================
+     COUNTER
+  ========================= */
+
+  .request-counter {
+    position: static;
+
+    order: 2;
+
     width: 100%;
-    margin-top: 30px;
-    padding: 0 28px;
-    flex-direction: column;
+
+    margin-top: 8px;
+
+    display: flex;
+    justify-content: flex-start;
     align-items: center;
-    gap: 25px;
+
+    gap: 5px;
+
+    color: #168fc4;
+
+    font-size: 14px;
   }
 
-  .stakeholder-text {
-    width: 100%;
-  }
-
-  .stakeholder-text h2 {
-    font-size: 18px;
-  }
-
-  .stakeholder-text p {
+  .request-counter strong {
     font-size: 16px;
   }
 
+  .request-counter span {
+    font-size: 14px;
+  }
+
+
+  /* =========================
+     CONTENT
+  ========================= */
+
+  .stakeholder-content {
+    order: 3;
+
+    width: 100%;
+    max-width: none;
+
+    margin: 20px 0 0;
+
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 0;
+  }
+
+
+  /*
+    Dadurch können h2, p und Button
+    direkt innerhalb von stakeholder-content
+    angeordnet werden.
+  */
+
+  .stakeholder-text {
+    display: contents;
+  }
+
+
+  /* =========================
+     HEADLINE
+  ========================= */
+
+  .stakeholder-text h2 {
+    order: 1;
+
+    width: 100%;
+
+    margin: 0 0 18px;
+
+    color: #3f5575;
+
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.15;
+  }
+
+
+  /* =========================
+     IMAGE
+  ========================= */
+
   .stakeholder-image {
+    order: 2;
+
     width: 220px;
-    order: -1;
+
+    margin: 0 auto 22px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .stakeholder-image img {
     width: 220px;
+    height: auto;
   }
+
+
+  /* =========================
+     TEXT
+  ========================= */
+
+  .stakeholder-text p {
+    width: 100%;
+
+    margin: 0 0 8px;
+
+    color: #53627a;
+
+    font-size: 14px;
+    line-height: 1.15;
+
+    text-align: left;
+  }
+
+  .stakeholder-text p:nth-of-type(1) {
+    order: 3;
+  }
+
+  .stakeholder-text p:nth-of-type(2) {
+    order: 4;
+
+    margin-bottom: 0;
+  }
+
+
+  /* =========================
+     EMAIL BOX
+     Nicht im Mobile-Zielbild
+  ========================= */
+
+  .issue-email-box {
+    display: none;
+  }
+
+
+  /* =========================
+     BUTTON
+  ========================= */
 
   .create-request-button {
-    width: 100%;
+    order: 5;
+
+    align-self: center;
+
+    width: auto;
+    min-width: 133px;
+    min-height: 41px;
+
+    margin-top: 36px;
+
+    padding: 0 18px;
+
+    background-color: #2a3647;
+
+    border-radius: 6px;
+
+    color: #ffffff;
+
+    font-size: 14px;
   }
+
+  .create-request-button span {
+    display: none;
+  }
+
+
+  /* =========================
+     FOOTER
+  ========================= */
 
   footer {
-    position: relative;
-    bottom: auto;
-    left: auto;
-    transform: none;
+    position: static;
+
+    order: 4;
+
+    width: 100%;
+
+    display: flex;
     justify-content: center;
-    margin-top: 60px;
-    padding-bottom: 25px;
+    align-items: center;
+
+    gap: 27px;
+
+    margin-top: auto;
+
+    padding-top: 30px;
+
+    transform: none;
   }
 
+  footer a {
+    color: #777777;
+
+    font-size: 14px;
+  }
 }

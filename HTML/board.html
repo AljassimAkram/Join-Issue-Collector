@@ -176,7 +176,11 @@
           <div class="modal-content">
             <span class="close-button" onclick="closeTaskModal()">&times;</span>
             <div class="task-modal">
-              <h3 id="modalCategory" class="category-label"></h3>
+              <div class="modal-top-row">
+                <h3 id="modalCategory" class="category-label"></h3>
+
+                <span id="modalAiGenerated" class="ai-generated-label"></span>
+              </div>
               <h4 class="modalTitle" id="modalTitle"></h4>
               <p class="modalDescription" id="modalDescription"></p>
               <p class="modalDueDate">
@@ -205,7 +209,11 @@
         <div class="addtask-overlay">
           <div class="title-arrow">
             <h1>Add Task</h1>
-            <button class="add-task-close" id="close-overlay" onclick="closeOverlay()">
+            <button
+              class="add-task-close"
+              id="close-overlay"
+              onclick="closeOverlay()"
+            >
               <img src="../Assets/Close.png" alt="" />
             </button>
           </div>
@@ -374,7 +382,9 @@
                   id="subtaskLabels"
                   class="subtask-label-container-overlay"
                 ></div>
-                <p class="required">This field is required<span class="span">*</span></p>
+                <p class="required">
+                  This field is required<span class="span">*</span>
+                </p>
               </div>
             </div>
           </div>
