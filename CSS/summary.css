@@ -7,7 +7,6 @@
   color: white;
 }
 
-
 /* ==================================================
    TITLE
 ================================================== */
@@ -40,17 +39,16 @@
 }
 
 .title-summary > hr {
-
   margin: 0;
+  height: 60px;
 
-  border: 1px solid #29abe2;
+  border: 2px solid #29abe2;
   border-radius: 20px;
 }
 
 .title-underline {
   display: none;
 }
-
 
 /* ==================================================
    MAIN INFO
@@ -61,7 +59,8 @@
   justify-content: center;
   align-items: center;
 
-  gap: 80px;
+  gap: 20px;
+  padding-left: 110px;
 }
 
 .info {
@@ -70,7 +69,6 @@
 
   gap: 28px;
 }
-
 
 /* ==================================================
    TO-DO + DONE
@@ -115,7 +113,6 @@
 .status h3 {
   margin: 0;
 }
-
 
 /* ==================================================
    DEADLINE + EMAIL REQUESTS
@@ -186,7 +183,6 @@
   line-height: 1.15;
 }
 
-
 /* ==================================================
    DEADLINE CONTENT
 ================================================== */
@@ -232,7 +228,6 @@
   font-weight: 700;
 }
 
-
 /* ==================================================
    PRIORITY ICONS
 ================================================== */
@@ -276,7 +271,6 @@
   border-radius: 50%;
 }
 
-
 /* ==================================================
    BOTTOM CARDS
 ================================================== */
@@ -310,7 +304,6 @@
 .task-status h3 {
   margin: 0;
 }
-
 
 /* ==================================================
    REGARDS
@@ -367,7 +360,6 @@
   font-weight: 500;
 }
 
-
 /* ==================================================
    LINKS
 ================================================== */
@@ -376,7 +368,6 @@
   color: #000000;
   text-decoration: none;
 }
-
 
 /* ==================================================
    HOVER
@@ -447,7 +438,6 @@
   transform-origin: right;
 }
 
-
 /* ==================================================
    HOVER ICONS
 ================================================== */
@@ -476,7 +466,6 @@
   display: block;
 }
 
-
 /* ==================================================
    DESKTOP RESPONSIVE
 ================================================== */
@@ -504,7 +493,6 @@
     padding-right: 0;
   }
 }
-
 
 /* ==================================================
    MOBILE GREETING
@@ -552,19 +540,16 @@
   }
 }
 
-
 /* ==================================================
    MOBILE
 ================================================== */
 
 @media (max-width: 600px) {
-
   #main-content {
     width: 100%;
 
     padding: 0;
   }
-
 
   /* =========================
      MAIN
@@ -574,33 +559,29 @@
     width: 100%;
     height: auto;
 
-    min-height: calc(100dvh - 130px);
+    min-height: calc(95dvh - 130px);
 
     display: flex;
     justify-content: flex-start;
     align-items: stretch;
-
-    padding:
-      38px
-      8px
-      95px;
   }
 
   .info-regards {
     width: 100%;
 
     display: block;
+    padding-left: 0;
   }
 
   .title-info {
-    width: 100%;
+    width: 95%;
+    margin: 0 auto;
 
     display: flex;
     flex-direction: column;
 
     gap: 30px;
   }
-
 
   /* =========================
      TITLE
@@ -645,16 +626,15 @@
 
   .title-underline {
     display: block;
-
     width: 76px;
-    height: 0;
+    height: 3px !important;
 
-    margin: 4px 0 0;
+    margin: 8px 0 0;
 
-    border: 0;
-    border-top: 3px solid #29abe2;
+    border: none !important;
+    background-color: #29abe2;
+
   }
-
 
   /* =========================
      INFO
@@ -668,7 +648,6 @@
 
     gap: 18px;
   }
-
 
   /* =========================
      TO-DO + DONE
@@ -725,7 +704,6 @@
     font-weight: 400;
   }
 
-
   /* =========================
      DEADLINE + EMAIL
   ========================= */
@@ -778,7 +756,6 @@
     line-height: 1.15;
   }
 
-
   /* =========================
      DEADLINE DETAILS
   ========================= */
@@ -819,7 +796,6 @@
 
     font-size: 12px;
   }
-
 
   /* =========================
      BOTTOM CARDS
@@ -865,7 +841,6 @@
     line-height: 1.15;
   }
 
-
   /* =========================
      NO HOVER SCALE MOBILE
   ========================= */
@@ -880,7 +855,6 @@
     transform: none;
   }
 
-
   /* =========================
      DESKTOP GREETING
   ========================= */
@@ -890,13 +864,11 @@
   }
 }
 
-
 /* ==================================================
    SMALL MOBILE
 ================================================== */
 
 @media (max-width: 360px) {
-
   .hero {
     padding-left: 7px;
     padding-right: 7px;
@@ -920,7 +892,6 @@
     font-size: 12px;
   }
 }
-
 
 /* ==================================================
    DESKTOP NAV

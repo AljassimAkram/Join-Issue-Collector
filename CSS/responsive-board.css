@@ -121,13 +121,6 @@
       margin-right: 35px;
     }
   }
-  @media (max-width: 830px){
-    #frame {
-      overflow-y: auto;
-      overflow-x: hidden;
-    }
-  
-  }
   
   @media(max-width: 1300px){
     .addtask-overlay{
@@ -137,9 +130,6 @@
   }
   
   @media (min-width: 315px) and (max-width: 830px) {
-    #main-container {
-      overflow-y: auto;
-    }
   
     .board-container {
       display: block;

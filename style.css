@@ -60,7 +60,7 @@ header {
   width: auto;
   display: flex;
   align-items: flex-start;
-  padding: 80px 77px;
+  padding: 75px 77px;
   justify-content: space-between;
 }
 
@@ -99,7 +99,6 @@ button {
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
-  gap: 20px;
 }
 
 h4 {
@@ -348,10 +347,5 @@ input:focus {
 
   h5 {
     font-size: 14px;
-  }
-
-  .hero {
-    padding-left: 95px;
-    padding-top: 90px;
   }
 }

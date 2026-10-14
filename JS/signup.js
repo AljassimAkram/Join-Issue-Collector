@@ -104,15 +104,16 @@ function allowSignup() {
   let checkbox = document.getElementById("checkbox");
   let signupBtn = document.getElementById("signup");
 
-  if (userName.value.trim().length > 1 && isValidEmail(email.value) && checkbox.checked && checkSignUp()) {
-    signupBtn.style.backgroundColor = "#2a3647";
-    signupBtn.style.border = "solid #2a3647";
-    signupBtn.style.color = "white";
+  if (
+    userName.value.trim().length > 1 &&
+    isValidEmail(email.value) &&
+    checkbox.checked &&
+    checkSignUp()
+  ) {
+    signupBtn.classList.add("signup-active");
     signupBtn.disabled = false;
   } else {
-    signupBtn.style.backgroundColor = "";
-    signupBtn.style.border = "";
-    signupBtn.style.color = "";
+    signupBtn.classList.remove("signup-active");
     signupBtn.disabled = true;
   }
 }

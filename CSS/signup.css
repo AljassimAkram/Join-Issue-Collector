@@ -19,15 +19,11 @@ button {
   cursor: pointer;
 }
 
-.login-logo {
-  height: 78px;
-  width: 64px;
-}
-
 .hero {
   align-items: center !important;
   padding: 0 !important;
   padding-top: 50px !important;
+  gap: 5px !important;
 }
 
 .signup-window {
@@ -67,6 +63,26 @@ button {
   justify-content: center;
   align-items: center;
 }
+
+#signup {
+  transition: all 0.2s ease;
+}
+
+#signup.signup-active {
+  background-color: #2a3647;
+  border: 1px solid #2a3647;
+  color: white;
+}
+
+#signup.signup-active:hover {
+  background-color: #29abe2;
+  border-color: #29abe2;
+  cursor: pointer;
+}
+#signup:disabled {
+  cursor: not-allowed;
+}
+
 .signup-container {
   padding-top: 77px;
   height: 49px;
