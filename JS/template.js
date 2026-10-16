@@ -100,13 +100,23 @@ function renderCurrentLetter(currentLetter) {
  * @returns {string} - Das generierte HTML.
  */
 function renderCurrentContacts(index, initialien) {
-    return `<div class="contact" id="contact-id-${index}" onclick="openContactDetailsOverlay(${index})">
-                <div class="contact-avatar">${initialien}</div>
-                <div class="contact-avatar-infos">
-                    <span>${loadedContacts[index].name}</span>
-                    <a href="mailto:${loadedContacts[index].email}">${loadedContacts[index].email}</a>
-                </div>
+    return `
+        <div class="contact" id="contact-id-${index}" onclick="openContactDetailsOverlay(${index})">
+            <div
+                class="contact-avatar"
+                style="background-color: ${loadedContacts[index].color};"
+            >
+                ${initialien}
             </div>
+
+            <div class="contact-avatar-infos">
+                <span>${loadedContacts[index].name}</span>
+                <a href="mailto:${loadedContacts[index].email}"
+                 onclick="event.preventDefault(); event.stopPropagation(); openContactDetailsOverlay(${index})">
+                    ${loadedContacts[index].email}
+                </a>
+            </div>
+        </div>
     `;
 }
 
@@ -144,7 +154,7 @@ function HTMLopenContactDetailsOverlayMobile(index) {
         </div>  
         <div class="contact-detail-view">
             <div class="contact-avatar-and-name">
-                <div class="detail-contact-avatar">${loadedContacts[index].initialien}</div>
+                <div class="detail-contact-avatar" style="background-color: ${loadedContacts[index].color};">${loadedContacts[index].initialien}</div>
                 <h2>${loadedContacts[index].name}</h2>
             </div>
             <p>Contact Information</p>
@@ -185,7 +195,7 @@ function HTMLopenContactDetailsOverlay(index) {
     </div>  
     <div class="contact-detail-view">
         <div class="contact-avatar-and-name">
-          <div class="detail-contact-avatar">${loadedContacts[index].initialien}</div>
+          <div class="detail-contact-avatar" style="background-color: ${loadedContacts[index].color};">${loadedContacts[index].initialien}</div>
           <div class="detail-name-div">
             <h2>${loadedContacts[index].name}</h2>
             <div class="edit-delete-button-div-desktop">
@@ -215,7 +225,7 @@ function HTMLopenContactDetailsOverlay(index) {
 function HTMLOpenAddContactOverlay() {
     return `
     <div class="overlay-edit-contact">
-        <div class="middle-avatar">TW</div>
+        <div class="middle-avatar-overlay gray-bg"><img src="../Assets/person.svg" alt=""></div>
         <div class="upper-half">
             <div class="cross-close" onclick="closeAddContactOverlay()">X</div>
             <div class="edit-contact-title">
@@ -232,7 +242,7 @@ function HTMLOpenAddContactOverlay() {
                 <div id="mail-error" class="input-layout error-message"></div>
                 <input class="input-layout input-phone" placeholder="Phone" type="tel" id="add-input-phone-id">
                 <div id="phone-error" class="input-layout error-message"></div>
-                <button onclick="addNewContact()" class="create-button">Create contact<i class="fa-sharp-duotone fa-solid fa-check"></i></button>
+                <button onclick="addNewContact()" class="create-button">Create contact ✓<i class="fa-sharp-duotone fa-solid fa-check"></i></button>
             </div>
         </div>
     </div>`;
@@ -308,7 +318,7 @@ function getSubtasksTemplate(subtask, index) {
 function HTMLEditOverlay(index) {
     return `
         <div class="overlay-edit-contact">
-            <div class="middle-avatar">${loadedContacts[index].initialien}</div>
+            <div class="middle-avatar"  style="background-color: ${loadedContacts[index].color};" >${loadedContacts[index].initialien}</div>
             <div class="upper-half">
                 <div class="cross-close" onclick="closeEditContactOverlay(${index})">X</div>
                 <div class="edit-contact-title">
@@ -342,7 +352,7 @@ function HTMLEditOverlay(index) {
 function HTMLEditOverlayDesktop(index) {
     return `
     <div class="overlay-edit-contact-desktop">
-        <div class="middle-avatar-desktop">${loadedContacts[index].initialien}</div>
+        <div class="middle-avatar-desktop"   style="background-color: ${loadedContacts[index].color};" >${loadedContacts[index].initialien}</div>
         <div class="left-part">
             <div class="edit-contact-title-desktop">
                 <img src="../Assets/Capa 2.svg" alt="Join">

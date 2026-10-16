@@ -1,10 +1,10 @@
 /**
  * Erzeugt HTML für einen "OK"-Button, um Änderungen an einer Aufgabe zu speichern.
- * 
+ *
  * @returns {string} Das HTML für den "OK"-Button.
  */
 function createSaveButtonHTML() {
-    return `
+  return `
         <button onclick="saveTaskChanges()" class="okTask-btn" id="oktaskBtn">
             OK <img src="../Assets/check.png" alt="Save">
         </button>`;
@@ -12,11 +12,11 @@ function createSaveButtonHTML() {
 
 /**
  * Erzeugt HTML für die "Edit" und "Delete" Buttons einer Aufgabe.
- * 
+ *
  * @returns {string} Das HTML für die Buttons zum Bearbeiten und Löschen der Aufgabe.
  */
 function createEditAndDeleteButtonsHTML() {
-    return `
+  return `
         <div onclick="deleteTask()" class="delete-button">
             <img class="delete-img" src="../Assets/delete_black.png" alt="Delete Icon"/>
             <p>Delete</p>
@@ -31,12 +31,12 @@ function createEditAndDeleteButtonsHTML() {
 
 /**
  * Erzeugt HTML für das Bearbeiten des Titels einer Aufgabe.
- * 
+ *
  * @param {string} titleText - Der aktuelle Titel der Aufgabe, der im Eingabefeld angezeigt werden soll.
  * @returns {string} Das HTML für das Titel-Bearbeitungsfeld.
  */
 function generateTitleEditHTML(titleText) {
-    return `
+  return `
         <div class="input-containers">
             <p>Title</p>
             <input class="title-input" type="text" placeholder="Enter a title" id="editTitle" value="${titleText}"/>
@@ -45,12 +45,12 @@ function generateTitleEditHTML(titleText) {
 
 /**
  * Erzeugt HTML für das Bearbeiten der Beschreibung einer Aufgabe.
- * 
+ *
  * @param {string} descriptionText - Die aktuelle Beschreibung der Aufgabe, die im Textbereich angezeigt werden soll.
  * @returns {string} Das HTML für das Beschreibung-Bearbeitungsfeld.
  */
 function generateDescriptionEditHTML(descriptionText) {
-    return `
+  return `
         <div class="input-containers">
             <p>Description</p>
             <textarea class="description-input" placeholder="Enter a Description" id="editDescription">${descriptionText}</textarea>
@@ -59,13 +59,13 @@ function generateDescriptionEditHTML(descriptionText) {
 
 /**
  * Erzeugt HTML für das Bearbeiten des Fälligkeitsdatums einer Aufgabe.
- * 
+ *
  * @param {string} dueDateText - Das aktuelle Fälligkeitsdatum der Aufgabe, das im Datumsfeld angezeigt werden soll.
  * @returns {string} Das HTML für das Fälligkeitsdatum-Bearbeitungsfeld.
  */
 function generateDueDateEditHTML(dueDateText) {
-    const formattedDate = formatDateForInput(dueDateText);
-    return `
+  const formattedDate = formatDateForInput(dueDateText);
+  return `
         <div class="input-containers">
             <input class="date-input" type="date" id="editDueDate" value="${formattedDate}" />
         </div>`;
@@ -73,17 +73,17 @@ function generateDueDateEditHTML(dueDateText) {
 
 /**
  * Erzeugt HTML für eine Subtask mit einer Checkbox, Text und den Bearbeitungs-/Lösch-Buttons.
- * 
+ *
  * @param {string} subtask - Der Text der Subtask.
  * @param {number} index - Der Index der Subtask, um sie eindeutig zu identifizieren.
  * @param {boolean} isChecked - Gibt an, ob die Subtask als erledigt markiert ist.
  * @returns {string} Das generierte HTML für die Subtask.
  */
 function generateSubtaskHTML(subtask, index, isChecked) {
-    return `
+  return `
         <div class="subtask-items" id="subtask-${index}">
           <div class="subtask-add-items">
-            <input type="checkbox" class="hidden" id="subtask-checkbox-${index}" ${isChecked ? 'checked' : ''} 
+            <input type="checkbox" class="hidden" id="subtask-checkbox-${index}" ${isChecked ? "checked" : ""} 
                 onchange="toggleSubtaskIdCompletion(${index})">
             <span class="span-overlay"></span>
             <span class="subtask-text">${subtask}</span>
@@ -102,13 +102,13 @@ function generateSubtaskHTML(subtask, index, isChecked) {
 
 /**
  * Erzeugt HTML für die Bearbeitung einer Subtask.
- * 
+ *
  * @param {string} subtaskText - Der Text der Subtask, die bearbeitet wird.
  * @param {number} index - Der Index der Subtask, um sie eindeutig zu identifizieren.
  * @returns {string} Das generierte HTML für das Bearbeitungsformular der Subtask.
  */
 function generateEditSubtaskHTML(subtaskText, index) {
-    return `
+  return `
         <div class="subtask-edit-items">
             <input type="text" value="${subtaskText}" id="editSubtaskInput-${index}" class="subtask-edit-input"/>
             <button class="edit-pen-subtask">
@@ -123,11 +123,11 @@ function generateEditSubtaskHTML(subtaskText, index) {
 
 /**
  * Erzeugt HTML für das Hinzufügen einer neuen Subtask.
- * 
+ *
  * @returns {string} Das generierte HTML für das Eingabefeld und die Schaltflächen zum Hinzufügen einer Subtask.
  */
 function createAddSubtaskHTML() {
-    return `
+  return `
         <div class="add-subtask-container">
             <div class="subtask-container">
                 <input oninput="toggleButtonVisibility()" class="subtask-input" type="text" placeholder="Add new subtask" id="newSubtask">
@@ -146,22 +146,22 @@ function createAddSubtaskHTML() {
 
 /**
  * Erzeugt HTML für ein Benutzer-Element mit einem Kontrollkästchen und einem Avatar.
- * 
+ *
  * @param {Object} user - Das Benutzerobjekt, das die Informationen über den Benutzer enthält.
  * @param {number} index - Der Index des Benutzers.
  * @param {boolean} isChecked - Gibt an, ob der Benutzer als ausgewählt markiert ist.
  * @returns {string} Das generierte HTML für das Benutzer-Element.
  */
 function createUserElement(user, index, isChecked) {
-    return `
-        <div class="contact ${isChecked ? 'checked' : ''}" onclick="checkBoxUserTask(${index})">
+  return `
+        <div class="contact ${isChecked ? "checked" : ""}" onclick="checkBoxUserTask(${index})">
            <div class="user-contact">
              <div class="user-avatar" style="background-color: ${user.color};">${user.initialien}</div>
              <span>${user.name}</span>
            </div>
           <input 
             type="checkbox" 
-            ${isChecked ? 'checked' : ''} 
+            ${isChecked ? "checked" : ""} 
             onclick="checkBoxUserTask(${index},  event)"
           />
         </div>
@@ -170,11 +170,11 @@ function createUserElement(user, index, isChecked) {
 
 /**
  * Erzeugt HTML für das Benutzerbearbeitungsformular mit einem Dropdown-Menü und der Kontaktliste.
- * 
+ *
  * @returns {string} Das generierte HTML für das Benutzerbearbeitungsformular.
  */
 function generateUserEditHTML() {
-    return `
+  return `
         <div onclick="openDropDownMenuUser()" class="drop-down">
             <div>Select contacts to assign</div>
             <div>
@@ -188,22 +188,22 @@ function generateUserEditHTML() {
 
 /**
  * Erzeugt HTML für die Prioritäts-Buttons, die es dem Benutzer ermöglichen, die Priorität einer Aufgabe zu ändern.
- * 
+ *
  * @param {string} currentPriority - Die aktuelle Priorität der Aufgabe (z. B. 'urgent', 'medium', 'low').
  * @returns {string} Das generierte HTML für die Prioritäts-Buttons.
  */
 function generatePriorityButtons(currentPriority) {
-    return` 
+  return ` 
         <div class="prio-btn-container">
-            <button id="btn-urgent" class="btn-prio-urgent ${currentPriority === 'urgent' ? 'active' : ''}" onclick="changeColorPrioBtn('urgent')">Urgent<img id="urgent-img" src="../Assets/prio_urgent.png" alt="Urgent" /></button>
-            <button id="btn-medium" class="btn-prio-medium ${currentPriority === 'medium' ? 'active' : ''}" onclick="changeColorPrioBtn('medium')">Medium<img id="medium-img" src="../Assets/prio_medium_Basis.png" alt="Medium"/></button>
-            <button id="btn-low" class="btn-prio-low ${currentPriority === 'low' ? 'active' : ''}" onclick="changeColorPrioBtn('low')">Low <img id="low-img" src="../Assets/prio_low.png" alt="Low" /></button>
-        </div>`
+            <button id="btn-urgent" class="btn-prio-urgent ${currentPriority === "urgent" ? "active" : ""}" onclick="changeColorPrioBtn('urgent')">Urgent<img id="urgent-img" src="../Assets/prio_urgent.png" alt="Urgent" /></button>
+            <button id="btn-medium" class="btn-prio-medium ${currentPriority === "medium" ? "active" : ""}" onclick="changeColorPrioBtn('medium')">Medium<img id="medium-img" src="../Assets/prio_medium_Basis.png" alt="Medium"/></button>
+            <button id="btn-low" class="btn-prio-low ${currentPriority === "low" ? "active" : ""}" onclick="changeColorPrioBtn('low')">Low <img id="low-img" src="../Assets/prio_low.png" alt="Low" /></button>
+        </div>`;
 }
 
 /**
  * Erzeugt HTML für eine Aufgabe mit den zugehörigen Informationen wie Titel, Beschreibung, Fortschritt und Benutzerzuweisungen.
- * 
+ *
  * @param {Object} task - Das Aufgabenobjekt, das die Details der Aufgabe enthält.
  * @param {string} task.id - Die ID der Aufgabe.
  * @param {string} task.category - Die Kategorie der Aufgabe (z.B. "Technical Task" oder "User Story").
@@ -216,18 +216,24 @@ function generatePriorityButtons(currentPriority) {
  * @returns {string} Das generierte HTML für die Aufgabe.
  */
 function renderTask(task) {
-    return `
+  return `
         <div class="user-card" draggable="true" id="${task.id}" ondragstart="drag(event)" onclick="openTaskDetails('${task.id}')">
             <div class="user-story-card todo">
                 <div class="progress-container">
                     <h3 class="category-label ${task.category === "Technical Task" ? "technical-task" : "user-story"}">${task.category}</h3>
-                    <div class="task-buttons">
-                        <button id="moveBtn link" class="move-btn" onclick="moveTask('${task.id}', 'previous', event)">
-                            <img class="arrow-right-icon" src="../Assets/arrow-left-line.png" alt="search-icon"/>
+                    <div class="move-task-area">
+                      <button class="move-task-button" onclick="toggleMoveMenu('${task.id}', event)" >
+                        <img class="move-task-icon" src="../Assets/move-task.png" alt="Move task" />
+                      </button>
+                      <div class="move-task-menu" id="move-menu-$${(task.id)}">
+                        <strong>Move to</strong>
+                        <button onclick="moveTask('${task.id}', 'previous', event)">
+                          ↑ Previous
                         </button>
-                        <button id="moveBtn right" class="move-btn" onclick="moveTask('${task.id}', 'next', event)">
-                            <img class="arrow-left-icon" src="../Assets/arrow-left-line.png" alt="search-icon"/>
+                        <button onclick="moveTask('${task.id}', 'next', event)">
+                          ↓ Next
                         </button>
+                      </div>
                     </div>
                 </div>
                 <h4>${task.title}</h4>
@@ -235,42 +241,59 @@ function renderTask(task) {
                 <div class="progress-container" style="display: 'flex' : 'none'};" id="progress-bar-${task.id}">
                     <div class="progress-bar">
                         <div class="progress" style="width: ${
-                            (Array.isArray(task.subtasks) && task.subtasks.length > 0
-                                ? (Array.isArray(task.completedSubtasks) 
-                                    ? (task.completedSubtasks.length / task.subtasks.length) * 100 
-                                    : 0)
-                                : 0)
+                          Array.isArray(task.subtasks) &&
+                          task.subtasks.length > 0
+                            ? Array.isArray(task.completedSubtasks)
+                              ? (task.completedSubtasks.length /
+                                  task.subtasks.length) *
+                                100
+                              : 0
+                            : 0
                         }%"></div>
                     </div>
                     <span class="subtasks">${
-                        (Array.isArray(task.completedSubtasks) ? task.completedSubtasks.length : 0)}/${
-                        (Array.isArray(task.subtasks) ? task.subtasks.length : 0)
+                      Array.isArray(task.completedSubtasks)
+                        ? task.completedSubtasks.length
+                        : 0
+                    }/${
+                      Array.isArray(task.subtasks) ? task.subtasks.length : 0
                     } Subtasks</span>
                 </div>
                 <div class="user-container">
                     <div class="user-avatar-container">
-                        ${Array.isArray(task.assignedUsers) 
-                            ? task.assignedUsers.slice(0, 4).map(user => {
-                                const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
-                                return `<div class="user-avatar" style="background-color: ${user.color};">${initials}</div>`;
-                            }).join('') 
-                            : ''
+                        ${
+                          Array.isArray(task.assignedUsers)
+                            ? task.assignedUsers
+                                .slice(0, 4)
+                                .map((user) => {
+                                  const initials = user.name
+                                    .split(" ")
+                                    .map((n) => n[0])
+                                    .join("")
+                                    .toUpperCase();
+                                  return `<div class="user-avatar" style="background-color: ${user.color};">${initials}</div>`;
+                                })
+                                .join("")
+                            : ""
                         }
-                        ${Array.isArray(task.assignedUsers) && task.assignedUsers.length > 4
+                        ${
+                          Array.isArray(task.assignedUsers) &&
+                          task.assignedUsers.length > 4
                             ? `<div class="user-avatar remaining-users-circle">+${task.assignedUsers.length - 4}</div>`
-                            : ''}
+                            : ""
+                        }
                     </div>
                     <p>${(() => {
-                        switch (task.priority?.toLowerCase()) {
-                            case "low":
-                                return `<img src="../Assets/prio_low.png" alt="Low Priority">`;
-                            case "medium":
-                                return `<img src="../Assets/prio_medium_orang.png" alt="Medium Priority">`;
-                            case "urgent":
-                                return `<img src="../Assets/prio_urgent.png" alt="Urgent Priority">`;
-                            default:
-                                return task.priority || "No Priority";
-                        }
+                      switch (task.priority?.toLowerCase()) {
+                        case "low":
+                          return `<img src="../Assets/prio_low.png" alt="Low Priority">`;
+                        case "medium":
+                          return `<img src="../Assets/prio_medium_orang.png" alt="Medium Priority">`;
+                        case "urgent":
+                          return `<img src="../Assets/prio_urgent.png" alt="Urgent Priority">`;
+                        default:
+                          return task.priority || "No Priority";
+                      }
                     })()}</p>
                 </div>
             </div>
@@ -280,13 +303,13 @@ function renderTask(task) {
 
 /**
  * Erzeugt HTML für die Subtask-Überlagerung mit Bearbeitungs- und Löschen-Optionen.
- * 
+ *
  * @param {string} subtask - Der Text der Subtask.
  * @param {number} index - Der Index der Subtask.
  * @returns {string} Das generierte HTML für die Subtask-Überlagerung.
  */
 function getSubtasksTemplateOverlay(subtask, index) {
-    return `
+  return `
         <div class="subtask-label-overlay" id="subtask-label-${index}">
             <ul id="subtask-list-${index}">
                 <li>
@@ -311,7 +334,7 @@ function getSubtasksTemplateOverlay(subtask, index) {
 
 /**
  * Erzeugt HTML für das Hinzufügen von Benutzern zur Aufgabe im Overlay.
- * 
+ *
  * @param {string} colorOverlay - Die Hintergrundfarbe des Benutzer-Avatars.
  * @param {string} initialsOverlay - Die Initialen des Benutzers.
  * @param {Object} user - Das Benutzerobjekt.
@@ -319,8 +342,14 @@ function getSubtasksTemplateOverlay(subtask, index) {
  * @param {boolean} isCheckedOverlay - Gibt an, ob der Benutzer ausgewählt wurde.
  * @returns {string} Das generierte HTML für das Hinzufügen des Benutzers.
  */
-function renderAddToTaskContactsOverlay(colorOverlay, initialsOverlay, user, index, isCheckedOverlay) {
-    return `
+function renderAddToTaskContactsOverlay(
+  colorOverlay,
+  initialsOverlay,
+  user,
+  index,
+  isCheckedOverlay,
+) {
+  return `
       <div class="contact-overlay ${isCheckedOverlay ? "selected-user" : ""}" onclick="checkBoxUserTaskOverlay(${index}, event)">
         <div class="name-and-img">
           <div class="initials-circle" style="background-color: ${colorOverlay};">
@@ -334,14 +363,14 @@ function renderAddToTaskContactsOverlay(colorOverlay, initialsOverlay, user, ind
 
 /**
  * Erzeugt HTML für die hinzugefügten Benutzer im Overlay.
- * 
+ *
  * @param {string} colorOverlay - Die Hintergrundfarbe des Benutzer-Avatars.
  * @param {string} initialsOverlay - Die Initialen des Benutzers.
  * @returns {string} Das generierte HTML für den hinzugefügten Benutzer.
  */
 function renderAddedUsersOverlay(colorOverlay, initialsOverlay) {
-    return `
+  return `
               <div class="initials-circle" style="background-color: ${colorOverlay};">
                   ${initialsOverlay}
               </div>`;
-  }
+}

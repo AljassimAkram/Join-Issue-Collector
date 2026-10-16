@@ -703,6 +703,9 @@
     font-size: 14px;
     font-weight: 400;
   }
+  .task-info hr {
+    height: 65px !important;
+  }
 
   /* =========================
      DEADLINE + EMAIL
@@ -864,6 +867,15 @@
   }
 }
 
+@media (max-width: 410px) {
+   .date h3{
+    font-size: 14px !important;
+   }
+   .status p{
+    font-size: 14px !important;
+   }
+}
+
 /* ==================================================
    SMALL MOBILE
 ================================================== */
@@ -890,6 +902,18 @@
 
   .task-status h3 {
     font-size: 12px;
+  }
+  .prio {
+    gap: 1px !important;
+  }
+  .task-info {
+    gap: 2px !important;
+  }
+  .status h4 {
+    font-size: 30px !important;
+  }
+  .task-status h4 {
+    font-size: 30px !important;
   }
 }
 

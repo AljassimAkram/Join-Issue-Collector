@@ -14,12 +14,39 @@ function loadTasks(columnId) {
   const tasks = JSON.parse(localStorage.getItem(columnId)) || [];
   tasks.forEach((task) => {
     container.innerHTML += renderTask(task);
-    updateArrowIcons(columnId, task.id);
     showSubtaskProgress(task);
   });
   updateTaskVisibilityById(columnId);
   
 }
+
+function toggleMoveMenu(taskId, event) {
+  event.stopPropagation();
+
+  const button = event.currentTarget;
+  const area = button.closest(".move-task-area");
+  const menu = area.querySelector(".move-task-menu");
+
+  document.querySelectorAll(".move-task-menu").forEach((item) => {
+    if (item !== menu) {
+      item.classList.remove("show");
+    }
+  });
+
+  menu.classList.toggle("show");
+}
+
+function closeMoveMenuOnOutsideClick(event) {
+  const clickedInsideMoveMenu = event.target.closest(".move-task-area");
+
+  if (!clickedInsideMoveMenu) {
+    document.querySelectorAll(".move-task-menu").forEach((menu) => {
+      menu.classList.remove("show");
+    });
+  }
+}
+
+document.addEventListener("click", closeMoveMenuOnOutsideClick);
 
 
 /**
