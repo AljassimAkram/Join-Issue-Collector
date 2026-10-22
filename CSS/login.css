@@ -389,7 +389,7 @@ footer {
   }
 
   .login-window {
-    width: calc(110% - 32px);
+    width: calc(100% - 32px);
   }
 }
 

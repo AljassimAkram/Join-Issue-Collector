@@ -466,31 +466,51 @@
   display: block;
 }
 
-/* ==================================================
-   DESKTOP RESPONSIVE
-================================================== */
-
-@media (max-width: 1430px) {
-  .title-summary h1 {
-    font-size: 47px;
+@media (max-width: 1200px) {
+  .info-regards {
+    padding-left: 15px!important;
   }
 }
 
-@media (max-width: 1190px) {
-  .regards {
-    display: none;
-  }
 
-  #main-content {
-    align-items: center;
-  }
-
+@media (max-width: 1050px) {
   .hero {
-    justify-content: center;
-    align-items: center;
+    padding-top: 10px;
+  }
+  .info-regards {
+    flex-direction: column-reverse;
+  }
+  .title-info {
+    gap: 30px;
+  }
+}
+@media (max-width: 945px) {
+  .info-regards {
+    padding-left: 25px;
+  }
+}
 
-    padding-left: 0;
-    padding-right: 0;
+@media (max-width: 925px) {
+  .info-regards {
+    padding-left: 15px;
+  }
+  .title-summary {
+    gap: 15px;
+  }
+  .title-summary h1 {
+    font-size: 50px;
+  }
+  .title-summary h2 {
+    font-size: 25px;
+  }
+  .info-todo {
+    gap: 15px;
+  }
+  .middle-info-row {
+    gap: 15px;
+  }
+  .tasks-status-container {
+    gap: 15px;
   }
 }
 
@@ -515,6 +535,9 @@
 }
 
 @media (max-width: 830px) {
+  .regards {
+    display: none;
+  }
   .regards-mobile {
     position: absolute;
 
@@ -536,7 +559,8 @@
   }
 
   .hero {
-    justify-content: flex-start;
+    flex-direction: initial;
+    padding-top: 30px;
   }
 }
 
@@ -558,6 +582,7 @@
   .hero {
     width: 100%;
     height: auto;
+    padding-top: 40px;
 
     min-height: calc(95dvh - 130px);
 
@@ -747,7 +772,7 @@
   .email-request-card h4 {
     margin: 0;
 
-    font-size: 40px;
+    font-size: 30px;
     line-height: 1;
   }
 

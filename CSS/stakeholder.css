@@ -316,7 +316,7 @@ footer a:hover {
    TABLET
 ================================================== */
 
-@media (max-width: 760px) {
+@media (max-width: 850px) {
 
   .request-counter {
     right: 30px;

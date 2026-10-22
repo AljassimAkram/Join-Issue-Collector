@@ -5,7 +5,6 @@
 }
 
 body {
-  display: flex;
   flex-direction: column;
   background-color: #f6f7f8;
 }
@@ -94,7 +93,7 @@ button {
 .hero {
   padding-left: 16px;
   padding-right: 16px;
-  padding-top: 90px;
+  padding-top: 50px;
   display: flex;
   justify-content: center;
   align-items: flex-start;

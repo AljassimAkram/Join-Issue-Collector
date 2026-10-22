@@ -1,3 +1,5 @@
+
+
 .prio-container {
   display: flex;
   flex-direction: column;
@@ -12,7 +14,6 @@
 
 .hero {
   display: block;
-  padding-top: 110px;
   padding-left: 96px;
 }
 
@@ -410,12 +411,15 @@ hr {
   color: white;
 }
 
-
 /* =========================
    RESPONSIVE
 ========================= */
 
 @media (max-width: 1290px) {
+  .hero {
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+  }
   .form-container {
     gap: 10px;
   }
@@ -441,6 +445,10 @@ hr {
 }
 
 @media (max-width: 830px) {
+  .hero {
+    padding-top: 0!important;
+    width: 100%;
+  }
   #frame {
     overflow-y: auto;
   }
@@ -461,6 +469,7 @@ hr {
 
   #main-content {
     align-items: center;
+    overflow-y: auto;
   }
 
   .add-clear-task {
@@ -484,9 +493,19 @@ hr {
 
   .title-arrow {
     position: sticky;
-    top: 82px;
+    top: 0;
     background-color: #f6f7f8;
     z-index: 1;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .form-left {
+    width: 100%;
+  }
+  .form-right {
+    width: 100%;
   }
 }
 
@@ -523,12 +542,6 @@ hr {
   .creatTask-btn {
     height: 46px;
     width: 140px;
-  }
-}
-
-@media (max-width: 1220px) {
-  #main-content {
-    width: auto;
   }
 }
 
