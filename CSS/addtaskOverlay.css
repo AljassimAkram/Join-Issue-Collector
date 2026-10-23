@@ -278,6 +278,7 @@ input::placeholder {
   border: none;
   background-color: white;
   width: 300px;
+  font-size: 14px;
 }
 
 .contact-list-container-overlay {
@@ -339,6 +340,10 @@ input::placeholder {
   border: none;
 }
 
+.subtask-input:hover,
+.subtask-input:focus {
+  border: 1px solid #29abe2;
+}
 .plus-img {
   position: absolute;
   right: 16px;

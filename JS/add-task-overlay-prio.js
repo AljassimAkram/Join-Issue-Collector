@@ -22,61 +22,34 @@ let imgSourcesOverlay = {
     ],
   };
 
-/**
- * Ändert die Farben und Bildquellen der Prioritäts-Schaltflächen und -Bilder basierend auf der gewählten Priorität.
- * @param {string} priority - Die gewählte Priorität, kann "urgent", "medium" oder "low" sein.
- */
-function changeColorPrioBtnOverlay(priority) {
-    let bgColorsOverlay = { urgent: "#FF3B30", medium: "#FFA800", low: "#4CD964" };
-  
-    resetButtonStylesOverlay();
-    selectedPriorityOverlay = priority;
-    setButtonStylesOverlay(priority, bgColorsOverlay[priority]);
-    setImageSourcesOverlay(imgSourcesOverlay[priority]);
-  }
-  
-  /**
- * Setzt die Hintergrundfarben aller Prioritäts-Schaltflächen auf die Standardfarbe zurück.
- */
-  function resetButtonStylesOverlay() {
-     btnUrgent.style.backgroundColor = "#ffffff";
-    btnMedium.style.backgroundColor = "#ffffff";
-    btnLow.style.backgroundColor = "#ffffff";
+/** Ändert die Farben und Bildquellen der Prioritäts-Schaltflächen und -Bilder basierend auf der gewählten Priorität. @param {string} priority - Die gewählte Priorität, kann "urgent", "medium" oder "low" sein. */
+function changeColorPrioBtnOverlay(priority) { let bgColorsOverlay = { urgent: "#FF3B30", medium: "#FFA800", low: "#4CD964" };
+resetButtonStylesOverlay();
+selectedPriorityOverlay = priority;
+setButtonStylesOverlay(priority, bgColorsOverlay[priority]);
+setImageSourcesOverlay(imgSourcesOverlay[priority]);
+}
 
-    btnUrgent.style.color = "#000000";
-    btnMedium.style.color = "#000000";
-    btnLow.style.color = "#000000";
-  }
-  
-  /**
- * Setzt den Hintergrundfarbwert der Schaltfläche für die angegebene Priorität.
- * @param {string} priority - Die Priorität, für die die Schaltfläche aktualisiert wird. Kann "urgent", "medium" oder "low" sein.
- * @param {string} bgColorOverlay - Die Hintergrundfarbe, die der Schaltfläche zugewiesen wird.
- */
-  function setButtonStylesOverlay(priority, bgColorOverlay) {
-    if (priority === "urgent") {
-      btnUrgent.style.backgroundColor = bgColorOverlay;
-      btnUrgent.style.color = "#ffffff";
-    }
-    else if (priority === "medium") {
-      btnMedium.style.backgroundColor = bgColorOverlay;
-      btnMedium.style.color = "#ffffff";
-    }
-    else if (priority === "low") {
-      btnLow.style.backgroundColor = bgColorOverlay;
-      btnLow.style.color = "#ffffff";
-    }
-  }
-  
-  /**
- * Setzt die Bildquellen für die Prioritäts-Bilder.
- * @param {Array} imgSources - Ein Array von Bildquellen für "urgent", "medium" und "low" Priorität in dieser Reihenfolge.
- * @param {string} imgSources[0] - Die Bildquelle für das "urgent"-Bild.
- * @param {string} imgSources[1] - Die Bildquelle für das "medium"-Bild.
- * @param {string} imgSources[2] - Die Bildquelle für das "low"-Bild.
- */
-  function setImageSourcesOverlay([urgentImgSrc, mediumImgSrc, lowImgSrc]) {
-    imgUrgent.src = urgentImgSrc;
-    imgMedium.src = mediumImgSrc;
-    imgLow.src = lowImgSrc;
-  }
+  /** Setzt die Hintergrundfarben aller Prioritäts-Schaltflächen auf die Standardfarbe zurück. */
+  function resetButtonStylesOverlay() { btnUrgent.style.backgroundColor = "#ffffff";
+btnMedium.style.backgroundColor = "#ffffff";
+btnLow.style.backgroundColor = "#ffffff";
+btnUrgent.style.color = "#000000";
+btnMedium.style.color = "#000000";
+btnLow.style.color = "#000000";
+}
+
+  /** Setzt den Hintergrundfarbwert der Schaltfläche für die angegebene Priorität. @param {string} priority - Die Priorität, für die die Schaltfläche aktualisiert wird. Kann "urgent", "medium" oder "low" sein. @param {string} bgColorOverlay - Die Hintergrundfarbe, die der Schaltfläche zugewiesen wird. */
+  function setButtonStylesOverlay(priority, bgColorOverlay) { if (priority === "urgent") { btnUrgent.style.backgroundColor = bgColorOverlay;
+btnUrgent.style.color = "#ffffff";
+} else if (priority === "medium") { btnMedium.style.backgroundColor = bgColorOverlay;
+btnMedium.style.color = "#ffffff";
+} else if (priority === "low") { btnLow.style.backgroundColor = bgColorOverlay;
+btnLow.style.color = "#ffffff";
+} }
+
+  /** Setzt die Bildquellen für die Prioritäts-Bilder. @param {Array} imgSources - Ein Array von Bildquellen für "urgent", "medium" und "low" Priorität in dieser Reihenfolge. @param {string} imgSources[0] - Die Bildquelle für das "urgent"-Bild. @param {string} imgSources[1] - Die Bildquelle für das... */
+  function setImageSourcesOverlay([urgentImgSrc, mediumImgSrc, lowImgSrc]) { imgUrgent.src = urgentImgSrc;
+imgMedium.src = mediumImgSrc;
+imgLow.src = lowImgSrc;
+}

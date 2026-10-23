@@ -1,4 +1,5 @@
-const BASE_URL = "https://join-aj-default-rtdb.europe-west1.firebasedatabase.app/";
+const BASE_URL =
+  "https://join-aj-default-rtdb.europe-west1.firebasedatabase.app/";
 const TASKS_PROJECT_ID = "-OHEHGcS4ouKKz4lJ0nr";
 let loadedContacts = [];
 let loadedTasks = [];
@@ -12,15 +13,20 @@ let passwordError = document.getElementById("password-error");
 let showPasswordImg = document.getElementById("show-password-img");
 let showRepeatPasswordImg = document.getElementById("show-repeat-password-img");
 let regardsUser = document.getElementById("regardsUser");
-let colors = ["#007bff", "#ffa500", "#800080", "#d8bfd8", "#ff69b4", "#28a745", "#ff6347", "#20b2aa"];
+let colors = [
+  "#007bff",
+  "#ffa500",
+  "#800080",
+  "#d8bfd8",
+  "#ff69b4",
+  "#28a745",
+  "#ff6347",
+  "#20b2aa",
+];
 let isPasswordVisible = false;
 let isRepeatPasswordVisible = false;
 
-/**
- * Initialisiert die Seite, indem alle erforderlichen Inhalte geladen werden.
- * Lädt Kontakte, Benutzerlogo und überprüft den Status des Benutzers.
- * @async
- */
+/** Initialisiert die Seite, indem alle erforderlichen Inhalte geladen werden. Lädt Kontakte, Benutzerlogo und überprüft den Status des Benutzers. @async */
 async function init() {
   await includeHTML();
   await loadAllContacts();
@@ -28,180 +34,127 @@ async function init() {
   inOrOut();
 }
 
-/**
- * Überprüft, ob der Benutzer eingeloggt ist.
- * Wenn ja, wird die `init`-Funktion aufgerufen, andernfalls wird der Benutzer zur Login-Seite weitergeleitet.
- */
+/** Überprüft, ob der Benutzer eingeloggt ist. Wenn ja, wird die `init`-Funktion aufgerufen, andernfalls wird der Benutzer zur Login-Seite weitergeleitet. */
 function userCheck() {
   let status = JSON.parse(localStorage.getItem("loggedInUser"));
   if (status) {
     init();
   } else {
-    window.location.href = '../index.html';
+    window.location.href = "../index.html";
   }
 }
 
-/**
- * Lädt alle Kontakte aus dem lokalen Speicher oder von der Firebase-Datenbank.
- * Wenn keine Kontakte im lokalen Speicher vorhanden sind, werden sie aus der Datenbank geladen.
- * @async
- * @param {string} [path=""] - Der Pfad zu den Kontakten in der Datenbank.
- */
+/** Lädt alle Kontakte aus dem lokalen Speicher oder von der Firebase-Datenbank. Wenn keine Kontakte im lokalen Speicher vorhanden sind, werden sie aus der Datenbank geladen. @async @param {string} [path=""] - Der Pfad zu den Kontakten in der Datenbank. */
 async function loadAllContacts() {
   let savedContacts = localStorage.getItem("contacts");
   loadedContacts = savedContacts ? JSON.parse(savedContacts) : [];
-
   if (typeof renderContacts === "function") {
     renderContacts();
   }
-
   if (!savedContacts) {
     try {
       const response = await fetch(`${BASE_URL}users.json`);
-
       if (!response.ok) {
-        throw new Error(`Users konnten nicht geladen werden: ${response.status}`);
+        throw new Error(
+          `Users konnten nicht geladen werden: ${response.status}`,
+        );
       }
-
       const users = await response.json();
-
-      loadedContacts = users
-        ? Object.values(users).map(formatContact)
-        : [];
-
+      loadedContacts = users ? Object.values(users).map(formatContact) : [];
       if (typeof saveContactsToLocalStorage === "function") {
         saveContactsToLocalStorage();
       }
-
       if (typeof renderContacts === "function") {
         renderContacts();
       }
     } catch (error) {
-      console.error(
-        "Fehler beim Laden der Kontakte aus der Datenbank:",
-        error
-      );
+      console.error("Fehler beim Laden der Kontakte aus der Datenbank:", error);
     }
   }
 }
 
-/**
- * Formatiert ein Kontaktobjekt, um sicherzustellen, dass alle Daten im richtigen Format vorliegen.
- * @param {Object} x - Das Kontaktobjekt.
- * @returns {Object} Das formatierte Kontaktobjekt.
- */
+/** Formatiert ein Kontaktobjekt, um sicherzustellen, dass alle Daten im richtigen Format vorliegen. @param {Object} x - Das Kontaktobjekt. @returns {Object} Das formatierte Kontaktobjekt. */
 function formatContact(x) {
   let [vorname, nachname] = x.name.split(" ");
   return {
-      color: x.color,
-      name: x.name,
-      email: x.email,
-      password: x.password,
-      phone: x.phone,
-      letter: x.name[0].toUpperCase(),
-      initialien: vorname[0] + (nachname ? nachname[0] : ""),
+    color: x.color,
+    name: x.name,
+    email: x.email,
+    password: x.password,
+    phone: x.phone,
+    letter: x.name[0].toUpperCase(),
+    initialien: vorname[0] + (nachname ? nachname[0] : ""),
   };
 }
 
-/**
- * Ruft die Aufgaben von der Firebase-Datenbank ab und speichert sie im lokalen Speicher.
- * @async
- */
+/** Ruft die Aufgaben von der Firebase-Datenbank ab und speichert sie im lokalen Speicher. @async */
 async function fetchAndStoreTasks() {
   try {
-    const response = await fetch(
-      `${BASE_URL}tasks/${TASKS_PROJECT_ID}.json`
-    );
-
+    const response = await fetch(`${BASE_URL}tasks/${TASKS_PROJECT_ID}.json`);
     if (!response.ok) {
       throw new Error("Tasks konnten nicht geladen werden");
     }
-
-    const projectTasks = await response.json() || {};
-
+    const projectTasks = (await response.json()) || {};
     saveTasksInLocalStorage(projectTasks);
   } catch (error) {
     console.error("Fehler beim Laden der Tasks:", error);
   }
 }
 
-/**
- * Speichert Aufgaben im lokalen Speicher.
- * @param {Array} loadedTasks - Die geladenen Aufgaben.
- */
+/** Speichert Aufgaben im lokalen Speicher. @param {Array} loadedTasks - Die geladenen Aufgaben. */
 function saveTasksInLocalStorage(projectTasks) {
-  localStorage.setItem(
-    "triage",
-    JSON.stringify(projectTasks.triage || [])
-  );
-
-  localStorage.setItem(
-    "todo",
-    JSON.stringify(projectTasks.todo || [])
-  );
-
+  localStorage.setItem("triage", JSON.stringify(projectTasks.triage || []));
+  localStorage.setItem("todo", JSON.stringify(projectTasks.todo || []));
   localStorage.setItem(
     "in-progress",
-    JSON.stringify(projectTasks.inProgress || [])
+    JSON.stringify(projectTasks.inProgress || []),
   );
-
   localStorage.setItem(
     "await-feedback",
-    JSON.stringify(projectTasks.awaitFeedback || [])
+    JSON.stringify(projectTasks.awaitFeedback || []),
   );
-
-  localStorage.setItem(
-    "done",
-    JSON.stringify(projectTasks.done || [])
-  );
+  localStorage.setItem("done", JSON.stringify(projectTasks.done || []));
 }
 
+/** Dokumentiert die Funktion getFirebaseColumnName. */
 function getFirebaseColumnName(columnId) {
   const columnNames = {
-    "triage": "triage",
-    "todo": "todo",
+    triage: "triage",
+    todo: "todo",
     "in-progress": "inProgress",
     "await-feedback": "awaitFeedback",
-    "done": "done"
+    done: "done",
   };
-
   return columnNames[columnId];
 }
 
-
+/** Dokumentiert die Funktion saveColumnToFirebase. */
 async function saveColumnToFirebase(columnId) {
   const firebaseColumn = getFirebaseColumnName(columnId);
   const tasks = JSON.parse(localStorage.getItem(columnId)) || [];
-
   try {
     const response = await fetch(
       `${BASE_URL}tasks/${TASKS_PROJECT_ID}/${firebaseColumn}.json`,
       {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(tasks)
-      }
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(tasks),
+      },
     );
-
     if (!response.ok) {
       throw new Error("Firebase speichern fehlgeschlagen");
     }
-
     console.log(`${columnId} wurde in Firebase gespeichert.`);
   } catch (error) {
     console.error("Firebase Fehler:", error);
   }
 }
 
-/**
- * Ändert das Symbol zum Anzeigen des Passworts, je nachdem, ob das Passwort-Feld gefüllt ist oder nicht.
- */
+/** Ändert das Symbol zum Anzeigen des Passworts, je nachdem, ob das Passwort-Feld gefüllt ist oder nicht. */
 function changePasswordImg() {
   if (password && password.value) {
-    showPasswordImg.src = isPasswordVisible 
-      ? "../Assets/visibility.png" 
+    showPasswordImg.src = isPasswordVisible
+      ? "../Assets/visibility.png"
       : "../Assets/visibility_off.png";
     showPasswordImg.style.cursor = "pointer";
   } else if (showPasswordImg) {
@@ -210,13 +163,11 @@ function changePasswordImg() {
   }
 }
 
-/**
- * Ändert das Symbol zum Anzeigen des wiederholten Passworts, je nachdem, ob das Passwort-Feld gefüllt ist oder nicht.
- */
+/** Ändert das Symbol zum Anzeigen des wiederholten Passworts, je nachdem, ob das Passwort-Feld gefüllt ist oder nicht. */
 function changeRepeatPasswordImg() {
   if (repeatPassword && repeatPassword.value) {
-    showRepeatPasswordImg.src = isRepeatPasswordVisible 
-      ? "../Assets/visibility.png" 
+    showRepeatPasswordImg.src = isRepeatPasswordVisible
+      ? "../Assets/visibility.png"
       : "../Assets/visibility_off.png";
     showRepeatPasswordImg.style.cursor = "pointer";
   } else if (showRepeatPasswordImg) {
@@ -225,41 +176,34 @@ function changeRepeatPasswordImg() {
   }
 }
 
-/**
- * Zeigt das Passwort an oder versteckt es basierend auf dem aktuellen Zustand des Passwort-Felds.
- */
+/** Zeigt das Passwort an oder versteckt es basierend auf dem aktuellen Zustand des Passwort-Felds. */
 function showPassword() {
   if (password && password.value.length >= 1) {
     isPasswordVisible = !isPasswordVisible;
     password.type = isPasswordVisible ? "text" : "password";
-    showPasswordImg.src = isPasswordVisible 
-      ? "../Assets/visibility.png" 
+    showPasswordImg.src = isPasswordVisible
+      ? "../Assets/visibility.png"
       : "../Assets/visibility_off.png";
   }
 }
 
-/**
- * Zeigt das wiederholte Passwort an oder versteckt es basierend auf dem aktuellen Zustand des Wiederholungs-Passwort-Felds.
- */
-function showRepeatPassowrd() {
+/** Zeigt das wiederholte Passwort an oder versteckt es basierend auf dem aktuellen Zustand des Wiederholungs-Passwort-Felds. */
+function showRepeatPassword() {
   if (repeatPassword && repeatPassword.value.length >= 1) {
     isRepeatPasswordVisible = !isRepeatPasswordVisible;
     repeatPassword.type = isRepeatPasswordVisible ? "text" : "password";
-    showRepeatPasswordImg.src = isRepeatPasswordVisible 
-      ? "../Assets/visibility.png" 
+    showRepeatPasswordImg.src = isRepeatPasswordVisible
+      ? "../Assets/visibility.png"
       : "../Assets/visibility_off.png";
   }
 }
 
-/**
- * Lädt HTML-Dateien, die in der Seite eingebunden werden sollen, asynchron.
- * @async
- */
+/** Lädt HTML-Dateien, die in der Seite eingebunden werden sollen, asynchron. @async */
 async function includeHTML() {
   let includeElements = document.querySelectorAll("[w3-include-html]");
   for (let i = 0; i < includeElements.length; i++) {
     const element = includeElements[i];
-    file = element.getAttribute("w3-include-html"); // "includes/*.html"
+    file = element.getAttribute("w3-include-html");
     let resp = await fetch(file);
     if (resp.ok) {
       element.innerHTML = await resp.text();
@@ -269,11 +213,7 @@ async function includeHTML() {
   }
 }
 
-/**
- * Lädt den Inhalt einer Seite in das Haupt-Element der Seite.
- * @async
- * @param {string} page - Der Name der Seite, die geladen werden soll.
- */
+/** Lädt den Inhalt einer Seite in das Haupt-Element der Seite. @async @param {string} page - Der Name der Seite, die geladen werden soll. */
 async function loadContent(page) {
   console.log(page);
   let element = document.getElementById("main-content");
@@ -285,20 +225,15 @@ async function loadContent(page) {
   }
 }
 
-/**
- * Ruft das Benutzerlogo ab und zeigt es an.
- */
+/** Ruft das Benutzerlogo ab und zeigt es an. */
 function getUserLogo() {
   let userLogo = document.getElementById("user-button");
   let user = JSON.parse(localStorage.getItem("loggedInUser"));
-
   if (!user) {
     return;
   }
-
   let initials = user.initialien;
   let color = user.color || "#3498db";
-
   if (userLogo) {
     userLogo.innerHTML = renderUserLogo(initials, color, user);
   }
@@ -310,11 +245,9 @@ function getUserLogo() {
 document.addEventListener("DOMContentLoaded", () => {
   const isAnimationShown = localStorage.getItem("welcomeAnimationShown");
   const animationDiv = document.getElementById("animation");
-
   if (!animationDiv) {
     return;
   }
-
   if (!isAnimationShown) {
     setTimeout(() => {
       animationDiv.style.display = "none";
@@ -332,12 +265,13 @@ document.addEventListener("DOMContentLoaded", () => {
  */
 document.addEventListener("DOMContentLoaded", () => {
   let isMobile = window.innerWidth <= 830;
-  let isAnimationShowSummary = localStorage.getItem("welcomeAnimationShowSummary");
+  let isAnimationShowSummary = localStorage.getItem(
+    "welcomeAnimationShowSummary",
+  );
   let regardDiv = document.getElementById("regardsUserMobile");
   if (!regardDiv) {
     return;
   }
-
   if (isMobile) {
     if (!isAnimationShowSummary) {
       setTimeout(() => {
@@ -350,21 +284,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-/**
- * Fügt einen Klick-Effekt zu einem Element hinzu.
- * @param {string} elementId - Die ID des Elements, das den Klick-Effekt erhalten soll.
- */
+/** Fügt einen Klick-Effekt zu einem Element hinzu. @param {string} elementId - Die ID des Elements, das den Klick-Effekt erhalten soll. */
 function addClickEffect(elementId) {
   let element = document.getElementById(elementId);
   if (element) {
     element.addEventListener("mousedown", () => {
       element.classList.add("color-on-click");
     });
-
     element.addEventListener("mouseup", () => {
       element.classList.remove("color-on-click");
     });
-
     element.addEventListener("mouseleave", () => {
       element.classList.remove("color-on-click");
     });
@@ -374,24 +303,19 @@ function addClickEffect(elementId) {
 addClickEffect("login-click-privacy");
 addClickEffect("login-click-legal");
 
-/**
- * Überprüft, ob ein Benutzer eingeloggt ist.
- * Wenn nicht, wird der Benutzer zur Login-Seite weitergeleitet.
- */
+/** Überprüft, ob ein Benutzer eingeloggt ist. Wenn nicht, wird der Benutzer zur Login-Seite weitergeleitet. */
 function checkIfLoggedIn() {
-  let loggedUser = localStorage.getItem('loggedInUser');
+  let loggedUser = localStorage.getItem("loggedInUser");
   console.log(loggedUser);
   if (!loggedUser) {
-    window.location.href = '/index.html';
+    window.location.href = "/index.html";
   }
 }
 
+/** Dokumentiert die Funktion startWelcomeAnimation. */
 function startWelcomeAnimation() {
   const animation = document.getElementById("animation");
-
   if (!animation) return;
-
   animation.style.display = "flex";
 }
-
 window.addEventListener("load", startWelcomeAnimation);

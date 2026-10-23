@@ -1,504 +1,214 @@
-/**
- * Opens task details in a modal.
- * @param {string} taskId - Task ID.
- */
-function openTaskDetails(taskId) {
-  const tasks = getAllTasks();
-  const task = findTaskById(tasks, taskId);
-  if (task) {
-    currentTaskId = taskId;
-    updateModalContent(task);
-    document.getElementById("taskModal").style.display = "block";
-    toggleModalLayout(false);
-    addSaveAndCancelButtons(false);
-  }
+/** Opens task details in a modal. @param {string} taskId - Task ID. */
+function openTaskDetails(taskId) { const tasks = getAllTasks();
+const task = findTaskById(tasks, taskId);
+if (task) { currentTaskId = taskId;
+updateModalContent(task);
+document.getElementById("taskModal").style.display = "block";
+toggleModalLayout(false);
+addSaveAndCancelButtons(false);
+} }
+
+/** Retrieves all tasks from local storage. @returns {Array} - List of tasks. */
+function getAllTasks() { return [ ...JSON.parse(localStorage.getItem("triage") || "[]"), ...JSON.parse(localStorage.getItem("todo") || "[]"), ...JSON.parse(localStorage.getItem("in-progress") || "[]"), ...JSON.parse(localStorage.getItem("await-feedback") || "[]"), ...JSON.parse(localStorage.getItem("done") || "[]"), ];
 }
 
-/**
- * Retrieves all tasks from local storage.
- * @returns {Array} - List of tasks.
- */
-function getAllTasks() {
-  return [
-    ...JSON.parse(localStorage.getItem("triage") || "[]"),
-    ...JSON.parse(localStorage.getItem("todo") || "[]"),
-    ...JSON.parse(localStorage.getItem("in-progress") || "[]"),
-    ...JSON.parse(localStorage.getItem("await-feedback") || "[]"),
-    ...JSON.parse(localStorage.getItem("done") || "[]"),
-  ];
+/** Finds a task by ID. @param {string} taskId - Task ID. @returns {Object|null} - Found task or null. */
+function findTaskById(tasks, taskId) { return tasks.find((task) => task.id === taskId);
 }
 
-/**
- * Finds a task by ID.
- * @param {string} taskId - Task ID.
- * @returns {Object|null} - Found task or null.
- */
-function findTaskById(tasks, taskId) {
-  return tasks.find((task) => task.id === taskId);
+/** Updates modal content with task details. @param {Object} task - Task object. */
+function updateModalContent(task) { updateModalCategory(task);
+updateModalAiGenerated(task);
+updateModalTitleAndDescription(task);
+updateModalDueDate(task);
+updateModalPriority(task);
+updateModalCreator(task);
+updateModalAssignedUsers(task);
+updateModalSubtasks(task);
 }
 
-/**
- * Updates modal content with task details.
- * @param {Object} task - Task object.
- */
-function updateModalContent(task) {
-  updateModalCategory(task);
-  updateModalAiGenerated(task);
-  updateModalTitleAndDescription(task);
-  updateModalDueDate(task);
-  updateModalPriority(task);
-  updateModalCreator(task);
-  updateModalAssignedUsers(task);
-  updateModalSubtasks(task);
+/** Displays the task creator and creator type. @param {Object} task - Task object. */
+function updateModalCreator(task) { const creatorElement = document.getElementById("modalCreator"); const creator = task.creator || "Unknown";
+if (task.creatorType === "external") { const emailMatch = creator.match(/<([^>]+)>/); const email = emailMatch ? emailMatch[1] : creator;
+const displayName = emailMatch ? creator.replace(/<[^>]+>/, "").trim() : creator; creatorElement.innerHTML = ` <span class="creator-badge external"> <img src="../Assets/extern.png" alt="External"> Extern </span> <span class="creator-name"> ${displayName} </span> <a class="creator-action" href="mailto:${email}"> <img src="../Assets/extern-mail.png" alt="E-mail"> E-mail </a> `;
+return; } const contact = loadedContacts.find((item) => { return ( item.email?.toLowerCase() === creator.toLowerCase() || item.name?.toLowerCase() === creator.toLowerCase() );
+}); const displayName = contact ? contact.name : creator;
+const contactValue = contact ? contact.email : creator; creatorElement.innerHTML = ` <span class="creator-badge member"> <img src="../Assets/member.png" alt="Member"> Member </span> <span class="creator-name"> ${displayName} </span> <a class="creator-action" href="contacts.html?contact=${encodeURIComponent(contactValue)}" > <img src="../Assets/person-member.png" alt="Profil"> Profil </a> `;
 }
 
-/**
- * Displays the task creator and creator type.
- * @param {Object} task - Task object.
- */
-function updateModalCreator(task) {
-  const creatorElement = document.getElementById("modalCreator");
-  const creator = task.creator || "Unknown";
-
-  if (task.creatorType === "external") {
-    const emailMatch = creator.match(/<([^>]+)>/);
-
-    const email = emailMatch ? emailMatch[1] : creator;
-
-    const displayName = emailMatch
-      ? creator.replace(/<[^>]+>/, "").trim()
-      : creator;
-
-    creatorElement.innerHTML = `
-      <span class="creator-badge external">
-        <img src="../Assets/extern.png" alt="External">
-        Extern
-      </span>
-
-      <span class="creator-name">
-        ${displayName}
-      </span>
-
-      <a class="creator-action" href="mailto:${email}">
-        <img src="../Assets/extern-mail.png" alt="E-mail">
-        E-mail
-      </a>
-    `;
-
-    return;
-  }
-
-  const contact = loadedContacts.find((item) => {
-    return (
-      item.email?.toLowerCase() === creator.toLowerCase() ||
-      item.name?.toLowerCase() === creator.toLowerCase()
-    );
-  });
-
-  const displayName = contact ? contact.name : creator;
-  const contactValue = contact ? contact.email : creator;
-
-  creatorElement.innerHTML = `
-    <span class="creator-badge member">
-      <img src="../Assets/member.png" alt="Member">
-      Member
-    </span>
-
-    <span class="creator-name">
-      ${displayName}
-    </span>
-
-    <a
-      class="creator-action"
-      href="contacts.html?contact=${encodeURIComponent(contactValue)}"
-    >
-      <img src="../Assets/person-member.png" alt="Profil">
-      Profil 
-    </a>
-  `;
+/** Updates the category in the modal. @param {Object} task - Task object. */
+function updateModalCategory(task) { const modalCategory = document.getElementById("modalCategory");
+modalCategory.innerText = task.category || "No Category";
+modalCategory.className = `category-label ${task.categoryClass || ""}`;
+setCategoryStyle("modalCategory", task.category);
 }
 
-/**
- * Updates the category in the modal.
- * @param {Object} task - Task object.
- */
-function updateModalCategory(task) {
-  const modalCategory = document.getElementById("modalCategory");
-  modalCategory.innerText = task.category || "No Category";
-  modalCategory.className = `category-label ${task.categoryClass || ""}`;
-  setCategoryStyle("modalCategory", task.category);
+/** Dokumentiert die Funktion updateModalAiGenerated. */
+function updateModalAiGenerated(task) { const aiElement = document.getElementById("modalAiGenerated");
+if (task.aiGenerated === true) { aiElement.innerHTML = ` <img src="../Assets/ai.png" alt="AI"> <span>AI-generated ticket</span> `;
+aiElement.style.display = "inline-flex";
+} else { aiElement.innerHTML = "";
+aiElement.style.display = "none";
+} }
+
+/** Updates title and description in the modal. @param {Object} task - Task object. */
+function updateModalTitleAndDescription(task) { document.getElementById("modalTitle").innerText = task.title;
+document.getElementById("modalDescription").innerText = task.description;
 }
 
-function updateModalAiGenerated(task) {
-  const aiElement = document.getElementById("modalAiGenerated");
-
-  if (task.aiGenerated === true) {
-    aiElement.innerHTML = `
-      <img src="../Assets/ai.png" alt="AI">
-      <span>AI-generated ticket</span>
-    `;
-
-    aiElement.style.display = "inline-flex";
-  } else {
-    aiElement.innerHTML = "";
-    aiElement.style.display = "none";
-  }
+/** Updates the due date in the modal. @param {Object} task - Task object. */
+function updateModalDueDate(task) { const dueDateElement = document.getElementById("modalDueDate");
+dueDateElement.innerText = task.dueDate ? formatDate(task.dueDate) : "Kein Fälligkeitsdatum";
 }
 
-/**
- * Updates title and description in the modal.
- * @param {Object} task - Task object.
- */
-function updateModalTitleAndDescription(task) {
-  document.getElementById("modalTitle").innerText = task.title;
-  document.getElementById("modalDescription").innerText = task.description;
+/** Updates priority in the modal. @param {Object} task - Task object. */
+function updateModalPriority(task) { document.getElementById("modalPriority").innerHTML = formatPriority( task.priority, );
 }
 
-/**
- * Updates the due date in the modal.
- * @param {Object} task - Task object.
- */
-function updateModalDueDate(task) {
-  const dueDateElement = document.getElementById("modalDueDate");
-  dueDateElement.innerText = task.dueDate
-    ? formatDate(task.dueDate)
-    : "Kein Fälligkeitsdatum";
+/** Updates assigned users in the modal. @param {Object} task - Task object. */
+function updateModalAssignedUsers(task) { document.getElementById("modalAssignedUsers").innerHTML = renderAssignedUsers( task.assignedUsers, );
 }
 
-/**
- * Updates priority in the modal.
- * @param {Object} task - Task object.
- */
-function updateModalPriority(task) {
-  document.getElementById("modalPriority").innerHTML = formatPriority(
-    task.priority,
-  );
+/** Closes the task modal. */
+function closeTaskModal() { document.getElementById("taskModal").style.display = "none";
 }
 
-/**
- * Updates assigned users in the modal.
- * @param {Object} task - Task object.
- */
-function updateModalAssignedUsers(task) {
-  document.getElementById("modalAssignedUsers").innerHTML = renderAssignedUsers(
-    task.assignedUsers,
-  );
+/** Deletes a task from local storage. */
+async function deleteTask() { const allColumns = [ "triage", "todo", "in-progress", "await-feedback", "done", ];
+for (const column of allColumns) { let tasks = JSON.parse(localStorage.getItem(column)) || [];
+const taskExists = tasks.some((task) => task.id === currentTaskId);
+if (taskExists) { tasks = tasks.filter((task) => task.id !== currentTaskId);
+localStorage.setItem(column, JSON.stringify(tasks));
+await saveColumnToFirebase(column);
+loadTasks(column);
+break;
+} } closeTaskModal();
 }
 
-/**
- * Closes the task modal.
- */
-function closeTaskModal() {
-  document.getElementById("taskModal").style.display = "none";
+/** Dokumentiert die Funktion closeTaskModal. */
+function closeTaskModal() { document.getElementById("taskModal").style.display = "none";
 }
 
-/**
- * Deletes a task from local storage.
- */
-async function deleteTask() {
-  const allColumns = [
-    "triage",
-    "todo",
-    "in-progress",
-    "await-feedback",
-    "done",
-  ];
-
-  for (const column of allColumns) {
-    let tasks = JSON.parse(localStorage.getItem(column)) || [];
-
-    const taskExists = tasks.some((task) => task.id === currentTaskId);
-
-    if (taskExists) {
-      tasks = tasks.filter((task) => task.id !== currentTaskId);
-
-      localStorage.setItem(column, JSON.stringify(tasks));
-
-      await saveColumnToFirebase(column);
-
-      loadTasks(column);
-      break;
-    }
-  }
-
-  closeTaskModal();
-}
-
-function closeTaskModal() {
-  document.getElementById("taskModal").style.display = "none";
-}
-
-/**
- * Handles responsive button display.
- */
-function addButton() {
-  const headerBoard = document.getElementById("sectionBoard");
-  const headerBoardPlus = document.getElementById("sectionBoardPlus");
-  if (window.innerWidth < 1355) {
-    headerBoard.classList.remove("hidden");
-    headerBoardPlus.classList.add("hidden");
-  } else {
-    headerBoard.classList.add("hidden");
-    headerBoardPlus.classList.remove("hidden");
-  }
-}
+/** Handles responsive button display. */
+function addButton() { const headerBoard = document.getElementById("sectionBoard");
+const headerBoardPlus = document.getElementById("sectionBoardPlus");
+if (window.innerWidth < 1355) { headerBoard.classList.remove("hidden");
+headerBoardPlus.classList.add("hidden");
+} else { headerBoard.classList.add("hidden");
+headerBoardPlus.classList.remove("hidden");
+} }
 
 window.addEventListener("resize", addButton);
 window.addEventListener("DOMContentLoaded", addButton);
 
-/**
- * Enables dragging for tasks.
- * @param {Event} event - Drag event.
- */
-function drag(event) {
-  draggedTaskId = event.target.id;
-  event.dataTransfer.effectAllowed = "move";
+/** Enables dragging for tasks. @param {Event} event - Drag event. */
+function drag(event) { draggedTaskId = event.target.id;
+event.dataTransfer.effectAllowed = "move";
 }
 
-/**
- * Allows dropping tasks into columns.
- * @param {Event} event - Drop event.
- */
-function allowDrop(event) {
-  event.preventDefault();
-  const taskContainer = event.target.closest(".task-container");
-  if (taskContainer) {
-    document
-      .querySelectorAll(".task-container.highlight-drop")
-      .forEach((container) => {
-        container.classList.remove("highlight-drop");
-      });
-    taskContainer.classList.add("highlight-drop");
-  }
+/** Allows dropping tasks into columns. @param {Event} event - Drop event. */
+function allowDrop(event) { event.preventDefault();
+const taskContainer = event.target.closest(".task-container");
+if (taskContainer) { document .querySelectorAll(".task-container.highlight-drop") .forEach((container) => { container.classList.remove("highlight-drop");
+});
+taskContainer.classList.add("highlight-drop");
+} }
+
+/** Removes highlight effect from drop areas. */
+function removeHighlight() { document .querySelectorAll(".task-container.highlight-drop") .forEach((container) => { container.classList.remove("highlight-drop");
+});
 }
 
-/**
- * Removes highlight effect from drop areas.
- */
-function removeHighlight() {
-  document
-    .querySelectorAll(".task-container.highlight-drop")
-    .forEach((container) => {
-      container.classList.remove("highlight-drop");
-    });
+/** Handles dropping a task into a new column. @param {Event} event - Drop event. */
+function handleDrop(event) { event.preventDefault();
+const targetTaskContainer = getClosestTaskContainer(event.target);
+removeHighlight();
+if (targetTaskContainer && draggedTaskId) { const draggedTaskElement = document.getElementById(draggedTaskId);
+const sourceTaskContainer = getSourceTaskContainer(draggedTaskElement);
+if (draggedTaskElement && targetTaskContainer !== sourceTaskContainer) { processDrop(targetTaskContainer, draggedTaskElement, sourceTaskContainer);
+} } }
+
+/** Processes the task drop action. @param {HTMLElement} targetTaskContainer - Drop target. @param {HTMLElement} draggedTaskElement - Dragged task. @param {HTMLElement} sourceTaskContainer - Original column. */
+function processDrop( targetTaskContainer, draggedTaskElement, sourceTaskContainer, ) { moveTaskInDOM(draggedTaskElement, targetTaskContainer);
+updateLocalStorage( sourceTaskContainer, targetTaskContainer, draggedTaskElement.id, );
+refreshUI(sourceTaskContainer, targetTaskContainer);
 }
 
-/**
- * Handles dropping a task into a new column.
- * @param {Event} event - Drop event.
- */
-function handleDrop(event) {
-  event.preventDefault();
-  const targetTaskContainer = getClosestTaskContainer(event.target);
-  removeHighlight();
-  if (targetTaskContainer && draggedTaskId) {
-    const draggedTaskElement = document.getElementById(draggedTaskId);
-    const sourceTaskContainer = getSourceTaskContainer(draggedTaskElement);
-    if (draggedTaskElement && targetTaskContainer !== sourceTaskContainer) {
-      processDrop(targetTaskContainer, draggedTaskElement, sourceTaskContainer);
-    }
-  }
+/** Gets the closest task container element. @param {HTMLElement} element - Target element. @returns {HTMLElement|null} - Closest task container. */
+function getClosestTaskContainer(element) { return element.closest(".task-container");
 }
 
-/**
- * Processes the task drop action.
- * @param {HTMLElement} targetTaskContainer - Drop target.
- * @param {HTMLElement} draggedTaskElement - Dragged task.
- * @param {HTMLElement} sourceTaskContainer - Original column.
- */
-function processDrop(
-  targetTaskContainer,
-  draggedTaskElement,
-  sourceTaskContainer,
-) {
-  moveTaskInDOM(draggedTaskElement, targetTaskContainer);
-  updateLocalStorage(
-    sourceTaskContainer,
-    targetTaskContainer,
-    draggedTaskElement.id,
-  );
-  refreshUI(sourceTaskContainer, targetTaskContainer);
+/** Finds the source task container for a dragged task. @param {HTMLElement} draggedTaskElement - Dragged task. @returns {HTMLElement|null} - Source container. */
+function getSourceTaskContainer(draggedTaskElement) { return draggedTaskElement.closest(".task-container");
 }
 
-/**
- * Gets the closest task container element.
- * @param {HTMLElement} element - Target element.
- * @returns {HTMLElement|null} - Closest task container.
- */
-function getClosestTaskContainer(element) {
-  return element.closest(".task-container");
+/** Moves a task in the DOM. @param {HTMLElement} draggedTaskElement - Dragged task. @param {HTMLElement} targetTaskContainer - New container. */
+function moveTaskInDOM(draggedTaskElement, targetTaskContainer) { targetTaskContainer.appendChild(draggedTaskElement);
 }
 
-/**
- * Finds the source task container for a dragged task.
- * @param {HTMLElement} draggedTaskElement - Dragged task.
- * @returns {HTMLElement|null} - Source container.
- */
-function getSourceTaskContainer(draggedTaskElement) {
-  return draggedTaskElement.closest(".task-container");
+/** Updates local storage after task movement. @param {HTMLElement} sourceTaskContainer - Original container. @param {HTMLElement} targetTaskContainer - New container. @param {string} taskId - Task ID. */
+async function updateLocalStorage( sourceTaskContainer, targetTaskContainer, taskId, ) { const sourceColumnId = sourceTaskContainer.closest(".column").id; const targetColumnId = targetTaskContainer.closest(".column").id;
+const sourceTasks = JSON.parse(localStorage.getItem(sourceColumnId)) || []; const targetTasks = JSON.parse(localStorage.getItem(targetColumnId)) || [];
+const taskIndex = sourceTasks.findIndex((task) => task.id === taskId); if (taskIndex > -1) { const movedTask = sourceTasks.splice(taskIndex, 1)[0];
+movedTask.status = targetColumnId; targetTasks.push(movedTask);
+localStorage.setItem(sourceColumnId, JSON.stringify(sourceTasks)); localStorage.setItem(targetColumnId, JSON.stringify(targetTasks));
+await saveColumnToFirebase(sourceColumnId); await saveColumnToFirebase(targetColumnId);
+notifyCreatorStatusChange(movedTask, targetColumnId); } }
+
+/** Refreshes UI after task movement. @param {HTMLElement} sourceTaskContainer - Original container. @param {HTMLElement} targetTaskContainer - New container. */
+function refreshUI(sourceTaskContainer, targetTaskContainer) { const sourceColumnId = sourceTaskContainer.closest(".column").id;
+const targetColumnId = targetTaskContainer.closest(".column").id;
+loadTasks(sourceColumnId);
+loadTasks(targetColumnId);
 }
 
-/**
- * Moves a task in the DOM.
- * @param {HTMLElement} draggedTaskElement - Dragged task.
- * @param {HTMLElement} targetTaskContainer - New container.
- */
-function moveTaskInDOM(draggedTaskElement, targetTaskContainer) {
-  targetTaskContainer.appendChild(draggedTaskElement);
-}
-
-/**
- * Updates local storage after task movement.
- * @param {HTMLElement} sourceTaskContainer - Original container.
- * @param {HTMLElement} targetTaskContainer - New container.
- * @param {string} taskId - Task ID.
- */
-async function updateLocalStorage(
-  sourceTaskContainer,
-  targetTaskContainer,
-  taskId,
-) {
-  const sourceColumnId = sourceTaskContainer.closest(".column").id;
-  const targetColumnId = targetTaskContainer.closest(".column").id;
-
-  const sourceTasks = JSON.parse(localStorage.getItem(sourceColumnId)) || [];
-
-  const targetTasks = JSON.parse(localStorage.getItem(targetColumnId)) || [];
-
-  const taskIndex = sourceTasks.findIndex((task) => task.id === taskId);
-
-  if (taskIndex > -1) {
-    const movedTask = sourceTasks.splice(taskIndex, 1)[0];
-
-    movedTask.status = targetColumnId;
-    targetTasks.push(movedTask);
-
-    localStorage.setItem(sourceColumnId, JSON.stringify(sourceTasks));
-
-    localStorage.setItem(targetColumnId, JSON.stringify(targetTasks));
-
-    await saveColumnToFirebase(sourceColumnId);
-    await saveColumnToFirebase(targetColumnId);
-
-    notifyCreatorStatusChange(movedTask, targetColumnId);
-  }
-}
-
-/**
- * Refreshes UI after task movement.
- * @param {HTMLElement} sourceTaskContainer - Original container.
- * @param {HTMLElement} targetTaskContainer - New container.
- */
-function refreshUI(sourceTaskContainer, targetTaskContainer) {
-  const sourceColumnId = sourceTaskContainer.closest(".column").id;
-  const targetColumnId = targetTaskContainer.closest(".column").id;
-  loadTasks(sourceColumnId);
-  loadTasks(targetColumnId);
-}
-
-document.querySelectorAll(".task-container").forEach((taskContainer) => {
-  taskContainer.addEventListener("dragleave", removeHighlight);
+document.querySelectorAll(".task-container").forEach((taskContainer) => { taskContainer.addEventListener("dragleave", removeHighlight);
 });
 
-/**
- * Calculates target column index based on movement direction.
- * @param {number} currentIndex - Current column index.
- * @param {string} direction - Move direction.
- * @param {number} columnCount - Total columns.
- * @returns {number|null} - Target index or null.
- */
-function calculateTargetColumnIndex(currentIndex, direction, columnCount) {
-  return direction === "left" && currentIndex > 0
-    ? currentIndex - 1
-    : direction === "right" && currentIndex < columnCount - 1
-      ? currentIndex + 1
-      : null;
+/** Calculates target column index based on movement direction. @param {number} currentIndex - Current column index. @param {string} direction - Move direction. @param {number} columnCount - Total columns. @returns {number|null} - Target index or null. */
+function calculateTargetColumnIndex(currentIndex, direction, columnCount) { return direction === "left" && currentIndex > 0 ? currentIndex - 1 : direction === "right" && currentIndex < columnCount - 1 ? currentIndex + 1 : null;
 }
 
-/**
- * Processes task movement between columns.
- * @param {string} taskId - Task ID.
- * @param {string} direction - Move direction.
- */
-function moveTask(taskId, direction, event) {
-  if (event) event.stopPropagation();
-  const columns = ["triage", "todo", "in-progress", "await-feedback", "done"];
-  const tasks = getAllTasks();
-  const task = findTaskById(tasks, taskId);
-  if (!task) return;
-  const currentColumnIndex = findCurrentColumnIndex(columns, taskId);
-  const targetColumnIndex = calculateTargetColumnIndex(
-    currentColumnIndex,
-    direction,
-    columns.length,
-  );
-  if (targetColumnIndex === null) return;
-  moveTaskBetweenColumns(
-    taskId,
-    task,
-    columns[currentColumnIndex],
-    columns[targetColumnIndex],
-  );
-  refreshUII(columns[currentColumnIndex], columns[targetColumnIndex]);
+/** Processes task movement between columns. @param {string} taskId - Task ID. @param {string} direction - Move direction. */
+function moveTask(taskId, direction, event) { if (event) event.stopPropagation();
+const columns = ["triage", "todo", "in-progress", "await-feedback", "done"];
+const tasks = getAllTasks();
+const task = findTaskById(tasks, taskId);
+if (!task) return;
+const currentColumnIndex = findCurrentColumnIndex(columns, taskId);
+const targetColumnIndex = calculateTargetColumnIndex( currentColumnIndex, direction, columns.length, );
+if (targetColumnIndex === null) return;
+moveTaskBetweenColumns( taskId, task, columns[currentColumnIndex], columns[targetColumnIndex], );
+refreshUII(columns[currentColumnIndex], columns[targetColumnIndex]);
 }
 
-/**
- * Finds the current column index of a task.
- * @param {Array} columns - List of column IDs.
- * @param {string} taskId - Task ID.
- * @returns {number} - Column index.
- */
-function findCurrentColumnIndex(columns, taskId) {
-  return columns.findIndex((column) => {
-    const columnTasks = JSON.parse(localStorage.getItem(column)) || [];
-    return columnTasks.some((t) => t.id === taskId);
-  });
+/** Finds the current column index of a task. @param {Array} columns - List of column IDs. @param {string} taskId - Task ID. @returns {number} - Column index. */
+function findCurrentColumnIndex(columns, taskId) { return columns.findIndex((column) => { const columnTasks = JSON.parse(localStorage.getItem(column)) || [];
+return columnTasks.some((t) => t.id === taskId);
+});
 }
 
-function calculateTargetColumnIndex(currentIndex, direction, totalColumns) {
-  let targetIndex =
-    direction === "previous" ? currentIndex - 1 : currentIndex + 1;
-  return targetIndex < 0 || targetIndex >= totalColumns ? null : targetIndex;
+/** Dokumentiert die Funktion calculateTargetColumnIndex. */
+function calculateTargetColumnIndex(currentIndex, direction, totalColumns) { let targetIndex = direction === "previous" ? currentIndex - 1 : currentIndex + 1;
+return targetIndex < 0 || targetIndex >= totalColumns ? null : targetIndex;
 }
 
-/**
- * Moves a task between columns.
- * @param {string} taskId - Task ID.
- * @param {Object} task - Task object.
- * @param {string} currentColumn - Source column ID.
- * @param {string} targetColumn - Destination column ID.
- */
-function moveTaskBetweenColumns(taskId, task, currentColumn, targetColumn) {
-  let currentTasks = JSON.parse(localStorage.getItem(currentColumn)) || [];
-  currentTasks = currentTasks.filter((t) => t.id !== taskId);
-  localStorage.setItem(currentColumn, JSON.stringify(currentTasks));
-  let targetTasks = JSON.parse(localStorage.getItem(targetColumn)) || [];
-  targetTasks.push(task);
-  localStorage.setItem(targetColumn, JSON.stringify(targetTasks));
+/** Moves a task between columns. @param {string} taskId - Task ID. @param {Object} task - Task object. @param {string} currentColumn - Source column ID. @param {string} targetColumn - Destination column ID. */
+function moveTaskBetweenColumns(taskId, task, currentColumn, targetColumn) { let currentTasks = JSON.parse(localStorage.getItem(currentColumn)) || [];
+currentTasks = currentTasks.filter((t) => t.id !== taskId);
+localStorage.setItem(currentColumn, JSON.stringify(currentTasks));
+let targetTasks = JSON.parse(localStorage.getItem(targetColumn)) || [];
+targetTasks.push(task);
+localStorage.setItem(targetColumn, JSON.stringify(targetTasks));
 }
 
-function refreshUII(currentColumn, targetColumn) {
-  loadTasks(currentColumn);
-  loadTasks(targetColumn);
+/** Dokumentiert die Funktion refreshUII. */
+function refreshUII(currentColumn, targetColumn) { loadTasks(currentColumn);
+loadTasks(targetColumn);
 }
 
-/**
- * Notifies the ticket creator about a status change via n8n.
- * @param {Object} task - Moved task.
- * @param {string} status - New column/status.
- */
-function notifyCreatorStatusChange(task, status) {
-  if (!task || !task.creator) return;
-
-  const data = new URLSearchParams({
-    creator: task.creator,
-    title: task.title || "Ticket",
-    status: status,
-  });
-
-  fetch("http://localhost:5678/webhook/join-status-change", {
-    method: "POST",
-    mode: "no-cors",
-    body: data,
-  });
+/** Notifies the ticket creator about a status change via n8n. @param {Object} task - Moved task. @param {string} status - New column/status. */
+function notifyCreatorStatusChange(task, status) { if (!task || !task.creator) return;
+const data = new URLSearchParams({ creator: task.creator, title: task.title || "Ticket", status: status, });
+fetch("http://localhost:5678/webhook/join-status-change", { method: "POST", mode: "no-cors", body: data, });
 }

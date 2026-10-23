@@ -116,6 +116,7 @@ span {
   border: 1px solid #d1d1d1;
   border-radius: 10px;
   padding-left: 21px;
+  font-size: 14px;
 }
 
 .add-subtask {
@@ -141,6 +142,12 @@ span {
   border-radius: 10px;
   padding-left: 21px;
   width: 100%;
+  font-size: 14px;
+}
+
+.subtask-input:focus,
+.subtask-input:hover {
+  border: 1px solid #29abe2;
 }
 
 button {
@@ -168,7 +175,13 @@ input::placeholder {
   border: 1px solid #d1d1d1;
   border-radius: 10px;
   padding: 18px 21px;
-  font-size: 16px;
+  width: 100%;
+  font-size: 14px;
+}
+.description-input:hover,
+.description-input:focus {
+  border: 1px solid #29abe2 !important;
+  outline: none;
 }
 
 .date-input {
@@ -275,6 +288,7 @@ input::placeholder {
   border: none;
   background-color: #f6f7f8;
   width: 300px;
+  font-size: 14px;
 }
 
 .contact-list-container {

@@ -316,22 +316,15 @@
   gap: 10px;
 }
 
-.regards h1,
-.regards h2 {
-  margin: 0;
-
-  white-space: nowrap;
-}
-
 .regards h1 {
   color: #29abe2;
 
-  font-size: 64px;
+  font-size: 45px;
   font-weight: 700;
 }
 
 .regards h2 {
-  font-size: 47px;
+  font-size: 45px;
   font-weight: 500;
 }
 
@@ -349,14 +342,14 @@
 
   color: #29abe2;
 
-  font-size: 64px;
+  font-size: 45px;
   font-weight: 700;
 }
 
 .regards-mobile h2 {
   margin: 0;
 
-  font-size: 47px;
+  font-size: 45px;
   font-weight: 500;
 }
 
@@ -473,7 +466,7 @@
 }
 
 
-@media (max-width: 1050px) {
+@media (max-width: 1110px) {
   .hero {
     padding-top: 10px;
   }
@@ -520,16 +513,15 @@
 
 @keyframes fadeOutBackground {
   0% {
-    background-color: #f6f7f8;
+    opacity: 1;
   }
 
   50% {
-    background-color: #f6f7f8;
+    opacity: 1;
   }
 
   100% {
-    background-color: transparent;
-    color: transparent;
+    opacity: 0;
     visibility: hidden;
   }
 }
